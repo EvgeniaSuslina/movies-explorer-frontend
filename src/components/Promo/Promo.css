@@ -1,0 +1,32 @@
+.promo{
+    background: #073042;
+    font-family: 'Inter', Arial, 'sans-serif';
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    padding: 82px 0 122px 0;
+    max-width: 1280px;
+}
+
+.promo__content{
+    background-image: url(../../images/promo-logo.svg);
+    background-size: 320px 320px;
+    background-repeat: no-repeat;
+    background-position: center;
+    
+}
+
+.promo__title{
+    font-weight: 400;
+    font-size: 50px;
+    line-height: 58px;
+    text-align: center;
+    letter-spacing: -0.04em;
+    color: #FFFFFF;
+    max-width: 730px;
+    margin: 0 auto;
+    padding: 102px 275px 102px 275px;
+}

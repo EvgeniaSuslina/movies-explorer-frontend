@@ -1,0 +1,20 @@
+.section {
+    box-sizing: border-box;
+    padding-left: 70px;
+    padding-right: 70px;
+}
+
+.section__header {
+    border-bottom: 1px solid #DADADA;
+    padding-bottom: 23px;
+}
+
+.section__title {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 27px;   
+    letter-spacing: -0.04em;
+    color: #FFFFFF;
+    margin: 0;
+}

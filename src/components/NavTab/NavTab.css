@@ -1,0 +1,30 @@
+.nav-tab{
+    background: #272727;
+    font-family: 'Inter', Arial, 'sans-serif';
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    padding-top: 24px; 
+    padding-bottom: 24px;
+    max-width: 1280px;
+}
+
+.nav-tab__list{
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    list-style-type: none;
+    justify-content: center;
+    margin: 0;
+}
+
+.nav-tab__link{
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;    
+    text-decoration-line: underline;
+    color: #FFFFFF;
+}
