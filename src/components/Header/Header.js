@@ -8,10 +8,10 @@ function Header(isLoggedIn) {
     const location = useLocation();
 
     return(
-        <header className={(isLoggedIn && location.pathname === '/') ? 'header' : ' header header_type_black'}>
+        <header className={(isLoggedIn && location.pathname === '/') ? 'header' : ' header eader_type_black'}>
             <div className="header__content">
                 {(location === '/') ? (
-                    <img className="header__logo" src={logo} alt="Логотип" />                    
+                    <img className="logo" src={logo} alt="Логотип" />                    
                 ) : (
                     <Link to="/">
                         <img className="header__logo" src={logo} alt="Логотип" />
