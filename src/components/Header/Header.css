@@ -1,5 +1,5 @@
 .header {
-    background: #073042;
+    background: #073042; 
     font-family: 'Inter', Arial, 'sans-serif';
     font-style: normal;
     -webkit-font-smoothing: antialiased;
@@ -10,6 +10,11 @@
     padding: 18px 70px 18px 70px;
     max-width: 1280px;
 }
+
+.header_type_black{
+    background: #202020;    
+}
+
 
 .header__logo {
     width: 38px;
@@ -22,7 +27,7 @@
     justify-content: space-between;
 }
 
-.header__auth{
+.header__navigation{
     display: flex;
     flex-direction: row;
     gap: 30px;
@@ -30,6 +35,7 @@
 }
 
 .header__register{
+    text-decoration: none;
     font-weight: 500;
     font-size: 12px;
     line-height: 16px;
@@ -37,6 +43,7 @@
 }
 
 .header__signin{
+    text-decoration: none;
     border: none;
     background: #3DDC84;
     border-radius: 3px;
