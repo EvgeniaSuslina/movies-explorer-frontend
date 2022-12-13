@@ -8,7 +8,7 @@ function Header(isLoggedIn) {
     const location = useLocation();
 
     return(
-        <header className={(isLoggedIn && location.pathname === '/') ? 'header' : ' header eader_type_black'}>
+        <header className={(isLoggedIn && location.pathname === '/') ? 'header' : ' header header_type_black'}>
             <div className="header__content">
                 {(location === '/') ? (
                     <img className="logo" src={logo} alt="Логотип" />                    

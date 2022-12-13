@@ -1,4 +1,5 @@
 .error-message{
+    visibility: hidden;
     margin: 0px, 22px, 0px, 22px;
     font-weight: normal;
     font-size: 10px;

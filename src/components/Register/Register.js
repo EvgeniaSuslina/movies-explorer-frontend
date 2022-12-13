@@ -8,29 +8,29 @@ import logo from '../../images/logo.svg';
 function Register() {
   
   return (    
-    <div className="reg">
+    <div className="auth">
       <Link to='/'><img src={logo} alt="Логотип" className="logo" /></Link>
-      <h2 className="reg__title">Добро пожаловать!</h2>
-      <form className="reg__form">
-        <label className="reg__form-label">Имя</label>
+      <h2 className="auth__title">Добро пожаловать!</h2>
+      <form className="auth__form">
+        <label className="auth__form-label">Имя</label>
         <input
-          className="reg__input"          
+          className="auth__input"          
           type="text"
           name="name"
           required   
 
         />
-        <label className="reg__form-label">E-mail</label>
+        <label className="auth__form-label">E-mail</label>
         <input
-          className="reg__input"   
+          className="auth__input"   
           type="email"
           name="email"          
           required
           
         />
-        <label className="reg__form-label">Пароль</label>
+        <label className="auth__form-label">Пароль</label>
         <input
-          className="reg__input"        
+          className="auth__input"        
           type="password"
           name="password"          
           maxLength="12"
@@ -38,14 +38,14 @@ function Register() {
           
         />
         <span className="error-message">Что-то пошло не так...</span>
-        <button className="reg__submit" type="submit">
+        <button className="auth__submit" type="submit">
         Зарегистрироваться
         </button>
       </form>
-      <div className="reg__wrapper">
-        <p className="reg__text">
+      <div className="auth__wrapper">
+        <p className="auth__text">
           Уже зарегистрированы? 
-          <Link className="reg__link" to="./sign-in">
+          <Link className="auth__link" to="./sign-in">
             Войти
           </Link>
         </p>
