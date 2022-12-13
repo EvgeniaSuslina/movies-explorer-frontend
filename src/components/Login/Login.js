@@ -30,7 +30,7 @@ function Login() {
       <div className="auth__wrapper">
         <p className="auth__text">
           Еще не зарегистрированы? 
-          <Link className="auth__link" to="./sign-in">
+          <Link className="auth__link" to="/signup">
             Регистрация
           </Link>
         </p>

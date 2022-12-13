@@ -8,7 +8,7 @@ import Footer from "../Footer/Footer";
 function Movies() {
     return (
         <>
-            <Header />
+            <Header navType={'loggedInLinks'}/>
             <main className="movies">
                 <SearchForm />
                 <MoviesCardList />

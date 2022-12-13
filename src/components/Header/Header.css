@@ -27,6 +27,10 @@
     justify-content: space-between;
 }
 
+.header__content-logged{
+    
+}
+
 .header__navigation{
     display: flex;
     flex-direction: row;

@@ -11,7 +11,7 @@ import Footer from '../Footer/Footer';
 function Main() {
     return (  
         <>
-        <Header />
+        <Header navType={'mainPage'}/>
         <main className="main">
             <Promo />
             <AboutProject />

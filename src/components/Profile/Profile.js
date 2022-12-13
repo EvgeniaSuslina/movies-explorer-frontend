@@ -6,7 +6,7 @@ import './Profile.css';
 function Profile() {
     return(
         <>
-        <Header />
+        <Header navType={'loggedInLinks'}/>
         <section className="profile">
             <h2 className="profile__title">Привет, Евгения!</h2>
             <form className="profile__form">

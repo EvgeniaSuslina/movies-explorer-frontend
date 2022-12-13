@@ -6,7 +6,7 @@ import Footer from '../Footer/Footer';
 function SavedMovies() {
     return(
         <>
-            <Header />
+            <Header navType={'loggedInLinks'}/>
             <SearchForm />
             <MoviesCardList />
             <Footer />

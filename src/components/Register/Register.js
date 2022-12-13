@@ -45,7 +45,7 @@ function Register() {
       <div className="auth__wrapper">
         <p className="auth__text">
           Уже зарегистрированы? 
-          <Link className="auth__link" to="./sign-in">
+          <Link className="auth__link" to="/signin">
             Войти
           </Link>
         </p>
