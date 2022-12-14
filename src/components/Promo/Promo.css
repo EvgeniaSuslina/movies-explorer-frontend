@@ -27,6 +27,28 @@
     letter-spacing: -0.04em;
     color: #FFFFFF;
     max-width: 730px;
-    margin: 0 auto;
-    padding: 102px 275px 102px 275px;
+    margin: 0 auto;   
+    padding: 102px 0 102px 0;
 }
+
+@media screen and (max-width: 940px){
+    .promo{
+        padding: 224px 0 240px 0;
+    }    
+}
+
+@media screen and (max-width: 480px){
+
+    .promo {
+        padding: 142px 0 180px 0;
+    } 
+
+    .promo__title{
+        font-size: 31px;
+        line-height: 39px;
+    }
+
+    .promo__content{
+        background-size: 248px 248px;
+    }
+}   

@@ -28,3 +28,18 @@
     text-decoration-line: underline;
     color: #FFFFFF;
 }
+
+@media screen and (max-width: 480px){
+    .nav-tab{
+        padding-top: 25px; 
+        padding-bottom: 25px;
+    }
+    .nav-tab__list{
+        width: 100%;
+        padding: 0;
+        gap: 24px;       
+    }
+    .nav-tab__link{
+        font-size: 11px;
+    }
+}

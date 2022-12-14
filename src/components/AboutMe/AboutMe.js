@@ -15,10 +15,10 @@ function AboutMe() {
                         Я родилась и живу в Москве, закончила факультет экономики СГУ. У меня есть муж
                         и  дочь. Я люблю слушать музыку, а ещё увлекаюсь бегом. Недавно начала кодить. С 2015 года работала в компании «СКБ Контур». После того, как прошла курс по веб-разработке, начала заниматься фриланс-заказами и ушла с постоянной работы.
                         </p>
-                    </div>
-                    <a href="https://github.com/EvgeniaSuslina" className="about-me__link">
-                    Github
-                    </a>
+                    </div> 
+                        <a href="https://github.com/EvgeniaSuslina" className="about-me__link about-me__link_type">
+                        Github
+                        </a>
                     <div className="about-me__photo">
                         <img className="about-me__pic" src={Photo} alt="Фото студента" />
                     </div>

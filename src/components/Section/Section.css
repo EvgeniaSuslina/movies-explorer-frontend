@@ -18,3 +18,23 @@
     color: #FFFFFF;
     margin: 0;
 }
+
+@media screen and (max-width: 768px){
+    .section {
+        max-width: 768px;
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+}
+
+@media screen and (max-width: 550px){
+    .section {
+        max-width: 550px;
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+    .section__title{
+        font-size: 18px;
+        line-height: 22px; 
+    }
+}

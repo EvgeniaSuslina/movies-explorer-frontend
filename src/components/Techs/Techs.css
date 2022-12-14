@@ -24,8 +24,7 @@
     letter-spacing: -0.04em;
     color: #FFFFFF;
     margin: 0 auto;
-    margin: 90px auto 26px;
-    
+    margin: 90px auto 26px;    
 }
 
 .techs__text{
@@ -71,6 +70,53 @@
     letter-spacing: -0.04em;
     color: #FFFFFF;
     margin: 0 auto;
-    margin-top: 21px;
-  
+    margin-top: 21px;  
+}
+
+@media screen and (max-width: 940px){
+    .techs{
+        padding: 90px 50px 90px 50px;
+    }
+    .techs__title{
+        margin: 80px auto 22px;
+    }
+    .techs__text{
+        font-size: 12px;
+        line-height: 18px;
+    }
+    .techs__wrapper{
+        margin: 83px auto 0 auto;
+    }
+    .techs__card{
+        width: 84px;
+        height: 57px;
+    }
+    .techs__card-text{
+        font-size: 12px;
+        line-height: 17px;
+    }
+}
+
+@media screen and (max-width: 684px){
+    .techs__wrapper{
+        max-width: 188px;            
+    }
+    .techs__cards{
+        flex-wrap: wrap;
+    }
+}
+
+@media screen and (max-width: 550px){
+    .techs{
+        padding: 70px 14px 70px 14px;
+    }
+    .techs__title{
+        margin: 60px auto 24px;
+        font-size: 30px;
+        line-height: 36px;
+    }
+    .techs__text{
+        font-size: 11px;
+        line-height: 16px;
+    }
 }

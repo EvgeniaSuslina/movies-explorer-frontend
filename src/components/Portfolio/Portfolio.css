@@ -50,3 +50,24 @@
     padding-bottom: 19px;
 }
 
+@media screen and (max-width: 940px){
+    .portfolio{
+        padding: 45px 50px 90px 50px;
+    }
+    .portoflio__text{
+        font-size: 28px;
+    }
+}
+
+@media screen and (max-width: 550px){
+    .portfolio{
+        padding: 35px 14px 70px 14px;
+    }
+    .portfolio__title{
+        font-size: 14px;
+    }
+    .portoflio__text{
+        font-size: 18px;
+        line-height: 28px;
+    }
+}
