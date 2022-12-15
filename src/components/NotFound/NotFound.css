@@ -43,3 +43,34 @@
     color: #4285F4;
     margin-top: 184px;
 }
+
+@media screen and (max-width: 940px){
+    .not-found{
+        padding: 408px 184px 222px 184px;
+    }
+}
+
+@media screen and (max-width: 550px){
+    .not-found{
+        padding: 350px 80px 150px 80px;
+    }
+}
+
+@media screen and (max-width: 450px){
+    .not-found{
+        padding: 330px 10px 30px 10px;
+    }
+    .not-found__title{
+        font-size: 80px;
+        line-height: 97px;
+    }
+    .not-found__text{
+        font-size: 12px;
+        line-height: 15px;
+    }
+    .not-found__link{
+        font-size: 12px;
+        line-height: 15px;
+        margin-top: 284px;
+    }
+}

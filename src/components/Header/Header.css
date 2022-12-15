@@ -15,20 +15,16 @@
     background: #202020;    
 }
 
-
 .logo {
     width: 38px;
     height: 38px;
 }
 
+
 .header__content{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-}
-
-.header__content-logged{
-    
 }
 
 .header__navigation{
@@ -55,4 +51,11 @@
     height: 32px;
     font-size: 12px;
     line-height: 16px;
+}
+
+@media screen and (max-width: 420px){
+    .logo__form{
+        margin: 0 auto;
+    }
+    
 }

@@ -9,7 +9,7 @@ function Register() {
   
   return (    
     <div className="auth">
-      <Link to='/'><img src={logo} alt="Логотип" className="logo" /></Link>
+      <Link to='/'><img src={logo} alt="Логотип" className="logo auth__logo"/></Link>
       <h2 className="auth__title">Добро пожаловать!</h2>
       <form className="auth__form">
         <label className="auth__form-label">Имя</label>

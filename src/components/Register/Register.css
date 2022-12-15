@@ -50,7 +50,7 @@
 
 .auth__submit{
     margin-top: 152px;
-    width: 396px;
+    width: 100%;
     height: 45px;
     border: none;
     background: #4285F4;
@@ -86,4 +86,53 @@
     color: #4285F4;
     margin-left: 6px;
 }
+
+@media screen and (max-width: 940px) {
+    .auth{
+        padding: 235px 186px 235px 186px;
+    }
+    .auth__submit{
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 620px){
+    .auth{
+        padding: 56px 80px 30px 80px;
+    }
+}
+
+@media screen and (max-width: 420px){
+    .auth{
+        padding: 56px 30px 30px 30px;
+    }
+    .auth{
+        align-items: center;
+        justify-content: center;
+    }    
+    
+    .auth__form{
+        width: 100%;
+    }
+
+    .auth__wrapper{
+        flex-direction: row;    
+    }
+
+    .auth__submit{
+        margin-top: 309px;
+    }
+    
+    .auth__text{
+        margin-top: 14px;
+        font-size: 12px;
+        line-height: 15px;
+    }
+
+    .auth__link{
+         font-size: 12px;
+        line-height: 15px;
+    }
+}
+
 
