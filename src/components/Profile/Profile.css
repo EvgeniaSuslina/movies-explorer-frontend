@@ -41,6 +41,9 @@
 }
 
 .profile__label-text {
+    margin: 0;
+    margin-top: 16px;
+    margin-bottom: 17px;
     font-weight: 500;
     font-size: 11px;
     line-height: 13px;    
@@ -75,5 +78,31 @@
     font-weight: 500;
     font-size: 13px;
     line-height: 16px;  
-    color: #bb2649; /* viva magenta */
+    color: #EE3465;
+}
+
+@media screen and (max-width: 940px) {
+    .profile{
+        padding: 200px 0 200px 0;
+        width: 100%;   
+    }
+}
+
+@media screen and (max-width: 769px) {
+    .profile{
+        padding: 236px 0 269px 0;    
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .profile{
+        padding: 30px 70px 30px 40px;
+        width: 100%;
+    }
+    .profile__form{
+        width: 100%;
+    }
+    .profle__button{
+        margin-top: 379px;
+    }
 }

@@ -16,7 +16,7 @@
 .movie-card__info{
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: flex-start;
 }
 
@@ -71,4 +71,20 @@
     background-image: url('../../images/del-button.svg');
     background-repeat: no-repeat;
     background-position: center;
+}
+
+@media screen and (max-width: 1205px){
+    .movie-card{
+        max-width: 320px;
+    }
+}
+
+@media screen and (max-width: 940px){
+    .movie-card{
+        max-width: 300px;
+    }
+    .movie-card__name{
+        font-size: 12px;
+        line-height: 15px;
+    }
 }

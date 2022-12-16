@@ -32,3 +32,29 @@
     line-height: 15px;
     color: #FFFFFF;
 }
+
+@media screen and (max-width: 1205px){
+    .movies-card-list{
+        padding: 50px 50px 80px 50px; 
+    }
+}
+
+@media screen and (max-width: 940px){
+    .movies-card-list{
+        padding: 50px 30px 80px 30px; 
+    }
+    .movies-card-list__grid{
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        row-gap: 47px;
+    }
+}
+
+@media screen and (max-width: 550px){
+    .movies-card-list{
+        padding: 40px 10px 80px 10px; 
+    }
+    .movies-card-list__grid{
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        row-gap: 39px;
+    }
+}
