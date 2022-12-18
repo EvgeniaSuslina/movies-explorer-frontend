@@ -1,14 +1,17 @@
 .navigation__links{
     display: flex;
     flex-direction: row;   
-    align-items: center; 
+    align-items: center;
+    justify-content: space-between;
+    gap: 44px;
 }
 
-.navigation__links-movies{
+.navigation__container{
     display: flex;
     flex-direction: row;
-    gap: 13px;
-    margin-right: 746px;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .navigation__link{
@@ -21,6 +24,7 @@
 }
 
 .navigation__active{
+    margin-right: 16px;
     font-weight: bold;
 }
 
@@ -45,5 +49,11 @@
     line-height: 16px;   
     color: #FFFFFF; 
     text-align: center;
+}
+
+@media screen and (max-width: 769px){
+    .navigation__container{
+        display: none;
+    }
 }
 

@@ -71,6 +71,11 @@
     color: #FFFFFF;
 }
 
+.profle__button:hover{
+    cursor: pointer;
+    opacity: 0.6;
+}
+
 .profile__exit-link{
     margin: 0 auto;
     margin-top: 16px;
@@ -79,6 +84,10 @@
     font-size: 13px;
     line-height: 16px;  
     color: #EE3465;
+}
+
+.profile__exit-link:hover{
+    opacity: 0.6;
 }
 
 @media screen and (max-width: 940px) {

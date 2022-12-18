@@ -3,7 +3,7 @@ import Photo from '../../images/My_photo.jpg'
 
 function AboutMe() {
     return (
-        <section className="about-me section id='student'">
+        <section className="about-me section" id='student'>
             <div className="section__header">
                 <h2 className="section__title">Студент</h2>
             </div>            
@@ -16,7 +16,7 @@ function AboutMe() {
                         и  дочь. Я люблю слушать музыку, а ещё увлекаюсь бегом. Недавно начала кодить. С 2015 года работала в компании «СКБ Контур». После того, как прошла курс по веб-разработке, начала заниматься фриланс-заказами и ушла с постоянной работы.
                         </p>
                     </div> 
-                        <a href="https://github.com/EvgeniaSuslina" className="about-me__link about-me__link_type">
+                        <a href="https://github.com/EvgeniaSuslina" target="_blank" rel="noopener noreferrer" className="about-me__link">
                         Github
                         </a>
                     <div className="about-me__photo">

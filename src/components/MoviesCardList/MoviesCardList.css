@@ -33,6 +33,11 @@
     color: #FFFFFF;
 }
 
+.movies-card-list__button:hover{
+    cursor: pointer;
+    opacity: 0.6;
+}
+
 @media screen and (max-width: 1205px){
     .movies-card-list{
         padding: 50px 50px 80px 50px; 

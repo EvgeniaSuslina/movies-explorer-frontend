@@ -52,6 +52,11 @@
     color: #FFFFFF;
 }
 
+.footer__link:hover{
+    cursor: pointer;
+    opacity: 0.6;
+}
+
 @media screen and (max-width: 940px){
     .footer{
         padding: 80px 30px 20px 30px;  

@@ -1,0 +1,132 @@
+.burger-popup{
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .burger-popup {
+      position: fixed;
+      z-index: 1;
+      display: block;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      visibility: hidden;
+      opacity: 0;
+      height: 1935px;
+      transition: visibility .3s, opacity .3s;
+    }
+    
+    .burger-popup_opened{
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .burger-popup__content{
+        height: 100%;
+        width: 520px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 460px;
+        background-color: #272727;
+    }
+
+    .burger-popup__close{
+        position: absolute;
+        top: 25px;
+        right: 25px;
+        border: none;
+        box-sizing: border-box;
+        background-color: transparent;
+        background-image: url(../../images/close-button.svg);
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 22px;
+        height: 22px;
+    }   
+    .burger-popup__close:hover{
+        cursor: pointer;
+        opacity: 0.6;
+    }
+
+    .burger-popup__links{
+        font-family: 'Inter', Arial, 'sans-serif';
+        font-style: normal;
+        list-style-type: none;
+        padding: 0;
+        margin-top: 159px;
+        display: flex;
+        flex-direction: column;
+        align-self: center;
+        gap: 28px;
+    }
+
+    .burger-popup__link{
+        display: block;
+        text-align: center;
+        font-weight: 500;
+        font-size: 18px;
+        text-decoration: none;
+        line-height: 22px;
+        color: #FFFFFF;
+    }
+
+    .burger-popup__link_active {
+        text-decoration: underline;
+        text-decoration-thickness: 2px;
+        text-underline-offset: 9px;
+    }
+
+    .burger-popup__link:hover{
+        cursor: pointer;
+        opacity: 0.6;
+    }
+
+
+    .burger-popup__profile{
+        width:100px;
+        height: 32px;
+        border: none;
+        background-color: inherit;   
+        border: 2px solid rgb(170, 170, 170, .3) ;
+        border-radius: 50px;    
+        background-image: url('../../images/profile-icon.svg');
+        background-repeat: no-repeat;
+        background-position: 10% 50%;
+    }
+
+    .burger-popup__profile:hover{
+        cursor: pointer;
+        opacity: 0.6;
+    }
+    
+    .burger-popup__profile-link{ 
+        display: block;
+        text-decoration: none;
+        margin-top: 7px;
+        margin-left: 20px;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 16px;   
+        color: #FFFFFF; 
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 460px) {
+
+    .burger-popup__content{
+      background-color:#202020;
+      width: 100vw;
+      gap: 300px;
+    }
+  
+    .burger-popup__links {
+      margin-top: 144px;
+    }
+  
+    .popup-nav__link {
+      margin-bottom: 24px;
+    }
+
+}

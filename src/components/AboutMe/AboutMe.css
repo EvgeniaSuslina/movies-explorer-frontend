@@ -67,6 +67,9 @@
     font-size: 14px;
     line-height: 17px;    
 }
+.about-me__link{
+    opacity: 0.6;
+}
 
 @media screen and (max-width: 1030px){
     .about-me__content{

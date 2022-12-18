@@ -9,7 +9,7 @@ function Register() {
   
   return (    
     <div className="auth">
-      <Link to='/'><img src={logo} alt="Логотип" className="logo auth__logo"/></Link>
+      <Link to='/' target="_blank"><img src={logo} alt="Логотип" className="logo auth__logo"/></Link>
       <h2 className="auth__title">Добро пожаловать!</h2>
       <form className="auth__form">
         <label className="auth__form-label">Имя</label>
@@ -45,7 +45,7 @@ function Register() {
       <div className="auth__wrapper">
         <p className="auth__text">
           Уже зарегистрированы? 
-          <Link className="auth__link" to="/signin">
+          <Link className="auth__link" to="/signin" target="_blank">
             Войти
           </Link>
         </p>

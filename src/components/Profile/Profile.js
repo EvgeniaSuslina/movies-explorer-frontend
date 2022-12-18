@@ -1,12 +1,26 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import Header from "../Header/Header";
+import BurgerPopup from "../BurgerPopup/BurgerPopup";
 import './Profile.css';
 
 
 function Profile() {
+
+    const [isBurgerPopupOpened, setIsBurgerPopupOpened] = useState(false);
+
+    function handleBurgerPopupClick() {
+    setIsBurgerPopupOpened(true);
+    }
+
+    function closePopup() {
+    setIsBurgerPopupOpened(false);
+    }
+
     return(
         <>
-        <Header navType={'loggedInLinks'}/>
+        <Header navType={'loggedInLinks'} onButtonClick={ handleBurgerPopupClick }/>
+        <BurgerPopup isOpen={ isBurgerPopupOpened } onButtonClick={ closePopup }/>
         <section className="profile">
             <h2 className="profile__title">Привет, Евгения!</h2>
             <form className="profile__form">
@@ -31,7 +45,7 @@ function Profile() {
                 />
             </label>
             <button className="profle__button" type="button">Редактировать</button>
-            <Link className="profile__exit-link" to="/">Выйти из аккаунта</Link>
+            <Link className="profile__exit-link" to="/" target="_blank">Выйти из аккаунта</Link>
             </form>
         </section>
         </>        

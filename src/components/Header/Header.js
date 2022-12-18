@@ -1,23 +1,28 @@
 import './Header.css';
 import logo from '../../images/logo.svg';
 import { useLocation, Link} from 'react-router-dom';
+import BurgerMenu from '../BurgerMenu/BurgerMenu';
 import Navigation from '../Navigation/Navigation';
 
-function Header({navType}) {
+function Header({navType, onButtonClick}) {
 
     const location = useLocation();
 
     return(
-        <header className={(location.pathname === '/') ? 'header' : ' header header_type_black'}>
-            <div className="header__content">
+        <header className={(location.pathname === '/') ? 'header' : 'header_type_black'}>
+            <div className={(location.pathname === '/') ? 'header__content' : ' navigation__links'}>
                 {(location.pathname === '/') ? (                    
                     <img className="logo" src={logo} alt="Логотип" />                 
                 ) : (
-                    <Link to="/">
+                    <>
+                    <Link to="/" target="_blank">
                         <img className="header__logo" src={logo} alt="Логотип" />
                     </Link>
-                )} 
+                    <BurgerMenu onButtonClick={ onButtonClick }/>
+                    </>
+                )}
                 <Navigation type={navType}/>
+                
             </div>
         </header>
     )

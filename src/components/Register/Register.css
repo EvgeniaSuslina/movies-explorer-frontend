@@ -61,6 +61,11 @@
     line-height: 17px;
 }
 
+.auth__submit:hover{
+    cursor: pointer;
+    opacity: 0.6;
+}
+
 .auth__wrapper{
     display: flex;
     flex-direction: column;
@@ -85,6 +90,11 @@
     text-align: center;
     color: #4285F4;
     margin-left: 6px;
+}
+
+.auth__link:hover{
+    cursor: pointer;
+    opacity: 0.6;
 }
 
 @media screen and (max-width: 940px) {
