@@ -4,21 +4,23 @@ import './FilterCheckbox.css';
 
 function FilterCheckbox() {
     return (
-        <div className="checkbox__content">
+        <div className="checkbox-content">
         <input 
-            className="checkbox"
+            className="checkbox-content__input"
             id={`checkbox__check`}
             type="checkbox"
         />
         <label
-            className="checkbox__label"
+            className="checkbox-content__label"
             htmlFor={`checkbox__check`}
         > 
-            <span className={`checkbox__switch-button`} />
+            <span className={`checkbox-content__switch-button`} />
         </label>
-        <p className="checkbox__text">Короткометражки</p>
+        <p className="checkbox-content__text">Короткометражки</p>
         </div>
     )
 }
+
+
 
 export default FilterCheckbox;

@@ -71,7 +71,7 @@
         color: #FFFFFF;
     }
 
-    .burger-popup__link_active {
+    .burger-popup__link-active{
         text-decoration: underline;
         text-decoration-thickness: 2px;
         text-underline-offset: 9px;
