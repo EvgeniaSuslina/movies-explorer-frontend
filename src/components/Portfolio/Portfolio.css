@@ -42,7 +42,7 @@
     border-bottom: none;
 }
 
-.portoflio__text{
+.portfolio__text{
     font-weight: 400;
     font-size: 30px;
     line-height: 50px;
@@ -57,7 +57,7 @@
     .portfolio{
         padding: 45px 50px 90px 50px;
     }
-    .portoflio__text{
+    .portfolio__text{
         font-size: 28px;
     }
 }
@@ -69,7 +69,7 @@
     .portfolio__title{
         font-size: 14px;
     }
-    .portoflio__text{
+    .portfolio__text{
         font-size: 18px;
         line-height: 28px;
     }

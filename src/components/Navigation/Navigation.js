@@ -13,9 +13,9 @@ function Navigation({type}) {
                 </nav>
 
     const LoggedInLinks =          
-                    <nav className="navigation__container">
+                    <nav className="navigation">
                         <div className="navigation__links-movies">
-                        <NavLink to="/movies" target="_blank" className="navigation__link navigation__active">Фильмы</NavLink>                    
+                        <NavLink to="/movies" target="_blank" className="navigation__link navigation__link-active">Фильмы</NavLink>                    
                         <NavLink to="/saved-movies" target="_blank" className="navigation__link">Сохраненные фильмы</NavLink>
                         </div>                    
                         <NavLink to="/profile" target="_blank">
@@ -23,8 +23,6 @@ function Navigation({type}) {
                                 <p className="navigation__account-text">Аккаунт</p>
                                 </button>
                         </NavLink>
-
-
                     </nav>
 
     return (type === 'mainPage' && MainPageLinks) || (type ==='loggedInLinks' && LoggedInLinks)

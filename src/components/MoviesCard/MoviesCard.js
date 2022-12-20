@@ -18,7 +18,7 @@ function MoviesCard() {
                 {(location.pathname === '/movies') ? (
                     <button className="movie-card__button" type="button">Сохранить</button>
                 ):(
-                    <button className="movie-card__button_del" type="button"></button>
+                    <button className="movie-card__button-del" type="button"></button>
                 )}
             </div>                
         </li>        

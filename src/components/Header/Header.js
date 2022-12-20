@@ -9,14 +9,14 @@ function Header({navType, onButtonClick}) {
     const location = useLocation();
 
     return(
-        <header className={(location.pathname === '/') ? 'header' : 'header_type_black'}>
-            <div className={(location.pathname === '/') ? 'header__content' : ' navigation__links'}>
+        <header className={(location.pathname === '/') ? 'header' : 'header-black'}>
+            <div className={(location.pathname === '/') ? 'header__content' : 'navigation-links'}>
                 {(location.pathname === '/') ? (                    
                     <img className="logo" src={logo} alt="Логотип" />                 
                 ) : (
                     <>
                     <Link to="/" target="_blank">
-                        <img className="header__logo" src={logo} alt="Логотип" />
+                        <img className="header-logo" src={logo} alt="Логотип" />
                     </Link>
                     <BurgerMenu onButtonClick={ onButtonClick }/>
                     </>

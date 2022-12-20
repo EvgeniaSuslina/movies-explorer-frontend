@@ -21,7 +21,7 @@ function BurgerPopup({ isOpen, onButtonClick }) {
                 Главная
               </NavLink>
               </li>
-              <li className="burger-popup__link_active">
+              <li className="burger-popup__link-active">
               <NavLink
                 to="/movies"
                 target="_blank"

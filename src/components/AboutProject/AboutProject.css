@@ -40,7 +40,7 @@
     margin: 0 auto;
 }
 
-.about__project__text{
+.about-project__text{
     font-weight: 400;
     font-size: 14px;
     line-height: 20px;
@@ -50,13 +50,13 @@
     max-width: 550px;
 }
 
-.about-project__time_backend{
+.about-project__backend{
     width: 228px;
     height: 36px;
     background-color: #3DDC84;
 }
 
-.about-project__time_frontend{
+.about-project__frontend{
     width: 912px;
     height: 36px;
     background-color: #303030;
@@ -94,7 +94,7 @@
     .about-project__containers{
         gap: 90px;       
     }
-    .about__project__text{
+    .about-project__text{
         font-size: 12px;
         line-height: 18px;
         margin-top: 22px;
@@ -114,10 +114,10 @@
     .about-project__containers{
         gap: 30px;       
     }
-    .about-project__time_backend{
+    .about-project__backend{
         width: 140px;     
     }
-    .about-project__time_frontend{
+    .about-project__frontend{
         width: 528px; 
     }
 }
@@ -140,16 +140,16 @@
         font-size: 18px;
         line-height: 22px;
     }
-    .about__project__text{
+    .about-project__textt{
         margin: 0;
         margin-top: 16px;
         font-size: 11px;
         line-height: 16px;     
     }
-    .about-project__time_backend{
+    .about-project__backend{
         width: 100px;     
     }
-    .about-project__time_frontend{
+    .about-project__frontend{
         width: 184px; 
     }
 }

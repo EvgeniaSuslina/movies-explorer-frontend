@@ -44,7 +44,7 @@ function Profile() {
                 value="pochta@yandex.ru"
                 />
             </label>
-            <button className="profle__button" type="button">Редактировать</button>
+            <button className="profle-button" type="button">Редактировать</button>
             <Link className="profile__exit-link" to="/" target="_blank">Выйти из аккаунта</Link>
             </form>
         </section>

@@ -9,6 +9,7 @@
     -moz-text-size-adjust: 100%;
     padding: 70px 34% 70px 34%;      
     max-width: 1280px;
+    height: 100vh;
     display: flex;
     flex-direction: column;
 }
@@ -99,7 +100,7 @@
 
 @media screen and (max-width: 940px) {
     .auth{
-        padding: 235px 186px 235px 186px;
+        padding: 150px 186px 150px 186px;
     }
     .auth__submit{
         width: 100%;
@@ -118,7 +119,7 @@
     }
     .auth{
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
     }    
     
     .auth__form{
@@ -130,7 +131,7 @@
     }
 
     .auth__submit{
-        margin-top: 309px;
+        margin-top: 260px;
     }
     
     .auth__text{
