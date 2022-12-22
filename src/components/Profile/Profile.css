@@ -1,0 +1,117 @@
+.profile{
+    background: #202020;
+    font-family: 'Inter', Arial, 'sans-serif';
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    box-sizing: border-box;
+    padding: 74px 0 70px 0;
+}
+
+.profile__title{
+    margin: 0 auto;
+    max-width: 204px;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;    
+    text-align: center;
+    color: #FFFFFF;
+    margin-bottom: 120px;
+}
+
+.profile__form{
+    margin: 0 auto;    
+    display: flex;
+    flex-direction: column;
+    width: 410px
+}
+
+.profile__label{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: 1px solid #424242;;
+}
+
+.profile__label:last-child {
+    border-bottom: none
+}
+
+.profile__label-text {
+    margin: 0;
+    margin-top: 16px;
+    margin-bottom: 17px;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 13px;    
+    color: #FFFFFF;    
+}
+
+.profile__input{
+    background: #202020;
+    border: none;
+    text-align: end;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    color: #FFFFFF;
+}
+
+.profle-button{
+    margin-top: 220px;
+    padding: 0;
+    border: none;
+    background: #202020;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;  
+    color: #FFFFFF;
+}
+
+.profle-button:hover{
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+.profile__exit-link{
+    margin: 0 auto;
+    margin-top: 16px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;  
+    color: #EE3465;
+}
+
+.profile__exit-link:hover{
+    opacity: 0.6;
+}
+
+@media screen and (max-width: 940px) {
+    .profile{
+        padding: 200px 0 200px 0;
+        width: 100%;   
+    }
+}
+
+@media screen and (max-width: 769px) {
+    .profile{
+        padding: 236px 0 269px 0;    
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .profile{
+        padding: 30px 70px 30px 40px;
+        width: 100%;
+    }
+    .profile__form{
+        width: 100%;
+    }
+    .profle-button{
+        margin-top: 379px;
+    }
+}

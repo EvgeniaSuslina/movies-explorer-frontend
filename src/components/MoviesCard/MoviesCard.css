@@ -1,0 +1,90 @@
+.movie-card{
+    list-style-type: none;
+    background: #202020;
+    margin: 0;
+    padding: 0;
+    max-width: 360px;
+}
+
+.movie-card__container{
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    position: relative;
+}
+
+.movie-card__info{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.movie-card__name{
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    color: #FFFFFF;
+    margin: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.movie-card__duration{
+    margin: 0;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 10px;   
+    padding-top: 5px;   
+    text-align: center;
+    background-color: #2F2F2F;
+    color: #8B8B8B;
+    width: 52px;
+    height: 16px; 
+}
+
+.movie-card__button{
+    position: absolute;
+    top:14px;
+    right: 14px;
+    background: #313131;
+    border: none;
+    border-radius: 30px;
+    width: 72px;
+    height: 21px;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 9px;    
+    color: #FFFFFF;
+    box-sizing: border-box;
+}
+
+.movie-card__button-del{
+    position: absolute;
+    top:14px;
+    right: 14px;
+    width: 21px;
+    height: 21px;
+    border: none;
+    background: inherit;
+    background-image: url('../../images/del-button.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+@media screen and (max-width: 1205px){
+    .movie-card{
+        max-width: 320px;
+    }
+}
+
+@media screen and (max-width: 940px){
+    .movie-card{
+        max-width: 300px;
+    }
+    .movie-card__name{
+        font-size: 12px;
+        line-height: 15px;
+    }
+}
