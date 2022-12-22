@@ -8,8 +8,7 @@
     -ms-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
     box-sizing: border-box;
-    padding: 70px 70px 80px 70px;    
-    max-width: 1280px;   
+    padding: 70px 70px 80px 70px;
 }
 
 .movies-card-list__grid{
