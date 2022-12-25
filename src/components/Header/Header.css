@@ -7,14 +7,12 @@
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
-    max-width: 1280px;
     box-sizing: border-box;
     padding: 18px 70px 18px 70px;
 }
 
 .header-black{
     background: #202020;
-    max-width: 1280px;
     box-sizing: border-box;
     padding: 18px 70px 18px 70px;
 }

@@ -7,8 +7,7 @@
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
-    padding: 70px 34% 70px 34%;      
-    max-width: 1280px;
+    padding: 70px 34% 70px 34%;
     height: 100vh;
     display: flex;
     flex-direction: column;
