@@ -9,6 +9,7 @@
     -moz-text-size-adjust: 100%;
     text-rendering: optimizeLegibility;
     padding: 100px 70px 1px 70px;
+    max-width: 1280px;
 }
 
 .techs__info{

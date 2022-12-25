@@ -7,7 +7,8 @@
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
-    padding: 50px 70px 125px 70px;
+    padding: 50px 70px 125px 70px;    
+    max-width: 1280px;
 }
 
 .portfolio__title{
