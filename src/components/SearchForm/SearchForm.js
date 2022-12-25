@@ -18,9 +18,9 @@ function SearchForm(){
         evt.preventDefault();
 
         if (!isValid || inputValue.length === 0) {
-            setIsErrorShown(true);
+            setIsError(true);
         } else {
-            setIsErrorShown(false);
+            setIsError(false);
         }
     }
 

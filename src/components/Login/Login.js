@@ -1,12 +1,28 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 import './Login.css';
 import logo from '../../images/logo.svg';
 
 function Login({onLogin}) {  
  
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState({
+    value: '',
+    isValid: false,
+    errorMessage: ''
+  });
+
+  const [password, setPassword] = useState({
+    value: '',
+    isValid: false,
+    errorMessage: ''
+  });
+
+  const isValid = email.isValid && password.isValid;
+  const [disabled, setDisabled] = useState(false);
+
+  useEffect(() =>{
+    isValid ? setDisabled(false) : setDisabled(true)
+  }, [isValid]);
 
   function handleEmailChange(evt){
     setEmail(evt.target.value);
@@ -18,7 +34,12 @@ function Login({onLogin}) {
 
   function handleSubmit(evt){
     evt.preventDefault();
-    onLogin(email, password);   
+    onLogin({
+      email: email,
+      password: password
+    });
+    setEmail({email: ''})
+    setPassword({password: ''})
   }
 
   return (
@@ -31,6 +52,7 @@ function Login({onLogin}) {
           className="auth__input"         
           type="email"
           name="email"
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
           required
           value={email}
           onChange={handleEmailChange}       
@@ -46,7 +68,7 @@ function Login({onLogin}) {
           value={password}
           onChange={handlePasswordChange}         
         />
-        <button className="auth__submit" type="submit">
+        <button className="auth__submit" type="submit" disabled={disabled}>
           Войти
         </button>
       </form>

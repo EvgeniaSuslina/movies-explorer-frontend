@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 import './Register.css';
 import '../ErrorMessage/ErrorMessage.css'
@@ -7,12 +7,37 @@ import logo from '../../images/logo.svg';
 
 function Register({onRegister}) {
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [name, setName] = useState({
+    value: '',
+    isValid: false,
+    errorMessage: ''
+  });
+
+  const [email, setEmail] = useState({
+    value: '',
+    isValid: false,
+    errorMessage: ''
+  });
+
+  const [password, setPassword] = useState({
+    value: '',
+    isValid: false,
+    errorMessage: ''
+  });
+
+  const isValid = name.isValid && email.isValid && password.isValid;
+  const [disabled, setDisabled] = useState(false);
+
+
+  useEffect(() =>{
+    isValid ? setDisabled(false) : setDisabled(true)
+  }, [isValid]);
+
 
   function handleNameChange(evt){
     setName(evt.target.value);
+    
+
   }
 
   function handleEmailChange(evt){
@@ -68,7 +93,7 @@ function Register({onRegister}) {
           
         />
         <span className="error-message">Что-то пошло не так...</span>
-        <button className="auth__submit" type="submit">
+        <button className="auth__submit" type="submit" disabled={disabled}>
         Зарегистрироваться
         </button>
       </form>
