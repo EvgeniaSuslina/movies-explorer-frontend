@@ -1,27 +1,50 @@
-import React from "react";
+import React, {useState} from "react";
 import { Link } from "react-router-dom";
 import './Login.css';
 import logo from '../../images/logo.svg';
 
-function Login() {  
+function Login({onLogin}) {  
+ 
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  function handleEmailChange(evt){
+    setEmail(evt.target.value);
+  }
+
+  function handlePasswordChange(evt){
+    setPassword(evt.target.value);
+  }
+
+  function handleSubmit(evt){
+    evt.preventDefault();
+    onLogin(email, password);   
+  }
+
   return (
     <div className="auth">
     <Link to='/' target="_blank"><img src={logo} alt="Логотип" className="logo" /></Link>
       <h2 className="auth__title ">Рады видеть!</h2>      
-      <form className="auth__form">
+      <form className="auth__form" onSubmit={handleSubmit}>
       <label className="auth__form-label">E-mail</label>
         <input
           className="auth__input"         
           type="email"
           name="email"
-          required          
+          required
+          value={email}
+          onChange={handleEmailChange}       
         />
         <label className="auth__form-label">Пароль</label>
         <input
           className="auth__input"          
           type="password"
           name="password"         
-          required          
+          minLength="4"
+          maxLength="12"
+          required
+          value={password}
+          onChange={handlePasswordChange}         
         />
         <button className="auth__submit" type="submit">
           Войти
