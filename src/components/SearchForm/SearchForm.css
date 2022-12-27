@@ -19,7 +19,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 10px;
-    padding-bottom: 28px;
+    padding-bottom: 10px;
 }
 
 .search-form__input{
@@ -50,6 +50,13 @@
 .search-form__button:hover{
     cursor: pointer;
     opacity: 0.6;
+}
+
+.search-form__error{
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 12px;
+    color: #FF0000;
 }
 
 @media screen and (max-width: 1150px){
