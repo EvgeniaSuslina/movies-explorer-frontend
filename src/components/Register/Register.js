@@ -5,54 +5,59 @@ import '../ErrorMessage/ErrorMessage.css'
 import logo from '../../images/logo.svg';
 
 
-function Register({onRegister}) {
+function Register({onRegister, isLoading}) {
 
-  const [name, setName] = useState({
-    value: '',
-    isValid: false,
-    errorMessage: ''
-  });
+  const [data, setData] = useState({
+    name: {
+      value: "",
+      isValid: false,
+      errorMessage: ""
+    },
+    email: {
+        value: "",
+        isValid: false,
+        errorMessage: ""
+    },
+    password: {
+        value: "",
+        isValid: false,
+        errorMessage: ""
+    }
+});
+ 
+const [disabled, setDisabled] = useState(false);
 
-  const [email, setEmail] = useState({
-    value: '',
-    isValid: false,
-    errorMessage: ''
-  });
+const isValid = data.name.isValid && data.email.isValid && data.password.isValid;
 
-  const [password, setPassword] = useState({
-    value: '',
-    isValid: false,
-    errorMessage: ''
-  });
+useEffect(() => {
+  isLoading ? setDisabled(true) : setDisabled(false);
+}, [isLoading]);
 
-  const isValid = name.isValid && email.isValid && password.isValid;
-  const [disabled, setDisabled] = useState(false);
-
-
-  useEffect(() =>{
-    isValid ? setDisabled(false) : setDisabled(true)
-  }, [isValid]);
-
-
-  function handleNameChange(evt){
-    setName(evt.target.value);
-    
-
-  }
-
-  function handleEmailChange(evt){
-    setEmail(evt.target.value);
-  }
-
-  function handlePasswordChange(evt){
-    setPassword(evt.target.value);
-  }
+useEffect(() => {
+  isValid ? setDisabled(false) : setDisabled(true);
+}, [isValid]);
   
-  function handleSubmit(evt){
-    evt.preventDefault();
+const handleChange = (evt) => {
+  const { name, value, validity, validationMessage } = evt.target;
 
-    onRegister(name, email, password);    
-  }
+  setData((prevState) => ({
+      ...prevState,
+      [name]: {
+          ...data[name],
+          value,
+          isValid: validity.valid,
+          errorMessage: validationMessage
+      }
+  }));
+}
+const handleSubmit = (evt) => {
+  evt.preventDefault();
+  onRegister({
+      name: data.name.value,
+      email: data.email.value,
+      password: data.password.value
+  });
+}
 
   
   return (    
@@ -66,20 +71,27 @@ function Register({onRegister}) {
           type="text"
           name="name"
           required
-          value={name}
-          onChange={handleNameChange}
-
+          minLength="2"
+          maxLength="15"
+          value={data.name.value || ""}
+          onChange={handleChange}
         />
+        <span className="auth__form-error">
+          {data.name.errorMessage}
+        </span>
         <label className="auth__form-label">E-mail</label>
         <input
           className="auth__input"   
           type="email"
           name="email"          
-          required
-          value={email}
-          onChange={handleEmailChange}
-          
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+          value={data.email.value || ""}
+          onChange={handleChange}
+          required          
         />
+        <span className="auth__form-error">
+          {data.email.errorMessage}
+        </span>
         <label className="auth__form-label">Пароль</label>
         <input
           className="auth__input"        
@@ -87,13 +99,14 @@ function Register({onRegister}) {
           name="password"          
           minLength="4"
           maxLength="12"
-          required
-          value={password}
-          onChange={handlePasswordChange}
-          
+          value={data.password.value || ""}
+          onChange={handleChange}
+          required          
         />
-        <span className="error-message">Что-то пошло не так...</span>
-        <button className="auth__submit" type="submit" disabled={disabled}>
+        <span className="auth__form-error">
+          {data.password.errorMessage}
+        </span>
+        <button className={`${isValid && !isLoading ? "auth__submit" : "auth__submit_disabled"}`} type="submit" disabled={disabled}>
         Зарегистрироваться
         </button>
       </form>

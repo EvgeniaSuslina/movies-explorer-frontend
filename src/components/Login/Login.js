@@ -3,72 +3,89 @@ import { Link } from "react-router-dom";
 import './Login.css';
 import logo from '../../images/logo.svg';
 
-function Login({onLogin}) {  
- 
-  const [email, setEmail] = useState({
-    value: '',
-    isValid: false,
-    errorMessage: ''
-  });
 
-  const [password, setPassword] = useState({
-    value: '',
-    isValid: false,
-    errorMessage: ''
-  });
+function Login ({onLogin, isLoading}) {
 
-  const isValid = email.isValid && password.isValid;
-  const [disabled, setDisabled] = useState(false);
+  const [data, setData] = useState({
+    email: {
+        value: "",
+        isValid: false,
+        errorMessage: ""
+    },
+    password: {
+        value: "",
+        isValid: false,
+        errorMessage: ""
+    }
+});
 
-  useEffect(() =>{
-    isValid ? setDisabled(false) : setDisabled(true)
-  }, [isValid]);
+const [disabled, setDisabled] = useState(false);
 
-  function handleEmailChange(evt){
-    setEmail(evt.target.value);
-  }
+const isValid = data.email.isValid && data.password.isValid;
 
-  function handlePasswordChange(evt){
-    setPassword(evt.target.value);
-  }
+useEffect(() => {
+    isLoading ? setDisabled(true) : setDisabled(false);
+}, [isLoading]);
 
-  function handleSubmit(evt){
+useEffect(() => {
+    isValid ? setDisabled(false) : setDisabled(true);
+}, [isValid]);
+
+const handleChange = (evt) => {
+    const { name, value, validity, validationMessage } = evt.target;
+
+    setData((prevState) => ({
+        ...prevState,
+        [name]: {
+            ...data[name],
+            value,
+            isValid: validity.valid,
+            errorMessage: validationMessage
+        }
+    }));
+}
+
+const handleSubmit = (evt) => {
     evt.preventDefault();
     onLogin({
-      email: email,
-      password: password
+        email: data.email.value,
+        password: data.password.value
     });
-    setEmail({email: ''})
-    setPassword({password: ''})
-  }
+    setData({email: '', password: ''});
+}
+
 
   return (
     <div className="auth">
     <Link to='/' target="_blank"><img src={logo} alt="Логотип" className="logo" /></Link>
       <h2 className="auth__title ">Рады видеть!</h2>      
       <form className="auth__form" onSubmit={handleSubmit}>
-      <label className="auth__form-label">E-mail</label>
+      <label className="auth__form-label">E-mail</label>       
         <input
-          className="auth__input"         
+          className="auth__input"  
           type="email"
           name="email"
           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+          value={data.email.value || ""}
+          onChange={handleChange}
           required
-          value={email}
-          onChange={handleEmailChange}       
         />
+        <span className="auth__form-error">
+          {data.email.errorMessage}
+        </span>
         <label className="auth__form-label">Пароль</label>
         <input
-          className="auth__input"          
-          type="password"
+          className="auth__input"        
+          type="text"
           name="password"         
-          minLength="4"
-          maxLength="12"
-          required
-          value={password}
-          onChange={handlePasswordChange}         
+          value={data.password.value || ""}
+          onChange={handleChange}
+          required   
         />
-        <button className="auth__submit" type="submit" disabled={disabled}>
+        <span className="auth__form-error">
+          {data.password.errorMessage}
+        </span>
+        <button className={`${isValid && !isLoading ? "auth__submit" : "auth__submit_disabled"}`} type="submit" disabled={disabled}>
           Войти
         </button>
       </form>
@@ -82,6 +99,7 @@ function Login({onLogin}) {
       </div> 
     </div>
   );
+
 }
 
 export default Login;
