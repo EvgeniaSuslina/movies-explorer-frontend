@@ -51,6 +51,7 @@
 }
 
 .profile__input{
+    width: 90%;
     background: #202020;
     border: none;
     text-align: end;
@@ -60,11 +61,22 @@
     color: #FFFFFF;
 }
 
-.profle-button{
+.profile-button_disabled{
     margin-top: 220px;
     padding: 0;
     border: none;
     background: #202020;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px; 
+    color: #9b9b9b
+}
+
+.profile-button {
+    margin-top: 220px;
+    padding: 0;
+    border: none;
+    background-color: #202020;
     font-weight: 400;
     font-size: 13px;
     line-height: 16px;  
