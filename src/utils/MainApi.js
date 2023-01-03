@@ -17,7 +17,7 @@ class MainApi extends Api {
                 "password": password
             })
         })
-        .then(this._checkResult)
+        .then(this._checkResult);
     }
 
     loginUser(email, password) {
@@ -29,7 +29,7 @@ class MainApi extends Api {
                 "email": email
             })
         }) 
-        .then(this._checkResult)
+        .then(this._checkResult);
     }
 
     updateToken(){
@@ -44,7 +44,56 @@ class MainApi extends Api {
             method: 'GET', 
             headers: this._headers
         })
-        .then(this._checkResult)
+        .then(this._checkResult);
+    }
+
+    updateUserInfo(name, email) {
+        return fetch (`${this._serverUrl}/users/me`, {
+            method: 'PATCH', 
+            headers: this._headers,
+            body: JSON.stringify({
+                "name": name,
+                "email": email
+            })
+        })
+        .then(this._checkResult);
+    }
+
+    saveMovie(country, director, duration, year, description, image, trailerLink, thumbnail, movieId, nameRu, nameEn) {
+        return fetch(`${this._baseUrl}/movies`, {
+            method: 'POST', 
+            headers: this._headers,
+            body: JSON.stringify({
+                "country": country,
+                "director": director, 
+                "duration": duration,
+                "year" : year,
+                "description": description, 
+                "image" : image, 
+                "trailerLink" : trailerLink, 
+                "thumbnail" : thumbnail, 
+                "movieId" : movieId, 
+                "nameRu" : nameRu, 
+                "nameEn" : nameEn
+            })
+        })
+        .then(this._checkResult);
+    }
+
+    getSavedMovies(){
+        return fetch(`${this._baseUrl}/movies`, {
+            method: 'GET', 
+            headers: this._headers,
+        })
+        .then(this._checkResult);
+    }
+
+    deleteMovie(id) {
+        return fetch(`${this._baseUrl}/movies/${id}`, {
+            method: 'DELETE',
+            headers: this._headers,
+        })
+        .then(this._checkResult);
     }
 
     logoutUser(){
@@ -52,18 +101,10 @@ class MainApi extends Api {
             method: 'GET', 
             headers: this._headers
         })
-        .then(this._checkResult)
+        .then(this._checkResult);
     }
 
 }
-
-
-
-
-
-
-
-
 
 
 const mainApi = new MainApi({

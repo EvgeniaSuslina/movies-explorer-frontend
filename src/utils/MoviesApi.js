@@ -1,16 +1,21 @@
-const MoviesApi = () =>{
-    return fetch('https://api.nomoreparties.co/beatfilm-movies', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then((res) => {
-        if(res.ok)
-        {return res.json()}
+import { MOVIESURL } from "../config";
+import Api from "./Api";
 
-        throw new Error(res.status);
-    })
+class MoviesApi extends Api {
+    constructor({baseUrl}) {
+        super({baseUrl});
+    }
+
+    getMovies(){
+        return fetch(`${this._baseUrl}`, {
+            method: 'GET',
+        })
+        .then(this._checkResult);
+    }
 }
 
-export default MoviesApi;
+const moviesApi = new MoviesApi({
+    baseUrl: MOVIESURL
+})
+
+export default moviesApi;
