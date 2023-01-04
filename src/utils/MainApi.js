@@ -1,4 +1,4 @@
-import { BASEURL } from "../config";
+import { BASEURL } from "./config";
 import Api from "./Api";
 
 class MainApi extends Api {

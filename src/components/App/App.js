@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+
+import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
@@ -7,7 +10,7 @@ import Profile from '../Profile/Profile';
 import Login from '../Login/Login';
 import Register from '../Register/Register';
 import NotFound from '../NotFound/NotFound';
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+
 
 import mainApi from "../../utils/MainApi";
 //import MoviesApi from '../../utils/MoviesApi';
@@ -92,11 +95,27 @@ mainApi.updateToken()
     <CurrentUserContext.Provider value={currentUser}>
     <Routes>
       <Route index path="/" element={< Main/> } />
-      <Route path="/signup" element={ <Register  onRegister={handleRegister}/> } />
-      <Route path="/signin" element={ <Login onLogin={handleLogin}/> } />
-      <Route path="/movies" element={ <Movies /> } />      
-      <Route path="/saved-movies" element={ <SavedMovies /> } />       
-      <Route path="/profile" element={ <Profile setCurrentUser={setCurrentUser}/> } />
+      <Route path="/signup" element={ <Register  onRegister={handleRegister} isLoading={isLoading}/> } />
+      <Route path="/signin" element={ <Login onLogin={handleLogin} isLoading={isLoading}/> } />
+      <Route path="/movies" element={ <Movies />} />
+      <Route path="/movies" 
+      element={ 
+      <ProtectedRoute isLogged={loggedIn}>
+        <Movies />
+      </ProtectedRoute>
+       } />      
+      <Route path="/saved-movies" 
+      element={ 
+      <ProtectedRoute isLogged={loggedIn}>
+      <SavedMovies /> 
+      </ProtectedRoute>
+      } />       
+      <Route path="/profile" 
+      element={ 
+      <ProtectedRoute isLogged={loggedIn}>
+      <Profile setCurrentUser={setCurrentUser}/>
+      </ProtectedRoute>
+      } />
       <Route path="*" element={< NotFound/> } />
     </Routes>
     </CurrentUserContext.Provider>

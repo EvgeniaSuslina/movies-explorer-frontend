@@ -1,4 +1,4 @@
-import { MOVIESURL } from "../config";
+import { MOVIESURL } from "./config";
 import Api from "./Api";
 
 class MoviesApi extends Api {
