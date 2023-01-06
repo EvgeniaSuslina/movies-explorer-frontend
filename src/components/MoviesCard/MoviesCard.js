@@ -3,8 +3,6 @@ import { MOVIESURL, MOVIE_DURATION } from '../../utils/config';
 import './MoviesCard.css'
 
 
-
-
 function MoviesCard({movie, onSaveMovie, onDeleteMovie, savedMovies}) {
     const location = useLocation();
 
