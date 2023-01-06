@@ -23,6 +23,10 @@ function App() {
 
   const navigate = useNavigate();
 
+  const [allMovies, setAllMovies] = useState([]); // загруженные фильмы при первом поиске
+  const [foundMovies, setFoundMovies] = useState([]); // найденные фильмы
+  const [savedMovies, setSavedMovies] = useState([]); // сохраненные фильмы
+  
   useEffect(() => {
     checkToken();
 }, []);

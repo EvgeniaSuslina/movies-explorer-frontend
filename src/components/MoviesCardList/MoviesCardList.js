@@ -7,7 +7,7 @@ import useWindowWidth from '../../utils/useWindowWidth'
 import { MOVIES_DEFAULT, MOVIES_AT_DESKTOP,  MOVIES_AT_TABLETS, MOVIES_AT_MOBILES, ADD_MOVIES_DEFAULT, ADD_MOVIES_DESKTOP, ADD_MOVIES_TABLETS, ADD_MOVIES_MOBILES } from '../../utils/config';
 
 
-function MoviesCardList({foundMovies}){
+function MoviesCardList({foundMovies, onSaveMovie, onDeleteMovie, savedMovies}){
  
   const widthOfWindow = useWindowWidth();
   const location = useLocation();
@@ -21,7 +21,7 @@ function MoviesCardList({foundMovies}){
 
   useEffect(() => {
     checkWidthOfWindow();
-  }, [widthOfWindow, foundMovies])
+  }, [widthOfWindow, foundMovies, location])
 
   function setMovies(){
     let movies = [];
@@ -57,6 +57,10 @@ function MoviesCardList({foundMovies}){
 
       setFoundMovies(MOVIES_AT_MOBILES);
     }
+
+    if (location.pathname === '/saved-movies') {
+      setMaxMovies(MOVIES_DEFAULT);
+    }
   }
 
   function showAdditionalMovies(){
@@ -82,17 +86,19 @@ function MoviesCardList({foundMovies}){
   return(
   <section className="movies-card-list">            
         <ul className="movies-card-list__grid">
-           <MoviesCard />
-           <MoviesCard />
-           <MoviesCard />
-           <MoviesCard />
-           <MoviesCard />
-           <MoviesCard />
-           <MoviesCard />
-           <MoviesCard />
-           <MoviesCard />          
+          {content.map((item => {
+             <MoviesCard
+             movie={item}
+             key={item.id || item._id}
+             onSaveMovie={onSaveMovie}         
+             onDeleteMovie={onDeleteMovie}
+             savedMovies={savedMovies}             
+             />
+          }))}        
         </ul>
-        <button className="movies-card-list__button" type="button" onClick={showAdditionalMovies}>Ещё</button>  
+        {foundMovies.length !== content.length ? (
+          <button className="movies-card-list__button" type="button" onClick={showAdditionalMovies}>Ещё</button>
+        ):  ( '' )}        
   </section>
   )
 } 

@@ -6,7 +6,7 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 import BurgerPopup from '../BurgerPopup/BurgerPopup';
 
-function Movies() {
+function Movies(foundMovies) {
 
     const [isBurgerPopupOpened, setIsBurgerPopupOpened] = useState(false);
 
@@ -24,7 +24,9 @@ function Movies() {
             <BurgerPopup isOpen={ isBurgerPopupOpened } onButtonClick={ closePopup }/>
             <main className="movies">
                 <SearchForm />
-                <MoviesCardList />
+                <MoviesCardList 
+                foundMovies={foundMovies}
+                />
             </main>
             <Footer />
         </>     

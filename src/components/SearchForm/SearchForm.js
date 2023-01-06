@@ -1,56 +1,71 @@
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import './SearchForm.css';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
-import { useEffect, useState } from 'react';
 
-const useValidation = (value, validations) => {
-    const [isEmpty, setEmpty] = useState(true)
+
+function SearchForm({onSearch, onChangeCheckbox}){
+    const [inputValue, setInputValue] =  useState('');
+    const [isChecked, setIsChecked] = useState(false);
+    const [error, setError] = useState({ errorMessage: '', isValid: true});
+
+    const location = useLocation()
 
     useEffect(() => {
-        for (const validation in validations) {
-            switch(validation) {
-                case 'isEmpty' :
-                    value ? setEmpty(false) : setEmpty(true) 
-                break;  
-                default: 
-                break                        
-            }
+        error.isValid && setError({errorMessage: '', isValid: true})
+    }, [])
+
+    useEffect(() => {
+        if (location.pathname === '/movies') {
+            setInputValue(localStorage.getItem('searchWord'));
+            setIsChecked(JSON.parse(localStorage.getItem('checkboxPosition')));
+        }  else if (location.pathname === '/saved-movies') {
+            const checkboxPosition = JSON.parse(localStorage.getItem('checkboxPositionSaved'));
+            setIsChecked(checkboxPosition);
+            onChangeCheckbox(checkboxPosition);
         }
-    }, [value, validations])
+    }, [location])
 
-    return {
-        isEmpty
+
+    function handleInputChange(evt) {
+        setInputValue(evt.target.value);
+
+        if(evt.target.value.lenght === 0) {
+            setError({
+                errorMessage: 'Нужно ввести ключевое слово',
+                isValid: evt.target.value.valid
+            });
+        } else {
+            setError({
+                errorMessage: '',
+                isValid: evt.target.value.valid
+            });
+        }
     }
 
-}
+    function handleSubmit(evt) {
+        evt.preventDefault();
 
-const useInput = (initialValue, validations) =>{
-    const [value, setValue] = useState(initialValue)
-    const [isDirty, setDirty] = useState(false)
-    const valid = useValidation(value, validations)
+        if(!inputValue) {
+            return setError({
+                isValid: false,
+                errorMessage: 'Нужно ввести ключевое слово'
+            });
+        }
 
-    const onChange = (e) => {
-        setValue(e.target.value)
+        onSearch(inputValue, isChecked);
     }
 
-    const onBlur = () => {
-        setDirty(true)
+    function handleChekboxChange(){
+        setIsChecked(!isChecked);
+        onChangeCheckbox(!isChecked);
     }
 
-    return{
-        value, 
-        isDirty,
-        onChange,
-        onBlur,
-        ...valid
-    }
-}
 
-function SearchForm(){
-    const filmName = useInput('', {isEmpty: true})
 
     return (
         <div className="search-form-content">            
-            <form className="search-form" noValidate>                
+            <form className="search-form" onSubmit={handleSubmit} noValidate>                
                 <input 
                 className="search-form__input" 
                 placeholder="Фильм"
@@ -58,14 +73,16 @@ function SearchForm(){
                 required
                 type="text"
                 minLength="1"
-                value={filmName.value}
-                onChange={e => filmName.onChange(e)}
-                onBlur={e => filmName.onBlur(e)}
+                value={inputValue || ""}
+                onChange={handleInputChange}
                 />
             <button className="search-form__button" type="submit"></button>            
             </form>
-            {(filmName.isDirty && filmName.isEmpty) && <span className="search-form__error">Нужно ввести ключевое слово</span>}
-            <FilterCheckbox />
+            <span className="search-form__error">{error.errorMessage}</span>
+            <FilterCheckbox 
+            isChecked={isChecked}
+            onChangeCheckbox={handleCheckboxClick}
+            />
         </div>
     )
 }

@@ -11,6 +11,15 @@
     padding: 70px 70px 80px 70px;
 }
 
+.movies-card-list__not-found{
+    display: none;
+    margin: 0;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 30px;
+    text-align: center;
+}
+
 .movies-card-list__grid{
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -58,6 +67,12 @@
     .movies-card-list{
         padding: 40px 10px 80px 10px; 
     }
+
+    .movies-card-list__not-found{
+        font-size: 18px;
+        line-height: 22px;
+    }
+
     .movies-card-list__grid{
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         row-gap: 39px;
