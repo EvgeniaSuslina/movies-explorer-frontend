@@ -4,101 +4,183 @@ import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import Preloader from '../Preloader/Preloader';
 import useWindowWidth from '../../utils/useWindowWidth'
-import { MOVIES_DEFAULT, MOVIES_AT_DESKTOP,  MOVIES_AT_TABLETS, MOVIES_AT_MOBILES, ADD_MOVIES_DEFAULT, ADD_MOVIES_DESKTOP, ADD_MOVIES_TABLETS, ADD_MOVIES_MOBILES } from '../../utils/config';
+import { MOVIES_AT_DESKTOP,  MOVIES_AT_TABLETS, MOVIES_AT_MOBILES, ADD_MOVIES_DESKTOP, ADD_MOVIES_TABLETS, ADD_MOVIES_MOBILES } from '../../utils/config';
 
 
-function MoviesCardList({foundMovies, onSaveMovie, onDeleteMovie, savedMovies}){
+function MoviesCardList({isLoading, isApiError, onSaveMovie, onDeleteMovie, savedMovies, filteredMovies, allMovies, loggedIn}){
  
   const widthOfWindow = useWindowWidth();
   const location = useLocation();
 
-  const [content, setContent] = useState([]);
-  const [maxMovies, setMaxMovies] = useState(MOVIES_DEFAULT);
+  const [content, setContent] = useState(null);
+  const [maxMovies, setMaxMovies] = useState(12);
+  const [maxAdditionalMovies, setMaxAdditionalMovies] = useState(3);
+  const [buttonShown, setButtonShown] = useState(false);
 
-  useEffect(() => {
-    setMovies();
-  }, [maxMovies]);
+  const notFoundMessage = (<p className="movies__text">Увы! Фильмы не найдены</p>);
+  const apiErrorMessage = (<p className="movies__text">Во время запроса произошла ошибка.Подождите немного и попробуйте ещё раз</p>);
 
+   //checking the width of screen
   useEffect(() => {
     checkWidthOfWindow();
-  }, [widthOfWindow, foundMovies, location])
+  }, [widthOfWindow])
 
-  function setMovies(){
-    let movies = [];
-    foundMovies.forEach((item, i) => {
-      if(i < maxMovies) {
-        movies.push(item);
-      }
-    });
-    setContent(movies);
-  }
 
-  function setFoundMovies(count) {
-    setMaxMovies(count);
-    let movies = [];
-    foundMovies.forEach((item, i) => {
-      if(i < count) {
-        movies.push(item);
-      }
-    });
-    setContent(movies);
-  }
-
-  function checkWidthOfWindow(){
-    if(widthOfWindow >= 1200) {
-
-      setFoundMovies(MOVIES_AT_DESKTOP);
-
-    } else if (widthOfWindow >= 940) {
-
-      setFoundMovies(MOVIES_AT_TABLETS);
-
-    } else if (widthOfWindow >= 550) {
-
-      setFoundMovies(MOVIES_AT_MOBILES);
+//check if user logged in
+   useEffect(() => {
+    if (!loggedIn) {
+      setContent(null)
     }
+   }, [loggedIn])
 
-    if (location.pathname === '/saved-movies') {
-      setMaxMovies(MOVIES_DEFAULT);
+
+//preloader
+   useEffect(() => {
+    if (isLoading) {
+      setContent(<Preloader/>);
     }
-  }
+   }, [isLoading])
 
-  function showAdditionalMovies(){
-    if(widthOfWindow >= 1200) {
 
-      setMaxMovies(maxMovies + ADD_MOVIES_DESKTOP);
+//render movies
+  useEffect(() => {
+    checkWidthOfWindow();
 
-    } else if (widthOfWindow >= 940) {
+    if(location.pathname === '/movies' && (!(filteredMovies === undefined))) {
+      setContent(
+        <ul className="movies-card-list__grid">
+          {renderMovies(filteredMovies)}
+        </ul>);
+    }
+  }, [])
 
-      setMaxMovies(maxMovies + ADD_MOVIES_TABLETS);
 
-    } else if (widthOfWindow >= 550) {
+//render saved movies
+  useEffect(() => {
+    if(location.pathname === '/saved-movies' && savedMovies && savedMovies.length > 0) {
+      if(maxMovies >= savedMovies.length) {
+        setButtonShown(false);
+      } else {
+        setButtonShown(true);
+      }
 
-      setMaxMovies(maxMovies + ADD_MOVIES_MOBILES);
+      setContent(
+        <ul className="movies-card-list__grid">
+          {renderMovies(savedMovies)}
+        </ul>);
+    } else if (location.pathname === '/saved-movies' && savedMovies && savedMovies.length === 0) {
+        setContent(notFoundMessage);
+        setButtonShown(false);
+    }
+  }, [savedMovies, location.pathname, maxMovies]);
 
+
+//render filtered movies
+  useEffect(() => {
+    if (localStorage.getItem('searchRequest')) {
+      if(filteredMovies && filteredMovies.length > 0) {
+        if(maxMovies >= filteredMovies.length) {
+          setButtonShown(false);
+        } else {
+          setButtonShown(true);
+        }
+        setContent(
+          <ul className="movies-card-list__grid">
+            {renderMovies(filteredMovies)}
+          </ul>);
+      } else if (filteredMovies && filteredMovies.length === 0) {
+        setContent(notFoundMessage);
+      }
+    }
+  }, [filteredMovies, maxMovies]);
+
+//check api error
+  useEffect(() => {
+    if (isApiError) {
+      setContent(apiErrorMessage);
+      setButtonShown(false);
     } else {
+      setContent(null)
+    }
+  }, [isApiError])
 
-      setMaxMovies(maxMovies + ADD_MOVIES_DEFAULT);
 
+//checking the width of screen
+  function checkWidthOfWindow(){
+    if(widthOfWindow >= 1100) {
+
+      setMaxMovies(MOVIES_AT_DESKTOP);
+      setMaxAdditionalMovies(ADD_MOVIES_DESKTOP)
+
+    } else if (widthOfWindow >= 625) {
+
+      setMaxMovies(MOVIES_AT_TABLETS);
+      setMaxAdditionalMovies(ADD_MOVIES_TABLETS);
+
+    } else if (widthOfWindow >= 320) {
+
+      setMaxMovies(MOVIES_AT_MOBILES);
+      setMaxAdditionalMovies(ADD_MOVIES_MOBILES);
+    }    
+  }
+
+//render Movies at the page
+  function renderMovies(moviesArray) {
+    if (!moviesArray) {
+      return;
+    }
+
+    return (
+      <>
+        {
+          moviesArray.slice(0, maxMovies).map((movie) => {
+            return <MoviesCard
+            movie={movie}
+            key={movie.id || movie.movieId}
+            onSaveMovie={onSaveMovie}         
+            onDeleteMovie={onDeleteMovie}
+            savedMovies={savedMovies} 
+            allMovies={allMovies}
+            filteredMovies={filteredMovies}
+             />
+          })
+        }
+      </>
+    )
+  }
+
+//handle button click
+function handleButtonClick(){
+  if (location.pathname === '/movies') {
+    setMaxMovies(maxMovies + maxAdditionalMovies)
+  }
+
+  if(location.pathname === '/saved-movies') {
+    setMaxMovies(maxMovies + maxAdditionalMovies);
+
+    if(savedMovies && savedMovies.length > 0) {
+      const movieElement = <ul className="movies-card-list__grid">
+      {renderMovies(savedMovies)}
+    </ul>;
+
+      setContent(movieElement);
+
+      if(maxMovies > savedMovies.length) {
+        setButtonShown(false);
+      } else {
+        setButtonShown(true);
+      }
     }
   }
+}
+  
 
   return(
   <section className="movies-card-list">            
-        <ul className="movies-card-list__grid">
-          {content.map((item => {
-             <MoviesCard
-             movie={item}
-             key={item.id || item._id}
-             onSaveMovie={onSaveMovie}         
-             onDeleteMovie={onDeleteMovie}
-             savedMovies={savedMovies}             
-             />
-          }))}        
-        </ul>
-        {foundMovies.length !== content.length ? (
-          <button className="movies-card-list__button" type="button" onClick={showAdditionalMovies}>Ещё</button>
-        ):  ( '' )}        
+        {content}
+        {buttonShown && 
+          <button className="movies-card-list__button" type="button" onClick={handleButtonClick}>Ещё</button>
+        }           
   </section>
   )
 } 

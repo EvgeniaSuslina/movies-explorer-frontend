@@ -52,6 +52,11 @@
     opacity: 0.6;
 }
 
+.search-form__button_disabled{
+    background: #F8F8F8;
+    color: #C2C2C2;
+}
+
 .search-form__error{
     font-weight: normal;
     font-size: 10px;

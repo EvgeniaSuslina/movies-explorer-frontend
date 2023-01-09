@@ -5,7 +5,7 @@ function useWindowWidth(){
 
     function changeWindowWidth(){
         setWindowWidth(window.innerWidth);
-
+    }
         useEffect(() => {
             window.addEventListener('resize', changeWindowWidth);
 
@@ -13,8 +13,8 @@ function useWindowWidth(){
                 window.removeEventListener('resize', changeWindowWidth);
             }
         }, [])
+        return windowWidth;
     }
-    return windowWidth;
-}
+    
 
 export default useWindowWidth;
