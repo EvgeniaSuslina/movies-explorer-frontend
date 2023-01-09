@@ -13,26 +13,50 @@ import NotFound from '../NotFound/NotFound';
 
 
 import mainApi from "../../utils/MainApi";
-//import MoviesApi from '../../utils/MoviesApi';
+import moviesApi from '../../utils/MoviesApi';
 
 function App() {
 
   const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
-  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isApiError, setIsApiError] = useState(false);
 
   const [allMovies, setAllMovies] = useState([]); // загруженные фильмы при первом поиске
-  const [foundMovies, setFoundMovies] = useState([]); // найденные фильмы
+  const [filteredMovies, setFilteredMovies] = useState([]); // отфильтрованные фильмы
   const [savedMovies, setSavedMovies] = useState([]); // сохраненные фильмы
+
+  const navigate = useNavigate();
   
+//check token
   useEffect(() => {
     checkToken();
 }, []);
 
-mainApi.updateToken()
 
+//update token if logged in
+  useEffect(() => {
+    if(!loggedIn) {
+      return;
+    }
+    mainApi.updateToken();
+
+    mainApi.getUserInfo()
+    .then(setCurrentUser)
+    .catch((err) => {
+      handleErrorApi(err)
+    });
+  }, [loggedIn])
+
+
+//api error
+  function handleErrorApi(err) {
+    setIsApiError(true);
+    console.log('Запрос не выполнен: ', err);
+  }
+
+//register user
   function handleRegister(name, email, password){
     setIsLoading(true);
     mainApi.register(name, email, password)
@@ -59,6 +83,7 @@ mainApi.updateToken()
     });
   }
 
+//login user
   function handleLogin(email, password){
     setIsLoading(true);
 
@@ -78,6 +103,7 @@ mainApi.updateToken()
     });
   }
 
+//check token function
   function checkToken(){
     if (localStorage.getItem('token')) {
       mainApi.updateToken();
@@ -93,7 +119,86 @@ mainApi.updateToken()
     }
   }
 
-  
+  //getting all movies from movies api
+  function getAllMovies() {
+    setIsLoading(true);
+    setIsApiError(false);
+
+      moviesApi.getMovies()
+      .then((res) => {
+        if(res) {
+          localStorage.setItem('allMovies', JSON.stringify(res));
+          setAllMovies(res);
+          getSavedMovies();
+        }
+      })
+      .catch((err) => {
+        handleErrorApi(err);
+      })
+      .finally(() =>{
+        setIsLoading(false);
+      })
+  }
+
+  //getting saved movies
+  function getSavedMovies() {
+    mainApi.updateToken()
+
+    mainApi.getSavedMovies()
+      .then((res) => {
+        localStorage.setItem('savedMovies', JSON.stringify(res));
+        setSavedMovies(res);
+      })
+      .catch((err) => {
+        handleErrorApi(err);
+      })
+      .finally(() =>{
+        setIsLoading(false);
+      })
+  }
+
+  //save movie
+  function handleMovieSave(country, director, duration, year, description, image, trailerLink, thumbnail,
+    movieId, nameRU, nameEN){
+
+      mainApi.saveMovie(country, director, duration, year, description, image, trailerLink, thumbnail,
+        movieId, nameRU, nameEN)
+        .then((res) => {
+          setSavedMovies([...savedMovies, res]);
+          localStorage.setItem('savedMovies', JSON.stringify([...savedMovies, res]));
+        })
+        .catch((err) => {
+          handleErrorApi(err);
+          //setIsSaveMoviePopupOpen(true); - попап сохранения фильмов
+        })
+  }
+
+  //delete movies
+  function handleMovieDelete(id){
+
+    mainApi.deleteMovie(id)
+    .then((res) => {
+      setSavedMovies(savedMovies.filter((movie) => !(movie._id === res._id)));
+      localStorage.setItem('savedMovies', JSON.stringify(savedMovies.filter((movie) => !(movie._id === res._id))));
+    })
+    .catch((err) => {
+      handleErrorApi(err);
+      //setIsDeleteMoviePopupOpen(true); - попап удаления фильмов
+    })
+  }
+
+  //update user info in profile
+  function handleUpdateUserInfo(name, email) {
+    setIsLoading(true);
+
+    mainApi.updateUserInfo(name, email)
+      .then((res) => {
+        setCurrentUser(res);
+      })
+      .catch((err) => {
+        handleErrorApi(err);
+      })
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -101,7 +206,17 @@ mainApi.updateToken()
       <Route index path="/" element={< Main/> } />
       <Route path="/signup" element={ <Register  onRegister={handleRegister} isLoading={isLoading}/> } />
       <Route path="/signin" element={ <Login onLogin={handleLogin} isLoading={isLoading}/> } />
-      <Route path="/movies" element={ <Movies />} />
+      <Route path="/movies" element={ <Movies
+       onSearch={getAllMovies}
+       isLoading={isLoading}
+       isApiError={isApiError}
+       allMovies={allMovies}
+       onSaveMovie={handleMovieSave}
+       onDeleteMovie={handleMovieDelete}
+       setFilteredMovies={setFilteredMovies}
+       filteredMovies={filteredMovies}
+       
+       />} />
       <Route path="/movies" 
       element={ 
       <ProtectedRoute isLogged={loggedIn}>
@@ -117,7 +232,7 @@ mainApi.updateToken()
       <Route path="/profile" 
       element={ 
       <ProtectedRoute isLogged={loggedIn}>
-      <Profile setCurrentUser={setCurrentUser}/>
+      <Profile onUpdateUser={handleUpdateUserInfo} setCurrentUser={setCurrentUser}/>
       </ProtectedRoute>
       } />
       <Route path="*" element={< NotFound/> } />

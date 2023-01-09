@@ -22,8 +22,8 @@ function SearchForm({onSearch, isLoading, setFilteredMovies, allMovies, setSaved
                 setInputValue(localStorage.getItem('searchRequest'));
             }
 
-            if (JSON.parse(localStorage.getItem('searchRequest'))) {
-                setIsChecked(JSON.parse(localStorage.getItem('searchRequest')))
+            if (JSON.parse(localStorage.getItem('isCheked'))) {
+                setIsChecked(JSON.parse(localStorage.getItem('isCheked')));
             }
         }
         if (location.pathname === '/saved-movies') {

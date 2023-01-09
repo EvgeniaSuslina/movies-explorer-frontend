@@ -53,8 +53,10 @@
 }
 
 .search-form__button_disabled{
-    background: #F8F8F8;
-    color: #C2C2C2;
+    background:#8bb4f8;
+    background-image: url(../../images/search.svg);
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .search-form__error{

@@ -5,9 +5,9 @@ import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 import BurgerPopup from '../BurgerPopup/BurgerPopup';
-import Preloader from "../Preloader/Preloader";
 
-function Movies({onSearch, onChangeCheckbox, foundMovies, savedMovies, onSaveMovie, onDeleteMovie, preloaderStatus}) {
+
+function Movies({onSearch, allMovies, isLoading, isApiError,onSaveMovie, onDeleteMovie, filteredMovies, loggedIn, setFilteredMovies}) {
 
     const [isBurgerPopupOpened, setIsBurgerPopupOpened] = useState(false);
 
@@ -26,18 +26,19 @@ function Movies({onSearch, onChangeCheckbox, foundMovies, savedMovies, onSaveMov
             <main className="movies">
                 <SearchForm 
                 onSearch={onSearch}
-                onChangeCheckbox={onChangeCheckbox}
+                isLoading={isLoading}
+                allMovies={allMovies}
+                setFilteredMovies={setFilteredMovies}
                 />
-                { preloaderStatus ? (
-                    <Preloader />
-                ) : (
-                    <MoviesCardList 
-                    foundMovies={foundMovies}
-                    onSaveMovie={onSaveMovie}
-                    onDeleteMovie={onDeleteMovie}
-                    savedMovies={savedMovies}
-                    />
-                )}                
+                <MoviesCardList 
+                isLoading={isLoading}
+                isApiError={isApiError}
+                allMovies={allMovies || JSON.parse(localStorage.getItem('allMovies'))}
+                onSaveMovie={onSaveMovie}
+                onDeleteMovie={onDeleteMovie}
+                filteredMovies={filteredMovies}
+                loggedIn={loggedIn}
+                />                               
             </main>
             <Footer />
         </>     

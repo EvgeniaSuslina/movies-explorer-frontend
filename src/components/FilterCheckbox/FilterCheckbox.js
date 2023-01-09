@@ -9,8 +9,8 @@ function FilterCheckbox({isChecked, handleCheckboxClick}) {
             className="checkbox-content__input"
             id={`checkbox__check`}
             type="checkbox"
-            checked={isChecked}
             onChange={handleCheckboxClick}
+            checked={isChecked}
         />
         <label
             className="checkbox-content__label"

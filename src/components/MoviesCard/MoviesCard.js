@@ -74,13 +74,13 @@ function MoviesCard({movie, onSaveMovie, onDeleteMovie, savedMovies, allMovies, 
             movie.director, 
             movie.duration, 
             movie.year, 
-            movie.description, 
+            movie.description,
+            movieImage, 
             movie.trailerLink, 
+            movieThumbnail,
             movie.id, 
             movie.nameRU, 
-            movie.nameEN, 
-            movieImage, 
-            movieThumbnail
+            movie.nameEN,
         )
     }
    }
