@@ -1,85 +1,138 @@
-import { Link } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Header from "../Header/Header";
 import BurgerPopup from "../BurgerPopup/BurgerPopup";
 import './Profile.css';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
-function Profile({ isLoading, onUpdateUser, onSignout}) {
+function Profile({
+    setCurrentUser, 
+    setLoggedIn, 
+    onUpdateUser, 
+    isUpdateProfileErr, 
+    setAllMovies, 
+    setSavedMovies,
+    setFilteredMovies, 
+    isUpdateProfileDone, 
+    setIsUpdateProfileErr, 
+    setIsUpdateProfileDone, 
+    isLoading
+    }) {
+
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const [email, setEmail] = useState('');
+    const [name, setName] =  useState('');
+    const [emailInputValidity, setEmailInputValidity] = useState(true);
+    const [nameInputValidity, setNameInputValidity] = useState(true);
+    const [isEmaiInputErr, setEmailInputErr] = useState(false);
+    const [isNameInputErr, setNameInputErr] = useState(false);
+
+    const [isDataChanged, setIsDataChanged] = useState(false);
+
+    const [isApiErrorShown, setIsApiErrorShown] = useState(false);
+    const [buttonDisabled, setButtomDisabled] = useState(false); 
+    const [isEditMode, setIsEditMode] = useState(false);
+
     const [isBurgerPopupOpened, setIsBurgerPopupOpened] = useState(false);
     const currentUser = useContext(CurrentUserContext);
 
-    const [data, setData] = useState({
-        name: {
-            value : "",
-            isValid: true,
-            errorMessage: ""
-        },
-        email: {
-            value : "",
-            isValid: true,
-            errorMessage: ""
-        }
-    })
-    
-    const [disabled, setDisabled] = useState(false);
+    useEffect(() => {
+        setIsDataChanged(isUpdateProfileDone);
+    }, [isUpdateProfileDone]);
 
-    const isValid = data.name.isValid && data.email.isValid;
 
     useEffect(() => {
-        isLoading ? setDisabled(true) : setDisabled(false);
-    }, [isLoading]);
-    
+        setIsUpdateProfileDone(false);
+    }, [location.pathname]);
+
 
     useEffect(() => {
-        isValid === true ? setDisabled(false) : setDisabled(true);
-    }, [isValid]);
-
-    useEffect(() => {
-        if(currentUser.name === data.name.value && currentUser.email === data.email.value){
-            setDisabled(true);
-        } else if (isValid) {
-            setDisabled(false);
-        }   else if(!isValid) {
-            setDisabled(true);        
-        }
-    }, [currentUser, data, isValid]);
-    
-    useEffect(() => {
-        setData({
-            name: {
-                value: currentUser.name,
-                isValid: true,
-                errorMessage: ""
-            },
-            email: {
-                value: currentUser.email,
-                isValid: true,
-                errorMessage: ""
-            }
-        });
+        setName(currentUser.name || '');
+        setEmail(currentUser.email || '');
     }, [currentUser]);
 
-    const handleChange = (evt) => {
-        const { name, value, validity, validationMessage } = evt.target;
+    useEffect(() => {
+        if(isLoading) {
+            setButtomDisabled(true);
+        } else {
+            setButtomDisabled(false);
+        }
+    }, [isLoading]);
 
-        setData((prevState) => ({
-            ...prevState,
-            [name]: {
-                ...data[name],
-                value,
-                isValid: validity.valid,
-                errorMessage: validationMessage
-            }
-        }));
+
+    useEffect(() => {
+        if(isUpdateProfileErr) {
+            setIsApiErrorShown(true);
+            setIsEditMode(true);
+            setButtomDisabled(true);
+        } else {
+            setIsApiErrorShown(false);
+        }
+    }, [isUpdateProfileErr]);
+
+    useEffect(() => {
+        if(nameInputValidity && emailInputValidity &&  (!(name === currentUser.name) || !(email === currentUser.email))) {
+            setButtomDisabled(false);
+        } else {
+            setButtomDisabled(true);
+        }
+
+        setIsUpdateProfileDone(false);
+        setIsUpdateProfileErr(false);        
+    }, [email, name]);
+
+
+    function handleEditButton(){
+        setIsEditMode(true);
     }
 
-    const handleSubmit = (evt) => {
+    function handleChangeName(evt){
+        setIsApiErrorShown(false);
+        setName(evt.target.value);
+        setNameInputValidity(evt.target.validity.valid);
+
+        if(!evt.target.validity.valid){
+            setNameInputErr(true);
+        } else {
+            setNameInputErr(false);
+        }
+    }
+
+    function handleChangeEmail(evt){
+        setIsApiErrorShown(false);
+        setEmail(evt.target.value);
+        setEmailInputValidity(evt.target.validity.valid);
+
+        if(!evt.target.validity.valid){
+            setEmailInputErr(true);
+        } else {
+            setEmailInputErr(false);
+        }
+    }
+
+    function handleSubmitButton(evt) {
         evt.preventDefault();
-        onUpdateUser({
-            name: data.name.value,
-            email: data.email.value
-        });
+
+        if(!(name === currentUser.name)|| !(email === currentUser.email)) {
+            onUpdateUser(name, email);
+            setIsEditMode(false);
+        } else if (name === currentUser.name) {
+            setNameInputErr(true);
+        } else if (email === currentUser.email) {
+            setEmailInputErr(true);
+        }
+    }
+
+    function signOut() {
+        setLoggedIn(false);
+        setCurrentUser({});
+        setAllMovies(null);
+        setSavedMovies(null);
+        setFilteredMovies(null);
+        localStorage.clear();
+        navigate('/');
     }
    
 
@@ -91,28 +144,37 @@ function Profile({ isLoading, onUpdateUser, onSignout}) {
     setIsBurgerPopupOpened(false);
     }
 
+    const nameErrorMessage = nameInputValidity ? 'Введите имя'
+    : 'Введите новое корректное имя';
+
+    const emailErrorMessage = emailInputValidity ? 'Введите email' : 'Введите новый корректный email';
+
+    
+
     return(
         <>
         <Header navType={'loggedInLinks'} onButtonClick={ handleBurgerPopupClick }/>
         <BurgerPopup isOpen={ isBurgerPopupOpened } onButtonClick={ closePopup }/>
         <section className="profile">
             <h2 className="profile__title">Привет, {currentUser.name}</h2>
-            <form className="profile__form" onSubmit={ handleSubmit }>
+            <form className="profile__form" onSubmit={ handleSubmitButton }>
             <label className="profile__label">
                 <p className="profile__label-text">Имя</p>
                 <input 
                 className="profile__input"
                 type="text"
                 name="name"
+                pattern="[a-zA-Zа-яА-ЯёЁ\-\s]+"
                 required
                 minLength="2"
                 maxLength="20"
-                value={data.name.value|| ""}
-                onChange={handleChange}
+                value={name}
+                disabled={!isEditMode || isLoading}
+                onChange={handleChangeName}
                 />
             </label>
             <span className="auth__form-error">
-                {data.name.errorMessage}
+                {isNameInputErr ? nameErrorMessage : ''}
             </span>
             <label className="profile__label">
                 <p className="profile__label-text">Почта</p>
@@ -122,17 +184,18 @@ function Profile({ isLoading, onUpdateUser, onSignout}) {
                 name="email"
                 required
                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-                value={data.email.value|| ""}
-                onChange={handleChange}
+                value={email}                                
+                disabled={!isEditMode || isLoading}
+                onChange={handleChangeEmail}
                 />
             </label>
             <span className="auth__form-error">
-                {data.email.errorMessage}
+                {isEmaiInputErr ? emailErrorMessage : ''}
             </span>
-            <button className={`${isValid && !isLoading ? "profile-button" : "profile-button_disabled"}`} type="button" disabled={disabled}>
+            <button className={`${isDataChanged && !isLoading ? "profile-button" : "profile-button_disabled"}`} type="button" disabled={buttonDisabled}>
                 Редактировать
             </button>
-            <Link className="profile__exit-link" to="/" target="_blank">Выйти из аккаунта</Link>
+            <Link className="profile__exit-link" onClick={signOut} to="/" target="_blank">Выйти из аккаунта</Link>
             </form>
         </section>
         </>        

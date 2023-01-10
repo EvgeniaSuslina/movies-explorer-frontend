@@ -1,7 +1,8 @@
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { MOVIESURL, MOVIE_DURATION } from '../../utils/config';
+import { MOVIE_DURATION } from '../../utils/config';
 import './MoviesCard.css'
+
 
 
 function MoviesCard({movie, onSaveMovie, onDeleteMovie, savedMovies, allMovies, filteredMovies}) {
@@ -27,6 +28,7 @@ function MoviesCard({movie, onSaveMovie, onDeleteMovie, savedMovies, allMovies, 
    
 //check if movie data is correct
    function checkMovieData() {
+        
     if(movie.nameRU === null || !(/[\Wа-яА-ЯёЁ0-9\s\-?]+/g.test(movie.nameRU))) {
         movie.nameRU = 'не указано';
     }
@@ -57,8 +59,8 @@ function MoviesCard({movie, onSaveMovie, onDeleteMovie, savedMovies, allMovies, 
 
 //save (or like)
    function handleMovieSave(){
-    const movieImage = MOVIESURL+ movie.image.url;    
-    const movieThumbnail = MOVIESURL + movie.image.formats.thumbnail.url;
+    const movieImage = 'https://api.nomoreparties.co'+ movie.image.url;    
+    const movieThumbnail = 'https://api.nomoreparties.co' + movie.image.formats.thumbnail.url;
 
     if(isLiked) {
         const savedMovie = JSON.parse(localStorage.getItem('savedMovies'))
@@ -91,7 +93,7 @@ function MoviesCard({movie, onSaveMovie, onDeleteMovie, savedMovies, allMovies, 
         <li className="movie-card">
             <div className="movie-card__container">
                 <a href={movie.trailerLink} target='blank'>
-                    <img className="movie-card__img" src={ movie.image.url ? `${MOVIESURL}/${movie.image.url}`: movie.image } alt={`Баннер фильма "${movie.nameRU}"`}/>
+                    <img className="movie-card__img" src={ movie.image.url ? 'https://api.nomoreparties.co/' + movie.image.url : movie.image } alt={movie.nameRU}/>
                 </a>
                 <div className="movie-card__info">
                     <p className="movie-card__name">{movie.nameRU}</p>

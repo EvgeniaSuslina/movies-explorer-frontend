@@ -214,8 +214,7 @@ function App() {
        onSaveMovie={handleMovieSave}
        onDeleteMovie={handleMovieDelete}
        setFilteredMovies={setFilteredMovies}
-       filteredMovies={filteredMovies}
-       
+       filteredMovies={filteredMovies}       
        />} />
       <Route path="/movies" 
       element={ 
@@ -226,7 +225,13 @@ function App() {
       <Route path="/saved-movies" 
       element={ 
       <ProtectedRoute isLogged={loggedIn}>
-      <SavedMovies /> 
+      <SavedMovies 
+      getSavedMovies={getSavedMovies}
+      onDeleteMovie={handleMovieDelete}
+      setSavedMovies={setSavedMovies}
+      savedMoviesByUser={savedMovies}
+      isLoading={isLoading}
+      /> 
       </ProtectedRoute>
       } />       
       <Route path="/profile" 

@@ -1,5 +1,5 @@
 export const BASEURL = 'http://localhost:3001';
-export const MOVIESURL = 'https://api.nomoreparties.co';
+export const MOVIESURL = 'https://api.nomoreparties.co/beatfilm-movies';
 
 
 //кол-во карточек, которые выдает поиск в зависимости от экрана
