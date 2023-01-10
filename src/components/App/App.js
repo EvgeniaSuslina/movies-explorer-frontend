@@ -27,6 +27,9 @@ function App() {
   const [filteredMovies, setFilteredMovies] = useState([]); // отфильтрованные фильмы
   const [savedMovies, setSavedMovies] = useState([]); // сохраненные фильмы
 
+  const [isUpdateProfileErr, setIsUpdateProfileErr] = useState(false);
+  const [isUpdateProfileDone, setIsUpdateProfileDone] = useState(false);
+
   const navigate = useNavigate();
   
 //check token
@@ -196,7 +199,12 @@ function App() {
         setCurrentUser(res);
       })
       .catch((err) => {
+        setIsUpdateProfileErr(true)
         handleErrorApi(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+        setIsUpdateProfileDone(true);
       })
   }
 
@@ -237,7 +245,19 @@ function App() {
       <Route path="/profile" 
       element={ 
       <ProtectedRoute isLogged={loggedIn}>
-      <Profile onUpdateUser={handleUpdateUserInfo} setCurrentUser={setCurrentUser}/>
+      <Profile 
+      onUpdateUser={handleUpdateUserInfo}
+      setCurrentUser={setCurrentUser}
+      setLoggedIn={setLoggedIn}
+      setAllMovies={setAllMovies}
+      setSavedMovies={setSavedMovies}
+      setFilteredMovies={setFilteredMovies}
+      isUpdateProfileErr={isUpdateProfileErr}
+      setIsUpdateProfileErr={setIsUpdateProfileErr}
+      isUpdateProfileDone={isUpdateProfileDone}
+      setIsUpdateProfileDone={setIsUpdateProfileDone}
+      isLoading={isLoading}
+      />
       </ProtectedRoute>
       } />
       <Route path="*" element={< NotFound/> } />
