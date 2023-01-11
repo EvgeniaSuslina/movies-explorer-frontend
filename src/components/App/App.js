@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute';
+//import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
@@ -26,6 +26,9 @@ function App() {
   const [allMovies, setAllMovies] = useState([]); // загруженные фильмы при первом поиске
   const [filteredMovies, setFilteredMovies] = useState([]); // отфильтрованные фильмы
   const [savedMovies, setSavedMovies] = useState([]); // сохраненные фильмы
+
+  const [isErrorOnLogin, setIsErrorOnLogin] = useState(false);
+  const [isErrorOnRegister, setIsErrorOnRegister] = useState(false);
 
   const [isUpdateProfileErr, setIsUpdateProfileErr] = useState(false);
   const [isUpdateProfileDone, setIsUpdateProfileDone] = useState(false);
@@ -74,12 +77,12 @@ function App() {
             navigate('/movies');
           }
         })
-        .catch((err) => {
-          console.log(`Произошла ошибка ${err}`)
+        .catch(() => {
+          setIsErrorOnRegister(true);
         })
     })
-    .catch((err) => {
-      console.log(`Произошла ошибка ${err}`)
+    .catch(() => {
+      setIsErrorOnRegister(true);
     })
     .finally(() => {
       setIsLoading(false);
@@ -98,8 +101,8 @@ function App() {
         navigate('/movies');
       }
     })
-    .catch((err) => {
-      console.log(`Произошла ошибка ${err}`)
+    .catch(() => {
+      setIsErrorOnLogin(true)
     })
     .finally(() => {
       setIsLoading(false);
@@ -212,8 +215,18 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
     <Routes>
       <Route index path="/" element={< Main/> } />
-      <Route path="/signup" element={ <Register  onRegister={handleRegister} isLoading={isLoading}/> } />
-      <Route path="/signin" element={ <Login onLogin={handleLogin} isLoading={isLoading}/> } />
+      <Route path="/signup" element={ <Register
+        onRegister={handleRegister}
+        isErrorOnRegister={isErrorOnRegister}
+        setIsErrorOnRegister={setIsErrorOnRegister}
+        isLoading={isLoading}
+         /> } />
+      <Route path="/signin" element={ <Login 
+      onLogin={handleLogin} 
+      isErrorOnLogin={isErrorOnRegister}
+      setIsErrorOnLogin={setIsErrorOnLogin}
+      isLoading={isLoading}/> 
+      } />
       <Route path="/movies" element={ <Movies
        onSearch={getAllMovies}
        isLoading={isLoading}
@@ -223,29 +236,15 @@ function App() {
        onDeleteMovie={handleMovieDelete}
        setFilteredMovies={setFilteredMovies}
        filteredMovies={filteredMovies}       
-       />} />
-      <Route path="/movies" 
-      element={ 
-      <ProtectedRoute isLogged={loggedIn}>
-        <Movies />
-      </ProtectedRoute>
-       } />      
-      <Route path="/saved-movies" 
-      element={ 
-      <ProtectedRoute isLogged={loggedIn}>
-      <SavedMovies 
+       />} />           
+      <Route path="/saved-movies" element={ <SavedMovies 
       getSavedMovies={getSavedMovies}
       onDeleteMovie={handleMovieDelete}
       setSavedMovies={setSavedMovies}
       savedMoviesByUser={savedMovies}
       isLoading={isLoading}
-      /> 
-      </ProtectedRoute>
-      } />       
-      <Route path="/profile" 
-      element={ 
-      <ProtectedRoute isLogged={loggedIn}>
-      <Profile 
+      />  } />       
+      <Route path="/profile" element={ <Profile 
       onUpdateUser={handleUpdateUserInfo}
       setCurrentUser={setCurrentUser}
       setLoggedIn={setLoggedIn}
@@ -257,9 +256,7 @@ function App() {
       isUpdateProfileDone={isUpdateProfileDone}
       setIsUpdateProfileDone={setIsUpdateProfileDone}
       isLoading={isLoading}
-      />
-      </ProtectedRoute>
-      } />
+      /> } />    
       <Route path="*" element={< NotFound/> } />
     </Routes>
     </CurrentUserContext.Provider>

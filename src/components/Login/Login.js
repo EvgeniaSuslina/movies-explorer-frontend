@@ -1,103 +1,123 @@
 import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
-import './Login.css';
+import Auth from "../Auth/Auth";
+import '../Auth/Auth.css';
 import logo from '../../images/logo.svg';
 
 
-function Login ({onLogin, isLoading}) {
+function Login ({onLogin, isLoading, setIsErrorOnLogin, isErrorOnLogin}) {
 
-  const [data, setData] = useState({
-    email: {
-        value: "",
-        isValid: false,
-        errorMessage: ""
-    },
-    password: {
-        value: "",
-        isValid: false,
-        errorMessage: ""
-    }
-});
+const [email, setEmail] = useState('');
+const [password, setPassword] = useState('');
+const [emailInputValidity, setEmailInputValidity] = useState(false);
+const [passwordInputValidity, setPasswordInputValidity] = useState(false);
+const [isEmailInputErr, setEmailInputErr] = useState(false);
+const [isPasswordInputErr, setPasswordInputErr]= useState(false);
 
+const isValid = email.isValid && password.isValid;
 const [disabled, setDisabled] = useState(false);
 
-const isValid = data.email.isValid && data.password.isValid;
+useEffect(() => {
+  setIsErrorOnLogin(false);
+}, []);
+
 
 useEffect(() => {
     isLoading ? setDisabled(true) : setDisabled(false);
 }, [isLoading]);
 
+
 useEffect(() => {
-    isValid ? setDisabled(false) : setDisabled(true);
-}, [isValid]);
+  if(passwordInputValidity && emailInputValidity) {
+    setDisabled(false);
+  } else {
+    setDisabled(true);
+  }
+  
+}, [emailInputValidity, passwordInputValidity])
 
-const handleChange = (evt) => {
-    const { name, value, validity, validationMessage } = evt.target;
 
-    setData((prevState) => ({
-        ...prevState,
-        [name]: {
-            ...data[name],
-            value,
-            isValid: validity.valid,
-            errorMessage: validationMessage
-        }
-    }));
+function handleEmailChange(evt) {
+  setEmail(evt.target.value);
+  setEmailInputValidity(evt.target.validity.valid);
+  setIsErrorOnLogin(false);
+
+  if(!evt.target.validity.valid){
+    setEmailInputErr(true);
+  } else {
+    setEmailInputErr(false);
+  }
 }
 
-const handleSubmit = (evt) => {
+
+function handlePasswordChange(evt) {
+  setPassword(evt.target.value);
+  setPasswordInputValidity(evt.target.validity.valid);
+  setIsErrorOnLogin(false);
+
+  if(!evt.target.validity.valid){
+    setPasswordInputErr(true);
+  } else {
+    setPasswordInputErr(false);
+  }
+}
+
+
+function handleSubmit(evt){
     evt.preventDefault();
-    onLogin({
-        email: data.email.value,
-        password: data.password.value
-    });
-    setData({email: '', password: ''});
+
+    onLogin(email, password);
 }
 
+
+const loginCaption = (
+        <p className="auth__text">
+        Еще не зарегистрированы? 
+        <Link className="auth__link" to="/signup" target="_blank">
+          Регистрация
+        </Link>
+        </p>
+)
+            
 
   return (
-    <div className="auth">
-    <Link to='/' target="_blank"><img src={logo} alt="Логотип" className="logo" /></Link>
-      <h2 className="auth__title ">Рады видеть!</h2>      
-      <form className="auth__form" onSubmit={handleSubmit}>
+    <Auth
+    title={'Рады видеть!'}
+    caption={loginCaption}
+    disabled={disabled}
+    onSubmit={handleSubmit}
+    isErrorOnLogin={isErrorOnLogin}
+    >
       <label className="auth__form-label">E-mail</label>       
         <input
           className="auth__input"  
           type="email"
           name="email"
           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-          value={data.email.value || ""}
-          onChange={handleChange}
+          onChange={handleEmailChange}
+          disabled={isLoading}
           required
         />
         <span className="auth__form-error">
-          {data.email.errorMessage}
+        {isEmailInputErr? 'Необходимо ввести корректный email': ''}
         </span>
         <label className="auth__form-label">Пароль</label>
         <input
           className="auth__input"        
           type="text"
           name="password"         
-          value={data.password.value || ""}
-          onChange={handleChange}
+          onChange={handlePasswordChange}
+          disabled={isLoading}
           required   
         />
         <span className="auth__form-error">
-          {data.password.errorMessage}
+        {isPasswordInputErr ? 'Пароль должен содержать от 2 до 12 символов': ''}
         </span>
         <button className={`${isValid && !isLoading ? "auth__submit" : "auth__submit_disabled"}`} type="submit" disabled={disabled}>
           Войти
         </button>
-      </form>
-      <div className="auth__wrapper">
-        <p className="auth__text">
-          Еще не зарегистрированы? 
-          <Link className="auth__link" to="/signup" target="_blank">
-            Регистрация
-          </Link>
-        </p>
-      </div> 
-    </div>
+    </Auth> 
+    
   );
 
 }
