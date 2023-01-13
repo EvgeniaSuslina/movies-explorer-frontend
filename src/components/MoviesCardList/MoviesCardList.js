@@ -125,15 +125,15 @@ function MoviesCardList({isLoading, isApiError, onSaveMovie, onDeleteMovie, save
   }
 
 //render Movies at the page
-  function renderMovies(moviesArray) {
-    if (!moviesArray) {
+  function renderMovies(listOfMovies) {
+    if (!listOfMovies) {
       return;
     }
 
     return (
       <>
         {
-          moviesArray.slice(0, maxMovies).map((movie) => {
+          listOfMovies.slice(0, maxMovies).map((movie) => {
             return <MoviesCard
             movie={movie}
             key={movie.id || movie.movieId}

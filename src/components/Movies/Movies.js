@@ -5,6 +5,7 @@ import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 import BurgerPopup from '../BurgerPopup/BurgerPopup';
+import './Movies.css';
 
 
 function Movies({onSearch, allMovies, isLoading, isApiError,onSaveMovie, onDeleteMovie, filteredMovies, loggedIn, setFilteredMovies}) {

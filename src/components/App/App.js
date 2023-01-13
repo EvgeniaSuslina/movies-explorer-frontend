@@ -23,9 +23,9 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isApiError, setIsApiError] = useState(false);
 
-  const [allMovies, setAllMovies] = useState([]); // загруженные фильмы при первом поиске
-  const [filteredMovies, setFilteredMovies] = useState([]); // отфильтрованные фильмы
-  const [savedMovies, setSavedMovies] = useState([]); // сохраненные фильмы
+  const [allMovies, setAllMovies] = useState(null); // загруженные фильмы при первом поиске
+  const [filteredMovies, setFilteredMovies] = useState(null);; // отфильтрованные фильмы
+  const [savedMovies, setSavedMovies] = useState(null); // сохраненные фильмы
 
   const [isErrorOnLogin, setIsErrorOnLogin] = useState(false);
   const [isErrorOnRegister, setIsErrorOnRegister] = useState(false);
@@ -157,10 +157,7 @@ function App() {
       })
       .catch((err) => {
         handleErrorApi(err);
-      })
-      .finally(() =>{
-        setIsLoading(false);
-      })
+      })      
   }
 
   //save movie
@@ -223,7 +220,7 @@ function App() {
          /> } />
       <Route path="/signin" element={ <Login 
       onLogin={handleLogin} 
-      isErrorOnLogin={isErrorOnRegister}
+      isErrorOnLogin={isErrorOnLogin}
       setIsErrorOnLogin={setIsErrorOnLogin}
       isLoading={isLoading}/> 
       } />
@@ -235,7 +232,8 @@ function App() {
        onSaveMovie={handleMovieSave}
        onDeleteMovie={handleMovieDelete}
        setFilteredMovies={setFilteredMovies}
-       filteredMovies={filteredMovies}       
+       filteredMovies={filteredMovies} 
+       loggedIn={loggedIn}      
        />} />           
       <Route path="/saved-movies" element={ <SavedMovies 
       getSavedMovies={getSavedMovies}

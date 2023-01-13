@@ -48,7 +48,7 @@ class MainApi extends Api {
     }
 
     updateUserInfo(name, email) {
-        return fetch (`${this._serverUrl}/users/me`, {
+        return fetch (`${this._baseUrl}/users/me`, {
             method: 'PATCH', 
             headers: this._headers,
             body: JSON.stringify({

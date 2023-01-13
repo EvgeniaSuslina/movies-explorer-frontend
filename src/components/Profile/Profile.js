@@ -54,11 +54,7 @@ function Profile({
     }, [currentUser]);
 
     useEffect(() => {
-        if(isLoading) {
-            setButtomDisabled(true);
-        } else {
-            setButtomDisabled(false);
-        }
+        isLoading ? setButtomDisabled(true) : setButtomDisabled(false)       
     }, [isLoading]);
 
 
@@ -86,12 +82,18 @@ function Profile({
 
     function handleEditButton(){
         setIsEditMode(true);
+    } 
+
+    function handleButtonClick(){
+        setIsEditMode(false);
+
     }
 
     function handleChangeName(evt){
         setIsApiErrorShown(false);
         setName(evt.target.value);
         setNameInputValidity(evt.target.validity.valid);
+        
 
         if(!evt.target.validity.valid){
             setNameInputErr(true);
@@ -149,7 +151,26 @@ function Profile({
 
     const emailErrorMessage = emailInputValidity ? 'Введите email' : 'Введите новый корректный email';
 
-    
+    const profileLinks= (
+        <>
+            <p className={`profile__text ${isDataChanged && 'profile__text_visible'}`}>Данные изменены</p>
+            <button  onClick={handleEditButton} className="profile-button" type="button">
+                Редактировать
+            </button>
+            <Link className="profile__exit-link" onClick={signOut} to="/" target="_blank">Выйти из аккаунта</Link>
+
+        </>)
+
+    const profileButton = (
+        <>
+        <span className="auth__form-error">
+                {isApiErrorShown && 'Произошла ошибка, попробуйте еще раз'}
+            </span>
+            <button disabled={buttonDisabled} className="profile-button" type="submit">
+                Сохранить
+            </button>
+        </>
+    )
 
     return(
         <>
@@ -192,10 +213,7 @@ function Profile({
             <span className="auth__form-error">
                 {isEmaiInputErr ? emailErrorMessage : ''}
             </span>
-            <button className={`${isDataChanged && !isLoading ? "profile-button" : "profile-button_disabled"}`} type="button" disabled={buttonDisabled}>
-                Редактировать
-            </button>
-            <Link className="profile__exit-link" onClick={signOut} to="/" target="_blank">Выйти из аккаунта</Link>
+            {isEditMode ? profileButton : profileLinks}
             </form>
         </section>
         </>        

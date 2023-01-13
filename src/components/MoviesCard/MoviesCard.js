@@ -10,6 +10,8 @@ function MoviesCard({movie, onSaveMovie, onDeleteMovie, savedMovies, allMovies, 
     const location = useLocation();
     const [isLiked, setIsLiked] = useState(false);
 
+
+
 //check movies and data for like
     useEffect(() => {
         checkMovieData();
@@ -83,10 +85,10 @@ function MoviesCard({movie, onSaveMovie, onDeleteMovie, savedMovies, allMovies, 
             movie.id, 
             movie.nameRU, 
             movie.nameEN,
-        )
+        );
     }
+    setIsLiked(!isLiked);
    }
-
 
 
     return(

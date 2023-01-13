@@ -2,8 +2,6 @@ import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 import Auth from "../Auth/Auth";
 import '../Auth/Auth.css';
-import logo from '../../images/logo.svg';
-
 
 function Login ({onLogin, isLoading, setIsErrorOnLogin, isErrorOnLogin}) {
 
@@ -14,12 +12,12 @@ const [passwordInputValidity, setPasswordInputValidity] = useState(false);
 const [isEmailInputErr, setEmailInputErr] = useState(false);
 const [isPasswordInputErr, setPasswordInputErr]= useState(false);
 
-const isValid = email.isValid && password.isValid;
+const isValid = emailInputValidity && passwordInputValidity;
 const [disabled, setDisabled] = useState(false);
 
 useEffect(() => {
   setIsErrorOnLogin(false);
-}, []);
+}, [setIsErrorOnLogin]);
 
 
 useEffect(() => {
@@ -113,7 +111,7 @@ const loginCaption = (
         <span className="auth__form-error">
         {isPasswordInputErr ? 'Пароль должен содержать от 2 до 12 символов': ''}
         </span>
-        <button className={`${isValid && !isLoading ? "auth__submit" : "auth__submit_disabled"}`} type="submit" disabled={disabled}>
+        <button className={`${isValid ? "auth__submit" : "auth__submit_disabled"}`} type="submit" disabled={disabled}>
           Войти
         </button>
     </Auth> 

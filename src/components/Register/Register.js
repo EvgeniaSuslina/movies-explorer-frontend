@@ -19,7 +19,7 @@ const [isNameInputErr, setNameInputErr] = useState(false);
 const [isEmailInputErr, setEmailInputErr] = useState(false);
 const [isPasswordInputErr, setPasswordInputErr]= useState(false);
 
-const isValid =  name.isValid && email.isValid && password.isValid;
+const isValid =  nameInputValidity && emailInputValidity && passwordInputValidity;
 const [disabled, setDisabled] = useState(false);
 
 useEffect(() => {
@@ -141,7 +141,7 @@ const registerCaption = (
     <span className="auth__form-error">
         {isPasswordInputErr ? 'Пароль должен содержать от 2 до 12 символов': ''}
     </span>
-    <button className={`${isValid && !isLoading ? "auth__submit" : "auth__submit_disabled"}`} type="submit" disabled={disabled}>
+    <button className={`${isValid  ? "auth__submit" : "auth__submit_disabled"}`} type="submit" disabled={disabled}>
     Зарегистрироваться
     </button>
 

@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import savedMovies from '../SavedMovies/SavedMovies';
 import './SearchForm.css';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import MoviesFilter from '../MoviesFilter/MoviesFilter';
+
 
 function SearchForm({onSearch, isLoading, setFilteredMovies, allMovies, setSavedMovies, savedMovies}){
 
@@ -10,7 +12,7 @@ function SearchForm({onSearch, isLoading, setFilteredMovies, allMovies, setSaved
     const [errorShown, setErrorShown] = useState(false);
     const [inputValidity, setInputValidity] = useState(false);
 
-    const [isChecked, setIsChecked] = useState(false);
+    const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
     const [isButtonDisabled, setButtonDisabled] = useState(inputValidity);
 
     const location = useLocation()
@@ -22,13 +24,13 @@ function SearchForm({onSearch, isLoading, setFilteredMovies, allMovies, setSaved
                 setInputValue(localStorage.getItem('searchRequest'));
             }
 
-            if (JSON.parse(localStorage.getItem('isCheked'))) {
-                setIsChecked(JSON.parse(localStorage.getItem('isCheked')));
+            if (JSON.parse(localStorage.getItem('isCheckboxChecked'))) {
+                setIsCheckboxChecked(JSON.parse(localStorage.getItem('isCheckboxChecked')));
             }
         }
         if (location.pathname === '/saved-movies') {
             setInputValue('');
-            setIsChecked(false);
+            setIsCheckboxChecked(false);
 
             if (inputValue.length === 0) {
                 setErrorShown(true);
@@ -40,40 +42,40 @@ function SearchForm({onSearch, isLoading, setFilteredMovies, allMovies, setSaved
 //update local storage
     useEffect(() => {
         if (location.pathname === '/movies') updateLocalStorage();
-    }, [isChecked]);
+    }, [isCheckboxChecked]);
 
 
 //pathname = movies
      useEffect(() => {
-        if (location.pathname === '/movies' && localStorage.getItem('allMovies')) {
+        if (localStorage.getItem('allMovies') && location.pathname === '/movies') {
             const filteredMovies = MoviesFilter(JSON.parse(localStorage.getItem('allMovies')), 
-            inputValue, isChecked);
+            inputValue, isCheckboxChecked);
 
             if (!(filteredMovies === undefined)) {
                 localStorage.setItem('filteredMovies', JSON.stringify(filteredMovies));
                 setFilteredMovies(filteredMovies);
             }
         }
-     }, [allMovies, isChecked])
+     }, [allMovies, isCheckboxChecked])
 
 
 //pathname = saved-movies
      useEffect(() => {
         if (location.pathname === '/saved-movies' && localStorage.getItem('savedMovies')) {
             const filteredMovies = MoviesFilter(JSON.parse(localStorage.getItem('savedMovies')),
-            inputValue, isChecked);
+            inputValue, isCheckboxChecked);
 
             if(!(filteredMovies === undefined)) {
                 localStorage.setItem('filteredMovies', JSON.stringify(filteredMovies));
                 setSavedMovies(filteredMovies);
             }
         }
-     })
+     }, [isCheckboxChecked]);
 
 //update local storage
     function updateLocalStorage(){
         localStorage.setItem('searchRequest', inputValue);
-        localStorage.setItem('isChecked', JSON.stringify(isChecked));
+        localStorage.setItem('isCheckboxChecked', JSON.stringify(isCheckboxChecked));
         localStorage.removeItem('moviesContent')
         localStorage.removeItem('moviesMoreButton')
     }
@@ -94,12 +96,12 @@ function SearchForm({onSearch, isLoading, setFilteredMovies, allMovies, setSaved
 
 //checkbox change
     function handleChekboxChange(){
-        setIsChecked(!isChecked);
+        setIsCheckboxChecked(!isCheckboxChecked);
 
         if(location.pathname === '/movies') {
             if (localStorage.getItem('allMovies')) {
                 const filteredMovies = MoviesFilter(JSON.parse(localStorage.getItem('allMovies')), 
-                inputValue, isChecked);
+                inputValue, isCheckboxChecked);
                 if (!(filteredMovies === undefined)) {
                     localStorage.setItem('filteredMovies', JSON.stringify(filteredMovies));
                     setFilteredMovies(filteredMovies);
@@ -117,7 +119,7 @@ function SearchForm({onSearch, isLoading, setFilteredMovies, allMovies, setSaved
 
             if(localStorage.getItem('allMovies')) {
                 const filteredMovies = MoviesFilter(JSON.parse(localStorage.getItem('allMovies')), 
-                inputValue, isChecked);
+                inputValue, isCheckboxChecked);
                 localStorage.setItem('filteredMovies', JSON.stringify(filteredMovies));
                 setFilteredMovies(filteredMovies);
             } else {
@@ -128,7 +130,7 @@ function SearchForm({onSearch, isLoading, setFilteredMovies, allMovies, setSaved
         if (location.pathname === '/saved-movies') {
             if(savedMovies) {
                 const filteredMovies = MoviesFilter(JSON.parse(localStorage.getItem('savedMovies')),
-                inputValue, isChecked);
+                inputValue, isCheckboxChecked);
 
                 if(!(filteredMovies === undefined)) {
                     setSavedMovies(filteredMovies);
@@ -156,7 +158,7 @@ function SearchForm({onSearch, isLoading, setFilteredMovies, allMovies, setSaved
             </form>
             <span className="search-form__error">{errorShown && 'Нужно ввести ключевое слово'}</span>
             <FilterCheckbox 
-            isChecked={isChecked}
+            isCheckboxChecked={isCheckboxChecked}
             onChangeCheckbox={handleChekboxChange}
             />
         </div>
