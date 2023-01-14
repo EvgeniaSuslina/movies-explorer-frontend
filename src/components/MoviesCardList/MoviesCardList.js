@@ -17,32 +17,16 @@ function MoviesCardList({isLoading, isApiError, onSaveMovie, onDeleteMovie, save
   const [maxAdditionalMovies, setMaxAdditionalMovies] = useState(3);
   const [buttonShown, setButtonShown] = useState(false);
 
-  const notFoundMessage = (<p className="movies__text">Увы! Фильмы не найдены</p>);
-  const apiErrorMessage = (<p className="movies__text">Во время запроса произошла ошибка.Подождите немного и попробуйте ещё раз</p>);
+  const notFoundMessage = (<p className="movies-card-list__text">Увы! Фильмы не найдены</p>);
+  const apiErrorMessage = (<p className="movies-card-list__text">Во время запроса произошла ошибка.Подождите немного и попробуйте ещё раз</p>);
 
    //checking the width of screen
   useEffect(() => {
     checkWidthOfWindow();
-  }, [widthOfWindow])
+  }, [widthOfWindow]);
 
 
-//check if user logged in
-   useEffect(() => {
-    if (!loggedIn) {
-      setContent(null)
-    }
-   }, [loggedIn])
-
-
-//preloader
-   useEffect(() => {
-    if (isLoading) {
-      setContent(<Preloader/>);
-    }
-   }, [isLoading])
-
-
-//render movies
+  //render movies
   useEffect(() => {
     checkWidthOfWindow();
 
@@ -52,7 +36,22 @@ function MoviesCardList({isLoading, isApiError, onSaveMovie, onDeleteMovie, save
           {renderMovies(filteredMovies)}
         </ul>);
     }
-  }, [])
+  }, []);
+
+//check if user logged in
+   useEffect(() => {
+    if (!loggedIn) {
+      setContent(null)
+    }
+   }, [loggedIn]);
+
+
+//preloader
+   useEffect(() => {
+    if (isLoading) {
+      setContent(<Preloader/>);
+    }
+   }, [isLoading]);
 
 
 //render saved movies
@@ -113,7 +112,7 @@ function MoviesCardList({isLoading, isApiError, onSaveMovie, onDeleteMovie, save
       setMaxAdditionalMovies(ADD_MOVIES_DESKTOP)
 
     } else if (widthOfWindow >= 625) {
-
+      
       setMaxMovies(MOVIES_AT_TABLETS);
       setMaxAdditionalMovies(ADD_MOVIES_TABLETS);
 

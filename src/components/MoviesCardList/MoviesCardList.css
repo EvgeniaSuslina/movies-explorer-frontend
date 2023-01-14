@@ -47,6 +47,18 @@
     opacity: 0.6;
 }
 
+.movies-card-list__text{
+    margin: 0;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 27px;   
+    color: #FFFFFF;
+    align-self: center;
+    justify-self: center;
+    text-align: center;
+}
+
 @media screen and (max-width: 1205px){
     .movies-card-list{
         padding: 50px 50px 80px 50px; 

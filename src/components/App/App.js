@@ -10,6 +10,9 @@ import Profile from '../Profile/Profile';
 import Login from '../Login/Login';
 import Register from '../Register/Register';
 import NotFound from '../NotFound/NotFound';
+import InfoTooltip from '../InfoToolip/InfoTooltip';
+import imageError from '../../images/image_error.svg';
+import imageSuccess from '../../images/image_success.png';
 
 
 import mainApi from "../../utils/MainApi";
@@ -24,7 +27,7 @@ function App() {
   const [isApiError, setIsApiError] = useState(false);
 
   const [allMovies, setAllMovies] = useState(null); // загруженные фильмы при первом поиске
-  const [filteredMovies, setFilteredMovies] = useState(null);; // отфильтрованные фильмы
+  const [filteredMovies, setFilteredMovies] = useState(null); // отфильтрованные фильмы
   const [savedMovies, setSavedMovies] = useState(null); // сохраненные фильмы
 
   const [isErrorOnLogin, setIsErrorOnLogin] = useState(false);
@@ -32,6 +35,10 @@ function App() {
 
   const [isUpdateProfileErr, setIsUpdateProfileErr] = useState(false);
   const [isUpdateProfileDone, setIsUpdateProfileDone] = useState(false);
+
+  const [infoTooltipOpen, setInfoTooltipOpen] = useState(false);
+  const [infoTooltipImage, setInfoTooltipImage] = useState(imageSuccess);
+  const [message, setMessage] = useState('');
 
   const navigate = useNavigate();
   
@@ -74,11 +81,17 @@ function App() {
           if (res.token) {
             localStorage.setItem('token', res.token);
             setLoggedIn(true);
+            //setInfoTooltipOpen(true);
+            //setInfoTooltipImage(imageSuccess);
+            //setMessage('Регистрация прошла успешно');
             navigate('/movies');
           }
         })
         .catch(() => {
           setIsErrorOnRegister(true);
+          setInfoTooltipImage(imageError);
+          setMessage('Что-то пошло не так! Попробуйте ещё раз.');
+          setInfoTooltipOpen(true);
         })
     })
     .catch(() => {
@@ -98,11 +111,18 @@ function App() {
       if (res.token) {
         localStorage.setItem('token', res.token);
         setLoggedIn(true);
+        setInfoTooltipOpen(true);
+        setInfoTooltipImage(imageSuccess);
+        setMessage('Авторизация прошла успешно');
         navigate('/movies');
+
       }
     })
     .catch(() => {
-      setIsErrorOnLogin(true)
+      setIsErrorOnLogin(true);
+      setInfoTooltipImage(imageError);
+      setMessage('Что-то пошло не так! Попробуйте ещё раз.');
+      setInfoTooltipOpen(true);
     })
     .finally(() => {
       setIsLoading(false);
@@ -127,8 +147,8 @@ function App() {
 
   //getting all movies from movies api
   function getAllMovies() {
-    setIsLoading(true);
     setIsApiError(false);
+    setIsLoading(true);
 
       moviesApi.getMovies()
       .then((res) => {
@@ -197,15 +217,26 @@ function App() {
     mainApi.updateUserInfo(name, email)
       .then((res) => {
         setCurrentUser(res);
+        setInfoTooltipOpen(true);
+        setMessage('Данные изменены успешно');
+        setInfoTooltipImage(imageSuccess);
       })
       .catch((err) => {
         setIsUpdateProfileErr(true)
         handleErrorApi(err);
+        setInfoTooltipOpen(true);       
+        setMessage('Что-то пошло не так! Попробуйте ещё раз.');
+        setInfoTooltipImage(imageError);
+
       })
       .finally(() => {
         setIsLoading(false);
         setIsUpdateProfileDone(true);
       })
+  }
+
+  function closeAllPopups() {
+    setInfoTooltipOpen(false);
   }
 
   return (
@@ -257,6 +288,15 @@ function App() {
       /> } />    
       <Route path="*" element={< NotFound/> } />
     </Routes>
+
+        <InfoTooltip
+        isOpen={infoTooltipOpen}
+        onClose={closeAllPopups}
+        image={infoTooltipImage}
+        message={message}
+        />
+
+
     </CurrentUserContext.Provider>
   )
 }

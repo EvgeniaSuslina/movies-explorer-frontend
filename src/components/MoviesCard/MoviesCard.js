@@ -3,14 +3,10 @@ import { useEffect, useState } from 'react';
 import { MOVIE_DURATION } from '../../utils/config';
 import './MoviesCard.css'
 
-
-
 function MoviesCard({movie, onSaveMovie, onDeleteMovie, savedMovies, allMovies, filteredMovies}) {
 
     const location = useLocation();
     const [isLiked, setIsLiked] = useState(false);
-
-
 
 //check movies and data for like
     useEffect(() => {
@@ -95,7 +91,7 @@ function MoviesCard({movie, onSaveMovie, onDeleteMovie, savedMovies, allMovies, 
         <li className="movie-card">
             <div className="movie-card__container">
                 <a href={movie.trailerLink} target='blank'>
-                    <img className="movie-card__img" src={ movie.image.url ? 'https://api.nomoreparties.co/' + movie.image.url : movie.image } alt={movie.nameRU}/>
+                    <img className="movie-card__img" src={movie.image.url ? 'https://api.nomoreparties.co/' + movie.image.url : movie.image} alt={movie.nameRU}/>
                 </a>
                 <div className="movie-card__info">
                     <p className="movie-card__name">{movie.nameRU}</p>
@@ -112,5 +108,4 @@ function MoviesCard({movie, onSaveMovie, onDeleteMovie, savedMovies, allMovies, 
         </li>        
     )    
 }
-
 export default MoviesCard;

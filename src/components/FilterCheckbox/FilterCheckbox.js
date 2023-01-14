@@ -25,4 +25,5 @@ function FilterCheckbox({isCheckboxChecked, handleCheckboxClick}) {
 
 
 
+
 export default FilterCheckbox;

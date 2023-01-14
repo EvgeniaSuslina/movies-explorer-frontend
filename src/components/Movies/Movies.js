@@ -8,7 +8,7 @@ import BurgerPopup from '../BurgerPopup/BurgerPopup';
 import './Movies.css';
 
 
-function Movies({onSearch, allMovies, isLoading, isApiError,onSaveMovie, onDeleteMovie, filteredMovies, loggedIn, setFilteredMovies}) {
+function Movies({onSearch, isLoading, isApiError, allMovies, onSaveMovie, onDeleteMovie, filteredMovies, loggedIn, setFilteredMovies}) {
 
     const [isBurgerPopupOpened, setIsBurgerPopupOpened] = useState(false);
 

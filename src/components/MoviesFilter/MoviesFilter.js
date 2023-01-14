@@ -4,7 +4,7 @@ function MoviesFilter(movies, request, isCheckboxChecked) {
             if (isCheckboxChecked) {
                 return movie.nameRu.toLowerCase().includes(request.toLowerCase()) && movie.duration <= 40;
             } else {
-                return  movie.nameRu.toLowerCase().includes(request.toLowerCase());
+                return movie.nameRu.toLowerCase().includes(request.toLowerCase());
             }
         })
     } else if (request.lenght === 0) {

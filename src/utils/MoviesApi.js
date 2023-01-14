@@ -16,6 +16,6 @@ class MoviesApi extends Api {
 
 const moviesApi = new MoviesApi({
     baseUrl: MOVIESURL
-})
+});
 
 export default moviesApi;

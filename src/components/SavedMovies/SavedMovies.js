@@ -13,6 +13,7 @@ function SavedMovies({isLoading, getSavedMovies, onDeleteMovie, savedMoviesByUse
     return(
         <>
             <Header navType={'loggedInLinks'}/>
+            <main className="movies">
             <SearchForm 
             isLoading={isLoading}
             savedMovies={savedMoviesByUser}
@@ -21,7 +22,8 @@ function SavedMovies({isLoading, getSavedMovies, onDeleteMovie, savedMoviesByUse
             <MoviesCardList                 
                 onDeleteMovie={onDeleteMovie}
                 savedMovies={savedMoviesByUser}
-            />            
+            /> 
+            </main>        
             <Footer />
         </>       
     )

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import savedMovies from '../SavedMovies/SavedMovies';
+//import savedMovies from '../SavedMovies/SavedMovies';
 import './SearchForm.css';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import MoviesFilter from '../MoviesFilter/MoviesFilter';
@@ -95,7 +95,7 @@ function SearchForm({onSearch, isLoading, setFilteredMovies, allMovies, setSaved
     }
 
 //checkbox change
-    function handleChekboxChange(){
+    function handleCheckboxClick(){
         setIsCheckboxChecked(!isCheckboxChecked);
 
         if(location.pathname === '/movies') {
@@ -141,7 +141,7 @@ function SearchForm({onSearch, isLoading, setFilteredMovies, allMovies, setSaved
  
     return (
         <div className="search-form-content">            
-            <form className="search-form" onSubmit={handleSubmitForm} noValidate>                
+            <form className="search-form" onSubmit={handleSubmitForm} noValidate={true}>                
                 <input 
                 className="search-form__input" 
                 placeholder="Фильм"
@@ -159,7 +159,7 @@ function SearchForm({onSearch, isLoading, setFilteredMovies, allMovies, setSaved
             <span className="search-form__error">{errorShown && 'Нужно ввести ключевое слово'}</span>
             <FilterCheckbox 
             isCheckboxChecked={isCheckboxChecked}
-            onChangeCheckbox={handleChekboxChange}
+            onChange={handleCheckboxClick}
             />
         </div>
     )
