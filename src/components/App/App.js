@@ -348,6 +348,10 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
     <Routes>
       <Route index path="/" element={< Main /> } />
+      <Route
+        element={
+        <ProtectedRoute condition={!loggedIn} redirectTo="/movies" />
+        }>
       <Route path="/signup" element={ <Register
         onRegister={handleRegister}
         isErrorOnRegister={isErrorOnRegister}
@@ -360,9 +364,10 @@ function App() {
       setIsErrorOnLogin={setIsErrorOnLogin}
       isLoading={isLoading}/> 
       } />
-
+      </Route>
+      <Route element={<ProtectedRoute condition={loggedIn} redirectTo="/movies" />
+      }>
       <Route path="/movies" element={ 
-      <ProtectedRoute isLogged={loggedIn}>
       <Movies
        isApiError={isApiError}
        onSearch={handleMovieSearch}
@@ -373,10 +378,9 @@ function App() {
        onSubmitCheckbox={handleCheckboxMovies}
        preloaderStatus={isPreloader}  
        />
-       </ProtectedRoute>} />    
+      } />    
 
-      <Route path="/saved-movies" element={ 
-      <ProtectedRoute isLogged={loggedIn}>      
+      <Route path="/saved-movies" element={             
       <SavedMovies 
       onSearch={handleSearchSavedMovie}
       onSaveMovie={handleMovieSave}
@@ -385,10 +389,9 @@ function App() {
       onSubmitCheckbox={handleCheckboxSavedMovies}
       preloaderStatus={isPreloader}
       /> 
-      </ProtectedRoute>} />      
+    } />      
 
-      <Route path="/profile" element={ 
-      <ProtectedRoute isLogged={loggedIn}>
+      <Route path="/profile" element={       
       <Profile 
       onUpdateUser={handleUpdateUserInfo}
       setCurrentUser={setCurrentUser}
@@ -401,8 +404,8 @@ function App() {
       setIsUpdateProfileDone={setIsUpdateProfileDone}
       isLoading={isLoading}
       />      
-      </ProtectedRoute>} />    
-
+      } />    
+    </Route>
       <Route path="*" element={< NotFound/> } />
     </Routes>
 
@@ -412,8 +415,6 @@ function App() {
         image={infoTooltipImage}
         message={message}
         />
-
-
     </CurrentUserContext.Provider>
   )
 }
