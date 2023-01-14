@@ -27,9 +27,7 @@ function Profile({
     const [emailInputValidity, setEmailInputValidity] = useState(true);
     const [nameInputValidity, setNameInputValidity] = useState(true);
     const [isEmaiInputErr, setEmailInputErr] = useState(false);
-    const [isNameInputErr, setNameInputErr] = useState(false);
-
-    const [isDataChanged, setIsDataChanged] = useState(false);
+    const [isNameInputErr, setNameInputErr] = useState(false);   
 
     const [isApiErrorShown, setIsApiErrorShown] = useState(false);
     const [buttonDisabled, setButtomDisabled] = useState(false); 
@@ -38,11 +36,7 @@ function Profile({
     const [isBurgerPopupOpened, setIsBurgerPopupOpened] = useState(false);
     const currentUser = useContext(CurrentUserContext);
 
-    useEffect(() => {
-        setIsDataChanged(isUpdateProfileDone);
-    }, [isUpdateProfileDone]);
-
-
+    
     useEffect(() => {
         setIsUpdateProfileDone(false);
     }, [location.pathname]);
@@ -152,8 +146,7 @@ function Profile({
     const emailErrorMessage = emailInputValidity ? 'Введите email' : 'Введите новый корректный email';
 
     const profileLinks= (
-        <>
-            <p className={`profile__text ${isDataChanged && 'profile__text_visible'}`}>Данные изменены</p>
+        <>            
             <button  onClick={handleEditButton} className="profile-button" type="button">
                 Редактировать
             </button>

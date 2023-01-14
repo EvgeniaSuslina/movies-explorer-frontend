@@ -1,165 +1,94 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-//import savedMovies from '../SavedMovies/SavedMovies';
 import './SearchForm.css';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
-import MoviesFilter from '../MoviesFilter/MoviesFilter';
 
 
-function SearchForm({onSearch, isLoading, setFilteredMovies, allMovies, setSavedMovies, savedMovies}){
+function SearchForm({onSearch, onSubmitCheckbox}){
 
-    const [inputValue, setInputValue] =  useState(localStorage.getItem('searchRequest') || '');
-    const [errorShown, setErrorShown] = useState(false);
-    const [inputValidity, setInputValidity] = useState(false);
-
+    const [inputValue, setInputValue] =  useState('');
     const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
-    const [isButtonDisabled, setButtonDisabled] = useState(inputValidity);
+    const [searchError, setSearchError] = useState({
+        errorMessage: "",
+        isValid: true
+    });
 
-    const location = useLocation()
+    const location = useLocation();
 
-//search request
+//get data & checkbox state from localstorge
     useEffect(() => {
         if (location.pathname === '/movies') {
-            if(localStorage.getItem('searchRequest')) {
-                setInputValue(localStorage.getItem('searchRequest'));
-            }
+            setInputValue(localStorage.getItem("searchWord"));
+            setIsCheckboxChecked(JSON.parse(localStorage.getItem("checkboxStatus")));
 
-            if (JSON.parse(localStorage.getItem('isCheckboxChecked'))) {
-                setIsCheckboxChecked(JSON.parse(localStorage.getItem('isCheckboxChecked')));
-            }
-        }
-        if (location.pathname === '/saved-movies') {
-            setInputValue('');
-            setIsCheckboxChecked(false);
-
-            if (inputValue.length === 0) {
-                setErrorShown(true);
-            }
-        }
-    }, []);
+        } else if (location.pathname === '/saved-movies') {
+            const checkboxStatus = JSON.parse(localStorage.getItem("checkboxStatusSaved"));
+            setIsCheckboxChecked(checkboxStatus);
+            onSubmitCheckbox(checkboxStatus);
+        }          
+    }, [location]);
 
 
-//update local storage
     useEffect(() => {
-        if (location.pathname === '/movies') updateLocalStorage();
-    }, [isCheckboxChecked]);
-
-
-//pathname = movies
-     useEffect(() => {
-        if (localStorage.getItem('allMovies') && location.pathname === '/movies') {
-            const filteredMovies = MoviesFilter(JSON.parse(localStorage.getItem('allMovies')), 
-            inputValue, isCheckboxChecked);
-
-            if (!(filteredMovies === undefined)) {
-                localStorage.setItem('filteredMovies', JSON.stringify(filteredMovies));
-                setFilteredMovies(filteredMovies);
-            }
-        }
-     }, [allMovies, isCheckboxChecked])
-
-
-//pathname = saved-movies
-     useEffect(() => {
-        if (location.pathname === '/saved-movies' && localStorage.getItem('savedMovies')) {
-            const filteredMovies = MoviesFilter(JSON.parse(localStorage.getItem('savedMovies')),
-            inputValue, isCheckboxChecked);
-
-            if(!(filteredMovies === undefined)) {
-                localStorage.setItem('filteredMovies', JSON.stringify(filteredMovies));
-                setSavedMovies(filteredMovies);
-            }
-        }
-     }, [isCheckboxChecked]);
-
-//update local storage
-    function updateLocalStorage(){
-        localStorage.setItem('searchRequest', inputValue);
-        localStorage.setItem('isCheckboxChecked', JSON.stringify(isCheckboxChecked));
-        localStorage.removeItem('moviesContent')
-        localStorage.removeItem('moviesMoreButton')
-    }
+        searchError.isValid && setSearchError({errorMessage: '', isValid: true});
+    }, [])
 
 //input change
     function handleInputChange(evt) {
-        setInputValue(evt.target.value);
-        setInputValidity(evt.target.validity.valid);
+        setInputValue(evt.target.value);       
 
-        if(!evt.target.validity.valid || evt.target.value.length < 2) {
-            setErrorShown(true);
-            setButtonDisabled(true);
+        if(evt.target.value.length === 0) {
+            setSearchError({               
+                isValid: evt.target.validity.valid,
+                errorMessage: "Нужно ввести ключевое слово",
+            });
         } else {
-            setErrorShown(false);
-            setButtonDisabled(false);
+            setSearchError({         
+                isValid: evt.target.validity.valid,
+                errorMessage: " "
+            });
         }
     }
 
 //checkbox change
     function handleCheckboxClick(){
         setIsCheckboxChecked(!isCheckboxChecked);
-
-        if(location.pathname === '/movies') {
-            if (localStorage.getItem('allMovies')) {
-                const filteredMovies = MoviesFilter(JSON.parse(localStorage.getItem('allMovies')), 
-                inputValue, isCheckboxChecked);
-                if (!(filteredMovies === undefined)) {
-                    localStorage.setItem('filteredMovies', JSON.stringify(filteredMovies));
-                    setFilteredMovies(filteredMovies);
-                }
-            }            
-        }        
+        onSubmitCheckbox(!isCheckboxChecked);      
     }
+
 
 //form submit
     function handleSubmitForm(evt) {
         evt.preventDefault();
 
-        if (inputValidity && !errorShown && location.pathname === '/movies') {
-            updateLocalStorage();
-
-            if(localStorage.getItem('allMovies')) {
-                const filteredMovies = MoviesFilter(JSON.parse(localStorage.getItem('allMovies')), 
-                inputValue, isCheckboxChecked);
-                localStorage.setItem('filteredMovies', JSON.stringify(filteredMovies));
-                setFilteredMovies(filteredMovies);
-            } else {
-                onSearch()
-            }
+        if (!inputValue) {
+            return setSearchError({
+                isValid: false,
+                errorMessage: "Нужно ввести ключевое слово",
+            })
         }
-
-        if (location.pathname === '/saved-movies') {
-            if(savedMovies) {
-                const filteredMovies = MoviesFilter(JSON.parse(localStorage.getItem('savedMovies')),
-                inputValue, isCheckboxChecked);
-
-                if(!(filteredMovies === undefined)) {
-                    setSavedMovies(filteredMovies);
-                }
-            }
-        }        
-    }
+        onSearch(inputValue, isCheckboxChecked);
+    }   
  
     return (
         <div className="search-form-content">            
-            <form className="search-form" onSubmit={handleSubmitForm} noValidate={true}>                
+            <form className="search-form" onSubmit={handleSubmitForm} noValidate>                
                 <input 
                 className="search-form__input" 
                 placeholder="Фильм"
                 type="text"
-                value={inputValue}
+                value={inputValue || ""}
                 onChange={handleInputChange}
-                disabled={isLoading}
                 />
                 <button  
-                className={`search-form__button ${(isLoading || isButtonDisabled) && 'search-form__button_disabled'}`}
-                disabled={(isLoading || isButtonDisabled)} 
+                className='search-form__button' 
                 type="submit">
                 </button>            
             </form>
-            <span className="search-form__error">{errorShown && 'Нужно ввести ключевое слово'}</span>
+            <span className="search-form__error">{searchError.errorMessage}</span>
             <FilterCheckbox 
             isCheckboxChecked={isCheckboxChecked}
-            onChange={handleCheckboxClick}
+            onSubmitCheckbox={handleCheckboxClick}
             />
         </div>
     )

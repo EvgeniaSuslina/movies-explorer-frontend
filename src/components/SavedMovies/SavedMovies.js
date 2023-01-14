@@ -1,28 +1,29 @@
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import Preloader from '../Preloader/Preloader';
 import Footer from '../Footer/Footer';
-import {useEffect} from 'react';
 
-function SavedMovies({isLoading, getSavedMovies, onDeleteMovie, savedMoviesByUser, setSavedMovies}) {
-
-    useEffect(() =>{
-        getSavedMovies();
-    }, [])
-
+function SavedMovies({onSearch,  savedMovies, onSaveMovie, onDeleteMovie, onSubmitCheckbox, preloaderStatus}) {
+   
     return(
         <>
             <Header navType={'loggedInLinks'}/>
             <main className="movies">
             <SearchForm 
-            isLoading={isLoading}
-            savedMovies={savedMoviesByUser}
-            setSavedMovies={setSavedMovies}
+            onSearch={onSearch}
+            onSubmitCheckbox={onSubmitCheckbox} 
             />
-            <MoviesCardList                 
-                onDeleteMovie={onDeleteMovie}
-                savedMovies={savedMoviesByUser}
-            /> 
+            {preloaderStatus ? (
+                <Preloader />
+                ) : (
+                    <MoviesCardList  
+                    foundMovies={savedMovies} 
+                    onSaveMovie={onSaveMovie}              
+                    onDeleteMovie={onDeleteMovie}
+                    savedMovies={savedMovies}
+                    /> 
+                )}             
             </main>        
             <Footer />
         </>       

@@ -59,22 +59,22 @@ class MainApi extends Api {
         .then(this._checkResult);
     }
 
-    saveMovie(country, director, duration, year, description, image, trailerLink, thumbnail, movieId, nameRu, nameEn) {
+    saveMovie(movie) {
         return fetch(`${this._baseUrl}/movies`, {
             method: 'POST', 
             headers: this._headers,
             body: JSON.stringify({
-                "country": country,
-                "director": director, 
-                "duration": duration,
-                "year" : year,
-                "description": description, 
-                "image" : image, 
-                "trailerLink" : trailerLink, 
-                "thumbnail" : thumbnail, 
-                "movieId" : movieId, 
-                "nameRu" : nameRu, 
-                "nameEn" : nameEn
+                country: movie.country,
+                director: movie.director,
+                duration: movie.duration,
+                year: movie.year,
+                description: movie.description,
+                image: `https://api.nomoreparties.co/${movie.image.url}`,
+                trailerLink: movie.trailerLink,
+                thumbnail: `https://api.nomoreparties.co/${movie.image.url}`,
+                movieId: movie.id,
+                nameRU: movie.nameRU,
+                nameEN: movie.nameEN
             })
         })
         .then(this._checkResult);

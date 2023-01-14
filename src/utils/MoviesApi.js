@@ -1,4 +1,4 @@
-import { MOVIESURL } from "./config";
+import { MOVIESURL} from "./config";
 import Api from "./Api";
 
 class MoviesApi extends Api {
@@ -7,7 +7,7 @@ class MoviesApi extends Api {
     }
 
     getMovies(){
-        return fetch(`${this._baseUrl}`, {
+        return fetch(`${this._baseUrl}/beatfilm-movies`, {
             method: 'GET',
         })
         .then(super._checkResult);

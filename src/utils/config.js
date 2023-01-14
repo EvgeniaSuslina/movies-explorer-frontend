@@ -1,5 +1,5 @@
 export const BASEURL = 'http://localhost:3001';
-export const MOVIESURL = 'https://api.nomoreparties.co/beatfilm-movies';
+export const MOVIESURL = 'https://api.nomoreparties.co';
 
 
 //кол-во карточек, которые выдает поиск в зависимости от экрана
@@ -14,6 +14,8 @@ export const ADD_MOVIES_DESKTOP = 3;
 export const ADD_MOVIES_TABLETS = 2;
 export const ADD_MOVIES_MOBILES = 2;
 
+const URL_REGEX = /^(https?:\/\/)?([\w-]{1,32}\.[\w-]{1,32})[^\s@]*/;
+
 const MOVIE_DURATION = (movie) => `${Math.floor(movie.duration / 60)}ч ${movie.duration % 60}м`;
 
-export {MOVIE_DURATION}
+export {MOVIE_DURATION, URL_REGEX}

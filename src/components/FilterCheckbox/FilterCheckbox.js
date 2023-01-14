@@ -2,14 +2,14 @@ import React from 'react';
 import './FilterCheckbox.css';
 
 
-function FilterCheckbox({isCheckboxChecked, handleCheckboxClick}) {
+function FilterCheckbox({isCheckboxChecked, onSubmitCheckbox}) {
     return (
         <div className="checkbox-content">
         <input 
             className="checkbox-content__input"
             id={`checkbox__check`}
             type="checkbox"
-            onChange={handleCheckboxClick}
+            onChange={onSubmitCheckbox}
             checked={isCheckboxChecked}
         />
         <label
