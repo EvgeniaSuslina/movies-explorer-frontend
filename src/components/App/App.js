@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-import { ProtectedRoute }from '../ProtectedRoute/ProtectedRoute';
+import ProtectedRoute from '../../utils/ProtectedRoute';
+import RouteToMovies from '../../utils/RouteToMovies';
+
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
@@ -347,65 +349,73 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
     <Routes>
-      <Route index path="/" element={< Main /> } />
-      <Route
-        element={
-        <ProtectedRoute condition={!loggedIn} redirectTo="/movies" />
-        }>
-      <Route path="/signup" element={ <Register
-        onRegister={handleRegister}
-        isErrorOnRegister={isErrorOnRegister}
-        setIsErrorOnRegister={setIsErrorOnRegister}
-        isLoading={isLoading}
-         /> } />
-      <Route path="/signin" element={ <Login 
-      onLogin={handleLogin} 
-      isErrorOnLogin={isErrorOnLogin}
-      setIsErrorOnLogin={setIsErrorOnLogin}
-      isLoading={isLoading}/> 
-      } />
-      </Route>
-      <Route element={<ProtectedRoute condition={loggedIn} redirectTo="/movies" />
-      }>
+      <Route index path="/" element={< Main /> } />     
+        <Route path="/signup" element={ 
+        <RouteToMovies>
+          <Register
+            onRegister={handleRegister}
+            isErrorOnRegister={isErrorOnRegister}
+            setIsErrorOnRegister={setIsErrorOnRegister}
+            isLoading={isLoading}
+            />
+        </RouteToMovies>
+            } />
+   
+      <Route path="/signin" element={ 
+        <RouteToMovies>      
+            <Login 
+            onLogin={handleLogin} 
+            isErrorOnLogin={isErrorOnLogin}
+            setIsErrorOnLogin={setIsErrorOnLogin}
+            isLoading={isLoading}/> 
+        </RouteToMovies>
+        } />     
+      
       <Route path="/movies" element={ 
-      <Movies
-       isApiError={isApiError}
-       onSearch={handleMovieSearch}
-       foundMovies={foundMovies}       
-       onSaveMovie={handleMovieSave}
-       onDeleteMovie={handleMovieDelete}
-       savedMovies={savedMovies}
-       onSubmitCheckbox={handleCheckboxMovies}
-       preloaderStatus={isPreloader}  
-       />
+        <ProtectedRoute>
+          <Movies
+          isApiError={isApiError}
+          onSearch={handleMovieSearch}
+          foundMovies={foundMovies}       
+          onSaveMovie={handleMovieSave}
+          onDeleteMovie={handleMovieDelete}
+          savedMovies={savedMovies}
+          onSubmitCheckbox={handleCheckboxMovies}
+          preloaderStatus={isPreloader}  
+          />
+          </ProtectedRoute>
       } />    
 
-      <Route path="/saved-movies" element={             
-      <SavedMovies 
-      onSearch={handleSearchSavedMovie}
-      onSaveMovie={handleMovieSave}
-      onDeleteMovie={handleMovieDelete}
-      savedMovies={savedMovies}
-      onSubmitCheckbox={handleCheckboxSavedMovies}
-      preloaderStatus={isPreloader}
-      /> 
+      <Route path="/saved-movies" element={    
+        <ProtectedRoute>
+          <SavedMovies 
+          onSearch={handleSearchSavedMovie}
+          onSaveMovie={handleMovieSave}
+          onDeleteMovie={handleMovieDelete}
+          savedMovies={savedMovies}
+          onSubmitCheckbox={handleCheckboxSavedMovies}
+          preloaderStatus={isPreloader}
+          /> 
+      </ProtectedRoute>
     } />      
 
-      <Route path="/profile" element={       
-      <Profile 
-      onUpdateUser={handleUpdateUserInfo}
-      setCurrentUser={setCurrentUser}
-      setLoggedIn={setLoggedIn}
-      setAllMovies={setAllMovies}
-      setSavedMovies={setSavedMovies}
-      isUpdateProfileErr={isUpdateProfileErr}
-      setIsUpdateProfileErr={setIsUpdateProfileErr}
-      isUpdateProfileDone={isUpdateProfileDone}
-      setIsUpdateProfileDone={setIsUpdateProfileDone}
-      isLoading={isLoading}
-      />      
+      <Route path="/profile" element={  
+        <ProtectedRoute>   
+          <Profile 
+          onUpdateUser={handleUpdateUserInfo}
+          setCurrentUser={setCurrentUser}
+          setLoggedIn={setLoggedIn}
+          setAllMovies={setAllMovies}
+          setSavedMovies={setSavedMovies}
+          isUpdateProfileErr={isUpdateProfileErr}
+          setIsUpdateProfileErr={setIsUpdateProfileErr}
+          isUpdateProfileDone={isUpdateProfileDone}
+          setIsUpdateProfileDone={setIsUpdateProfileDone}
+          isLoading={isLoading}
+          />      
+        </ProtectedRoute>
       } />    
-    </Route>
+    
       <Route path="*" element={< NotFound/> } />
     </Routes>
 
