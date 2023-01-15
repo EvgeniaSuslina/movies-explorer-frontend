@@ -71,7 +71,7 @@ function handleSubmit(evt){
 const loginCaption = (
         <p className="auth__text">
         Еще не зарегистрированы? 
-        <Link className="auth__link" to="/signup" target="_blank">
+        <Link className="auth__link" to="/signup">
           Регистрация
         </Link>
         </p>

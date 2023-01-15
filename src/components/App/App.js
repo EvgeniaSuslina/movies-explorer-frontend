@@ -15,7 +15,7 @@ import NotFound from '../NotFound/NotFound';
 import InfoTooltip from '../InfoToolip/InfoTooltip';
 import imageError from '../../images/image_error.svg';
 import imageSuccess from '../../images/image_success.png';
-import { URL_REGEX } from '../../utils/config'
+import { URL_REGEX, SHORT_MOVIE_DURATION } from '../../utils/config'
 
 import mainApi from "../../utils/MainApi";
 import moviesApi from '../../utils/MoviesApi';
@@ -66,7 +66,8 @@ function App() {
     });
   }, [loggedIn])
 
-  useEffect(() => {
+
+useEffect(() => {
     if (JSON.parse(localStorage.getItem("loadedMovies"))) {
         if (localStorage.getItem("loadedMovies")) {
             setAllMovies(JSON.parse(localStorage.getItem("loadedMovies")));
@@ -74,14 +75,15 @@ function App() {
     }
 }, [])
 
-  useEffect(() => {
-    if (localStorage.getItem("searchedMovies") && localStorage.getItem("checkboxStatus")) {
 
-        const checkboxStatus = JSON.parse(localStorage.getItem("checkboxStatus"));
+useEffect(() => {
+    if (localStorage.getItem("searchedMovies") && localStorage.getItem("checkboxStat")) {
+        const checkboxStatus = JSON.parse(localStorage.getItem("checkboxStat"));
         handleCheckboxMovies(checkboxStatus);
     }
   }, []);
 
+ 
 
   useEffect(() => {
     if (loggedIn && currentUser) {
@@ -172,7 +174,6 @@ function App() {
       });
     }
   }
-
   
   //getting all movies from movies api 
   function handleMovieSearch(movie, checked) {
@@ -239,17 +240,17 @@ function App() {
     let movies = JSON.parse(localStorage.getItem("searchedMovies"));
 
     if(checkbox) {
-      shortMovies = movies.filter((item) => item.duration <= 40);
+      shortMovies = movies.filter((item) => item.duration <= SHORT_MOVIE_DURATION );
     } else if (!checkbox) {
       shortMovies = movies;
       setFoundMovies(shortMovies);
-      localStorage.setItem("checkboxStatus", JSON.stringify(checkbox));
+      localStorage.setItem("checkboxStat", JSON.stringify(checkbox));
     }
   }
 
   //getting saved movies
   function getSavedMovies() {
-    //mainApi.updateToken()
+    mainApi.updateToken()
 
     mainApi.getSavedMovies()
       .then((res) => {
@@ -267,7 +268,8 @@ function App() {
       mainApi.saveMovie(movie)
         .then((res) => {
           setSavedMovies(savedMovies.concat(res));
-          localStorage.setItem(savedMoviesList.concat(res));
+          setSavedMoviesList(savedMoviesList.concat(res));
+          //localStorage.setItem(savedMoviesList.concat(res));
         })
         .catch((err) => {
           console.log(`Ошибка ${err}`);
@@ -340,7 +342,7 @@ function App() {
 
   function handleCheckboxSavedMovies(checkbox) {
     if(checkbox) {
-      setSavedMovies(savedMovies.filter((item) => item.duration <= 40));
+      setSavedMovies(savedMovies.filter((item) => item.duration <= SHORT_MOVIE_DURATION));
     } else if (!checkbox) {
       setSavedMovies(savedMoviesList);
     }
@@ -351,14 +353,14 @@ function App() {
     <Routes>
       <Route index path="/" element={< Main /> } />     
         <Route path="/signup" element={ 
-        <RouteToMovies>
+        <RouteToMovies> 
           <Register
             onRegister={handleRegister}
             isErrorOnRegister={isErrorOnRegister}
             setIsErrorOnRegister={setIsErrorOnRegister}
             isLoading={isLoading}
             />
-        </RouteToMovies>
+       </RouteToMovies>
             } />
    
       <Route path="/signin" element={ 

@@ -15,7 +15,7 @@ function Header({navType, onButtonClick}) {
                     <img className="logo" src={logo} alt="Логотип" />                 
                 ) : (
                     <>
-                    <Link to="/" target="_blank">
+                    <Link to="/">
                         <img className="header-logo" src={logo} alt="Логотип" />
                     </Link>
                     <BurgerMenu onButtonClick={ onButtonClick }/>

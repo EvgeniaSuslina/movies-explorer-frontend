@@ -102,7 +102,9 @@ function handleButtonClick(){
       setMaxMovies(maxMovies + ADD_MOVIES_DEFAULT);
   }
 }
-  
+
+const moreButtonVisible = (<button className="movies-card-list__button" type="button" onClick={handleButtonClick}>Ещё</button>)
+const moreButtonHidden = (<button className="movies-card-list__button_disbled" type="button"></button>)
 
   return(
   <section className="movies-card-list">            
@@ -118,11 +120,7 @@ function handleButtonClick(){
                     />
                 ))}
             </ul> 
-          {foundMovies.lenght !== renderedMovies.length ? (
-            <button className="movies-card-list__button" type="button" onClick={handleButtonClick}>Ещё</button>
-          ) : (
-            ''
-          )}
+          {renderedMovies.length >= 12 || renderedMovies.length >= 8 ||  renderedMovies.length >= 5 ? (moreButtonVisible) : (moreButtonHidden)}
     </section>
   )
 } 

@@ -86,7 +86,7 @@ function handleSubmit (evt) {
 const registerCaption = (  
         <p className="auth__text">
           Уже зарегистрированы? 
-          <Link className="auth__link" to="/signin" target="_blank">
+          <Link className="auth__link" to="/signin">
             Войти
           </Link>
         </p>

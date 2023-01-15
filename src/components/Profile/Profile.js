@@ -122,13 +122,13 @@ function Profile({
     }
 
     function signOut() {
+        localStorage.clear();
+        navigate('/');
         setLoggedIn(false);
         setCurrentUser({});
         setAllMovies(null);
         setSavedMovies(null);
         setFilteredMovies(null);
-        localStorage.clear();
-        navigate('/');
     }
    
 
@@ -150,7 +150,7 @@ function Profile({
             <button  onClick={handleEditButton} className="profile-button" type="button">
                 Редактировать
             </button>
-            <Link className="profile__exit-link" onClick={signOut} to="/" target="_blank">Выйти из аккаунта</Link>
+            <Link className="profile__exit-link" onClick={signOut} to="/">Выйти из аккаунта</Link>
 
         </>)
 
