@@ -1,5 +1,4 @@
-//export const BASEURL = 'https://api.evgenia.movies-explor.nomoredomains.club';
-export const BASEURL = 'http://localhost:3001';
+export const BASEURL = 'https://api.evgenia.movies-explor.nomoredomains.club';
 export const MOVIESURL = 'https://api.nomoreparties.co';
 
 
