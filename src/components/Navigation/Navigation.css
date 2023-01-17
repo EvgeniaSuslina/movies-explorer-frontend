@@ -14,6 +14,7 @@
     width: 100%;
 }
 
+
 .navigation__link{
     font-weight: 400;
     font-size: 13px;
@@ -29,6 +30,9 @@
     font-weight: bold;
 }
 
+.navigation__link_color_white{
+    color: #FFFFFF;
+}
 .navigation__link-account{
     width:100px;
     height: 32px;

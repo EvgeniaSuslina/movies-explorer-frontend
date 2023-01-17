@@ -3,20 +3,21 @@ import { useLocation } from 'react-router-dom';
 import './Navigation.css';
 import '../Header/Header.css';
 
-function Navigation({type}) {  
+function Navigation({type, loggedIn}) {  
 
     const location = useLocation();
 
-    const MainPageLinks = 
-                <nav className="header__navigation">
+    const MainPageLinks =  
+                <nav className="header__navigation"> 
                     <NavLink to="/signup" className="header__register">Регистрация</NavLink>                    
                     <NavLink to="/signin">
                         <button className="header__signin" type="button">Войти</button>
                     </NavLink>
                 </nav>
 
-    const LoggedInLinks =          
-                    <nav className="navigation">                     
+
+    const LoggedInLinks =  
+                    <nav className="navigation">                             
                         {(location.pathname === '/movies') ? (
                         <div className="navigation__links-movies">
                              <NavLink to="/movies" className="navigation__link navigation__link-active">Фильмы</NavLink>                    
@@ -33,9 +34,11 @@ function Navigation({type}) {
                                 <p className="navigation__account-text">Аккаунт</p>
                                 </button>
                         </NavLink>
-                    </nav>
-
+                    </nav>                        
+    
     return (type === 'mainPage' && MainPageLinks) || (type ==='loggedInLinks' && LoggedInLinks)
+    
 }
+
 
 export default Navigation;

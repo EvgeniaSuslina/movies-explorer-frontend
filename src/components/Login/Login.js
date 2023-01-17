@@ -102,7 +102,7 @@ const loginCaption = (
         <label className="auth__form-label">Пароль</label>
         <input
           className="auth__input"        
-          type="text"
+          type="password"
           name="password"         
           onChange={handlePasswordChange}
           disabled={isLoading}

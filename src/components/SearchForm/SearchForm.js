@@ -22,9 +22,9 @@ function SearchForm({onSearch, onSubmitCheckbox}){
             setIsCheckboxChecked(JSON.parse(localStorage.getItem("checkboxStat")));
 
         } else if (location.pathname === '/saved-movies') {
-            const checkboxStatus = JSON.parse(localStorage.getItem("checkboxStatusSaved"));
-            setIsCheckboxChecked(checkboxStatus);
-            onSubmitCheckbox(checkboxStatus);
+            const checkboxStat = JSON.parse(localStorage.getItem("checkboxStatusSaved"));
+            setIsCheckboxChecked(checkboxStat);
+            onSubmitCheckbox(checkboxStat);
         }          
     }, [location]);
 

@@ -78,8 +78,8 @@ useEffect(() => {
 
 useEffect(() => {
     if (localStorage.getItem("searchedMovies") && localStorage.getItem("checkboxStat")) {
-        const checkboxStatus = JSON.parse(localStorage.getItem("checkboxStat"));
-        handleCheckboxMovies(checkboxStatus);
+        const checkboxStat = JSON.parse(localStorage.getItem("checkboxStat"));
+        handleCheckboxMovies(checkboxStat);
     }
   }, []);
 
@@ -191,7 +191,7 @@ useEffect(() => {
 
         localStorage.setItem("searchWord", movie);
         localStorage.setItem("searchedMovies", JSON.stringify(searchMovies));
-        localStorage.setItem("checkboxStatus", JSON.stringify(checked));
+        localStorage.setItem("checkboxStat", JSON.stringify(checked));
 
         setFoundMovies(searchMovies);
       }
@@ -222,7 +222,7 @@ useEffect(() => {
           setAllMovies(requestMovies);
           localStorage.setItem("searchWord", movie);
           localStorage.setItem("searchedMovies", JSON.stringify(searchMovies));
-          localStorage.setItem("checkboxStatus", JSON.stringify(checked));
+          localStorage.setItem("checkboxStat", JSON.stringify(checked));
           setFoundMovies(searchMovies);
         }
       })
@@ -269,7 +269,7 @@ useEffect(() => {
         .then((res) => {
           setSavedMovies(savedMovies.concat(res));
           setSavedMoviesList(savedMoviesList.concat(res));
-          //localStorage.setItem(savedMoviesList.concat(res));
+          localStorage.setItem(savedMoviesList.concat(res));
         })
         .catch((err) => {
           console.log(`Ошибка ${err}`);
@@ -323,7 +323,7 @@ useEffect(() => {
 
 
   //searching movies in saved-movies
-  function handleSearchSavedMovie(req){
+  function handleSearchSavedMovie(req, checkbox){
     setIsPreloader(true);
     const searchMovies = savedMovies.filter((item) =>
     item.nameRU.toLowerCase().includes(req.toLowerCase()));
@@ -337,6 +337,7 @@ useEffect(() => {
     } else {
         setSavedMovies(searchMovies);
         setIsPreloader(false);
+        localStorage.setItem("checkboxStat", JSON.stringify(checkbox));
     }
   }
 
@@ -345,6 +346,7 @@ useEffect(() => {
       setSavedMovies(savedMovies.filter((item) => item.duration <= SHORT_MOVIE_DURATION));
     } else if (!checkbox) {
       setSavedMovies(savedMoviesList);
+      localStorage.setItem("checkboxStat", JSON.stringify(checkbox));
     }
   }
 

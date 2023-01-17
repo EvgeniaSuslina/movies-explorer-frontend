@@ -120,7 +120,7 @@ const moreButtonHidden = (<button className="movies-card-list__button_disbled" t
                     />
                 ))}
             </ul> 
-          {renderedMovies.length >= 12 || renderedMovies.length >= 8 ||  renderedMovies.length >= 5 ? (moreButtonVisible) : (moreButtonHidden)}
+          {renderedMovies.length >= 12 ? (moreButtonVisible) : (moreButtonHidden)}
     </section>
   )
 } 

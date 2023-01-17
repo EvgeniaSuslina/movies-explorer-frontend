@@ -31,12 +31,11 @@
 }
 
 .header__content{
-    max-width: calc(1280px - 140px);
-    display: block;
     margin: 0;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    width: 100%;
 
 }
 
