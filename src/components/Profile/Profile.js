@@ -159,7 +159,7 @@ function Profile({
         <span className="auth__form-error">
                 {isApiErrorShown && 'Произошла ошибка, попробуйте еще раз'}
             </span>
-            <button disabled={buttonDisabled} className="profile-button" type="submit">
+            <button disabled={buttonDisabled} className={buttonDisabled ? "profile-button-disabled" : "profile-button"}type="submit">
                 Сохранить
             </button>
         </>

@@ -61,15 +61,15 @@
     color: #FFFFFF;
 }
 
-.profile-button_disabled{
+.profile-button-disabled{   
     margin-top: 220px;
     padding: 0;
     border: none;
-    background: #202020;
+    background-color: #202020;
     font-weight: 400;
     font-size: 13px;
-    line-height: 16px; 
-    color: #9b9b9b
+    line-height: 16px;  
+    color: grey
 }
 
 .profile-button {

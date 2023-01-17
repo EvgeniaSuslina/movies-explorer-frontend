@@ -14,31 +14,29 @@ function Navigation({type, loggedIn}) {
                         <button className="header__signin" type="button">Войти</button>
                     </NavLink>
                 </nav>
-
-
-    const LoggedInLinks =  
-                    <nav className="navigation">                             
-                        {(location.pathname === '/movies') ? (
-                        <div className="navigation__links-movies">
-                             <NavLink to="/movies" className="navigation__link navigation__link-active">Фильмы</NavLink>                    
-                             <NavLink to="/saved-movies" className="navigation__link">Сохраненные фильмы</NavLink>
-                        </div>  
-                        ):(
-                        <div className="navigation__links-movies">
-                            <NavLink to="/movies" className="navigation__link ">Фильмы</NavLink>                    
-                            <NavLink to="/saved-movies" className="navigation__link navigation__link-active">Сохраненные фильмы</NavLink>
-                        </div>  
-                        )}                                          
-                        <NavLink to="/profile">
-                            <button className="navigation__link-account" type="button">
-                                <p className="navigation__account-text">Аккаунт</p>
-                                </button>
-                        </NavLink>
-                    </nav>                        
+   
+                    
+    const AfterLoggedIn = 
+                    <nav className="navigation">
+                    <div className="navigation__links-movies">
+                        <NavLink className={`navigation__link ${loggedIn && 'navigation__link-white'}
+                        ${location.pathname === '/movies' && 'navigation__link-active'}`}
+                        to="/movies">Фильмы</NavLink>
+                        <NavLink className={`navigation__link ${loggedIn && 'navigation__link-white'}
+                        ${location.pathname === '/saved-movies' && 'navigation__link-active'}`} to="/saved-movies">Сохраненные
+                        фильмы</NavLink>                        
+                     </div> 
+                     <NavLink to="/profile">
+                        <button className="navigation__link-account" type="button">
+                         <p className="navigation__account-text">Аккаунт</p>
+                        </button>
+                    </NavLink>
+                    </nav>
     
-    return (type === 'mainPage' && MainPageLinks) || (type ==='loggedInLinks' && LoggedInLinks)
+    return (type === 'mainPage' && MainPageLinks) || (type ==='loggedInLinks' && AfterLoggedIn)
     
 }
 
 
 export default Navigation;
+

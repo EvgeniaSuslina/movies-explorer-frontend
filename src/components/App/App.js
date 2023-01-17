@@ -264,7 +264,15 @@ useEffect(() => {
   }
 
   //save movie
-  function handleMovieSave(movie){
+  function handleMovieSave(movie, res){
+    const isSaved = savedMovies.find((item) => item.movieId === movie.id);
+
+    if(!isSaved){
+      mainApi.saveMovie(movie)
+      setSavedMovies(savedMovies.concat(res));
+      setSavedMoviesList(savedMoviesList.concat(res));
+      localStorage.setItem(savedMoviesList.concat(res));
+    } else {}
       mainApi.saveMovie(movie)
         .then((res) => {
           setSavedMovies(savedMovies.concat(res));
@@ -353,7 +361,7 @@ useEffect(() => {
   return (
     <CurrentUserContext.Provider value={currentUser}>
     <Routes>
-      <Route index path="/" element={< Main /> } />     
+      <Route index path="/" element={< Main loggedIn={loggedIn}/> } />     
         <Route path="/signup" element={ 
         <RouteToMovies> 
           <Register

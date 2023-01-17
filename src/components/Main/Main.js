@@ -13,7 +13,7 @@ import Footer from '../Footer/Footer';
 function Main({loggedIn}) {
     return (  
         <>
-        <Header navType={ 'mainPage'}/>
+        <Header loggedIn={loggedIn}  navType={loggedIn? 'loggedInLinks': 'mainPage'}/>
         <main className="main">
             <Promo />
             <NavTab />
