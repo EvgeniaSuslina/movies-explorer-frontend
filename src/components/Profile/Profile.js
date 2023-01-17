@@ -28,6 +28,7 @@ function Profile({
     const [nameInputValidity, setNameInputValidity] = useState(true);
     const [isEmaiInputErr, setEmailInputErr] = useState(false);
     const [isNameInputErr, setNameInputErr] = useState(false);   
+    
 
     const [isApiErrorShown, setIsApiErrorShown] = useState(false);
     const [buttonDisabled, setButtomDisabled] = useState(false); 

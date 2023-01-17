@@ -12,7 +12,7 @@ function MoviesCardList({foundMovies, isApiError, onSaveMovie, onDeleteMovie, sa
   const [maxMovies, setMaxMovies] = useState(12);
   const [renderedMovies, setRenderedMovies] = useState([]);
   const [windowWidth, setWindowWidth] = useState(1280);
-  
+  const [isButtonShown, setIsButtonShown] = useState(false);
 
   useEffect(() => {
     setMovies();
@@ -47,6 +47,12 @@ function MoviesCardList({foundMovies, isApiError, onSaveMovie, onDeleteMovie, sa
       }
     });
     setRenderedMovies(movies);
+
+    if(foundMovies.length <= maxMovies){
+      setIsButtonShown(false)
+    } else {
+      setIsButtonShown(true)
+    }
   }
 
 //checking the width of screen
@@ -85,6 +91,12 @@ function MoviesCardList({foundMovies, isApiError, onSaveMovie, onDeleteMovie, sa
     }
   });
   setRenderedMovies(movies);
+
+  if(foundMovies.length <= maxMovies){
+    setIsButtonShown(false)
+  } else {
+    setIsButtonShown(true)
+  }
  }
 
 //handle button click
@@ -120,7 +132,7 @@ const moreButtonHidden = (<button className="movies-card-list__button_disbled" t
                     />
                 ))}
             </ul> 
-          {renderedMovies.length >= 12 ? (moreButtonVisible) : (moreButtonHidden)}
+          {renderedMovies.length >= 12 && isButtonShown ? (moreButtonVisible) : (moreButtonHidden)}
     </section>
   )
 } 
