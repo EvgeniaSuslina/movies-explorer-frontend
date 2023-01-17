@@ -83,7 +83,6 @@ useEffect(() => {
     }
   }, []);
 
- 
 
   useEffect(() => {
     if (loggedIn && currentUser) {
@@ -210,6 +209,13 @@ useEffect(() => {
         const searchMovies = requestMovies.filter((item) => 
         item.nameRU.toLowerCase().includes(movie.toLowerCase()));
 
+        localStorage.setItem("loadedMovies", JSON.stringify(requestMovies));
+          setAllMovies(requestMovies);
+          localStorage.setItem("searchWord", movie);
+          localStorage.setItem("searchedMovies", JSON.stringify(searchMovies));
+          localStorage.setItem("checkboxStat", JSON.stringify(checked));
+          setFoundMovies(searchMovies);
+
         if (searchMovies.length === 0) {
 
           setInfoTooltipImage(imageError);
@@ -264,20 +270,12 @@ useEffect(() => {
   }
 
   //save movie
-  function handleMovieSave(movie, res){
-    const isSaved = savedMovies.find((item) => item.movieId === movie.id);
-
-    if(!isSaved){
-      mainApi.saveMovie(movie)
-      setSavedMovies(savedMovies.concat(res));
-      setSavedMoviesList(savedMoviesList.concat(res));
-      localStorage.setItem(savedMoviesList.concat(res));
-    } else {}
+  function handleMovieSave(movie){
       mainApi.saveMovie(movie)
         .then((res) => {
           setSavedMovies(savedMovies.concat(res));
           setSavedMoviesList(savedMoviesList.concat(res));
-          localStorage.setItem(savedMoviesList.concat(res));
+          console.log(movie.trailerLink)
         })
         .catch((err) => {
           console.log(`Ошибка ${err}`);
