@@ -118,23 +118,32 @@ function handleButtonClick(){
 const moreButtonVisible = (<button className="movies-card-list__button" type="button" onClick={handleButtonClick}>Ещё</button>)
 const moreButtonHidden = (<button className="movies-card-list__button_disbled" type="button"></button>)
 
-  return(
-  <section className="movies-card-list">            
-        <p className="movies-card-list__not-found">Фильмы не найдены</p>
-            <ul className="movies-card-list__container">
-                {renderedMovies.map((item) => (
-                    <MoviesCard
-                        movie={item}
-                        key={item.id || item._id}
-                        onSaveMovie={onSaveMovie}
-                        onDeleteMovie={onDeleteMovie}
-                        savedMovies={savedMovies}
-                    />
-                ))}
-            </ul> 
-          {renderedMovies.length >= 12 && isButtonShown ? (moreButtonVisible) : (moreButtonHidden)}
-    </section>
-  )
+return( 
+  <section className="movies-card-list">             
+        <p className="movies-card-list__not-found">Фильмы не найдены</p> 
+            <ul className="movies-card-list__container"> 
+                {renderedMovies.filter((item) => { 
+                    if (isChecked)  
+                      return ( 
+                        (item.duration <= 41) 
+                      );  
+                    else  
+                      return ( 
+                        item 
+                      ) 
+                    }).map((item) => ( 
+                    <MoviesCard 
+                        movie={item} 
+                        key={item.id || item._id} 
+                        onSaveMovie={onSaveMovie} 
+                        onDeleteMovie={onDeleteMovie} 
+                        savedMovies={savedMovies} 
+                    /> 
+                ))} 
+            </ul>  
+          {renderedMovies.length >= 12 && isButtonShown ? (moreButtonVisible) : (moreButtonHidden)} 
+    </section> 
+  ) 
 } 
 
 export default MoviesCardList;

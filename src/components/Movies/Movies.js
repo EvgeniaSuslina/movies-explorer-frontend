@@ -30,7 +30,8 @@ function Movies({onSearch, isApiError, foundMovies, savedMovies, onSaveMovie, on
                 <SearchForm 
                 onSearch={onSearch}
                 onSubmitCheckbox={onSubmitCheckbox}
-                setIsChecked={setIsChecked}         
+                setIsChecked={setIsChecked} 
+                isChecked={isChecked}      
                 />
                 {preloaderStatus ? (
                 <Preloader />

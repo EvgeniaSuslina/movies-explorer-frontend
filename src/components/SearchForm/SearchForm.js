@@ -4,7 +4,7 @@ import './SearchForm.css';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 
 
-function SearchForm({onSearch, onSubmitCheckbox, setIsChecked}){
+function SearchForm({onSearch, onSubmitCheckbox, isChecked,setIsChecked}){
 
     const [inputValue, setInputValue] =  useState('');
     const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
@@ -16,18 +16,15 @@ function SearchForm({onSearch, onSubmitCheckbox, setIsChecked}){
     const location = useLocation();
 
 //get data & checkbox state from localstorge
-    useEffect(() => {
-        if (location.pathname === '/movies') {
-            setInputValue(localStorage.getItem("searchWord"));
-            //setIsCheckboxChecked(JSON.parse(localStorage.getItem("checkboxStat")));
+useEffect(() => { 
+    if (location.pathname === '/movies') { 
+        setInputValue(localStorage.getItem("searchWord")); 
+        setIsCheckboxChecked(isChecked)        
 
-        } else if (location.pathname === '/saved-movies') {
-            const checkboxStat = JSON.parse(localStorage.getItem("checkboxStatusSaved"));
-            setIsCheckboxChecked(checkboxStat);
-            onSubmitCheckbox(checkboxStat);
-        }          
-    }, [location]);
-
+    } else if (location.pathname === '/saved-movies') { 
+        setIsCheckboxChecked(false);         
+    }           
+}, [location]);
 
     useEffect(() => {
         searchError.isValid && setSearchError({errorMessage: '', isValid: true});

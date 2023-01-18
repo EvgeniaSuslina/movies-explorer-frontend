@@ -45,6 +45,7 @@ function App() {
   const [message, setMessage] = useState('');
   const [search, setSearch] = useState('');
   const [isChecked, setIsChecked] = useState('');
+  const [isCheckedInSaved, setIsCheckedInSaved] = useState('');
 
   const navigate = useNavigate();
   
@@ -189,6 +190,7 @@ useEffect(() => {
    //getting all movies from movies api 
    function handleMovieSearch(movie, checked) {
     if(allMovies.length !== 0) {
+      setSearch(movie)
       const searchMovies = allMovies.filter((item) => 
       item.nameRU.toLowerCase().includes(movie.toLowerCase()));
       if (searchMovies.length === 0) {
@@ -199,10 +201,12 @@ useEffect(() => {
         localStorage.setItem("searchWord", movie);
         localStorage.setItem("searchedMovies", JSON.stringify(searchMovies));
         localStorage.setItem("checkboxStatus", JSON.stringify(checked));
+     
         setFoundMovies(searchMovies);
       }
     } else {
       setIsPreloader(true);
+      setSearch(movie)
       moviesApi.getMovies()
       .then((requestMovies) => {
         requestMovies = requestMovies.map((item) => {
@@ -405,6 +409,8 @@ useEffect(() => {
           savedMovies={savedMovies}
           onSubmitCheckbox={handleCheckboxSavedMovies}
           preloaderStatus={isPreloader}
+          isCheckedInSaved={isCheckedInSaved}  
+          setIsCheckedInSaved={setIsCheckedInSaved}
           /> 
       </ProtectedRoute>
     } />      
