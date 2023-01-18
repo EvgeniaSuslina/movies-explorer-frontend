@@ -9,7 +9,7 @@ import Preloader from '../Preloader/Preloader';
 import './Movies.css';
 
 
-function Movies({onSearch, isApiError, foundMovies, savedMovies, onSaveMovie, onDeleteMovie, onSubmitCheckbox, preloaderStatus}) {  
+function Movies({onSearch, isApiError, foundMovies, savedMovies, onSaveMovie, onDeleteMovie, onSubmitCheckbox, preloaderStatus, isChecked, setIsChecked}) {  
         
     const [isBurgerPopupOpened, setIsBurgerPopupOpened] = useState(false);
 
@@ -29,7 +29,8 @@ function Movies({onSearch, isApiError, foundMovies, savedMovies, onSaveMovie, on
             <main className="movies">
                 <SearchForm 
                 onSearch={onSearch}
-                onSubmitCheckbox={onSubmitCheckbox}             
+                onSubmitCheckbox={onSubmitCheckbox}
+                setIsChecked={setIsChecked}         
                 />
                 {preloaderStatus ? (
                 <Preloader />
@@ -40,6 +41,7 @@ function Movies({onSearch, isApiError, foundMovies, savedMovies, onSaveMovie, on
                     onSaveMovie={onSaveMovie}
                     onDeleteMovie={onDeleteMovie}
                     savedMovies={savedMovies}
+                    isChecked={isChecked}
                     /> 
                 )}                         
             </main>

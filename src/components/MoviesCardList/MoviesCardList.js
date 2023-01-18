@@ -5,7 +5,7 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 import { MOVIES_AT_DESKTOP,  MOVIES_AT_TABLETS, MOVIES_AT_MOBILES, ADD_MOVIES_DESKTOP, ADD_MOVIES_TABLETS, ADD_MOVIES_MOBILES, MOVIES_DEFAULT, ADD_MOVIES_DEFAULT } from '../../utils/config';
 
 
-function MoviesCardList({foundMovies, isApiError, onSaveMovie, onDeleteMovie, savedMovies }){
+function MoviesCardList({foundMovies, isApiError, onSaveMovie, onDeleteMovie, savedMovies, isChecked }){
  
   const location = useLocation();
 

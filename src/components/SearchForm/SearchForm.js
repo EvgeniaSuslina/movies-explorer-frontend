@@ -4,7 +4,7 @@ import './SearchForm.css';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 
 
-function SearchForm({onSearch, onSubmitCheckbox}){
+function SearchForm({onSearch, onSubmitCheckbox, setIsChecked}){
 
     const [inputValue, setInputValue] =  useState('');
     const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
@@ -53,7 +53,8 @@ function SearchForm({onSearch, onSubmitCheckbox}){
 //checkbox change
     function handleCheckboxClick(){
         setIsCheckboxChecked(!isCheckboxChecked);
-        onSubmitCheckbox(!isCheckboxChecked);      
+        onSubmitCheckbox(!isCheckboxChecked);
+        setIsChecked(!isCheckboxChecked); 
     }
 
 

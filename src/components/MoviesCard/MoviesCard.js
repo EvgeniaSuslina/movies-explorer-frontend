@@ -1,26 +1,38 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import { MOVIE_DURATION } from '../../utils/config';
 import './MoviesCard.css'
 
 function MoviesCard({movie, onSaveMovie, onDeleteMovie, savedMovies}) {
 
-    const location = useLocation();
-    const isSaved = savedMovies.find((item) => item.movieId === movie.id);
+    const location = useLocation();    
+    const [isSaved, setIsSaved] = useState(false);
+    
+    function checkForSaved() {
+        const result = savedMovies.find(obj => {
+          return obj.nameRU === movie.nameRU
+        });
+        if (result !==undefined)
+        return (setIsSaved(true))
+      }
+    
+      useEffect(() => {
+        checkForSaved()
+      }, [])
 
+   function handleAddClick() {
+    console.log(movie);
+    onSaveMovie(movie);
+    setIsSaved(!isSaved);
+  }
 
-//save (or like)
-   function handleMovieSave(){
-     if(!isSaved) {
-        onSaveMovie(movie);
-     } else {
-        onDeleteMovie(movie)
-     }
-   }
-
-   //delete from saved
-   function handleMovieDelete(){
-    onDeleteMovie(movie);
-   }
+  function handleDeleteClick() {
+    const result = savedMovies.find(obj => {
+      return obj.nameRU === movie.nameRU
+    });    
+    onDeleteMovie(result._id);
+    setIsSaved(!isSaved);
+  }
 
     return(
         <li className="movie-card">
@@ -33,11 +45,11 @@ function MoviesCard({movie, onSaveMovie, onDeleteMovie, savedMovies}) {
                     <p className="movie-card__duration"> {MOVIE_DURATION(movie)}</p>
                 </div>
                 {(location.pathname === '/movies') ? (
-                    <button className={isSaved ? "movie-card__button-saved" : "movie-card__button"}type="button" onClick={handleMovieSave}>
+                    <button className={isSaved ? "movie-card__button-saved" : "movie-card__button"}type="button" onClick={isSaved ? handleDeleteClick : handleAddClick}>
                         {!isSaved? 'Сохранить' : ''}
                     </button>
                 ):(
-                    <button className="movie-card__button-del" type="button" onClick={handleMovieDelete}></button>
+                    <button className="movie-card__button-del" type="button" onClick={handleDeleteClick}></button>
                 )}
             </div>                
         </li>        

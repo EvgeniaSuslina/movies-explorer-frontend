@@ -44,6 +44,7 @@ function App() {
   const [infoTooltipImage, setInfoTooltipImage] = useState(imageSuccess);
   const [message, setMessage] = useState('');
   const [search, setSearch] = useState('');
+  const [isChecked, setIsChecked] = useState('');
 
   const navigate = useNavigate();
   
@@ -84,6 +85,7 @@ useEffect(() => {
     }
   }, []);
 
+  
   useEffect(() => {
     setFoundMovies(allMovies.filter((item) => {
       return (
@@ -183,6 +185,7 @@ useEffect(() => {
     }
   }
 
+ 
   //getting all movies from movies api 
   function handleMovieSearch(movie, checked) {
     if(allMovies.length !== 0) {//setSearch(movie);
@@ -192,7 +195,7 @@ useEffect(() => {
       if (searchMovies.length === 0) {
 
         setInfoTooltipImage(imageError);
-        setMessage('Что-то пошло не так! Попробуйте ещё раз.');
+        setMessage('Увы, фильмы не найдены');
         setInfoTooltipOpen(true);
 
       } else {
@@ -228,7 +231,7 @@ useEffect(() => {
         if (searchMovies.length === 0) {
 
           setInfoTooltipImage(imageError);
-          setMessage('Что-то пошло не так! Попробуйте ещё раз.');
+          setMessage('Увы, фильмы не найдены');
           setInfoTooltipOpen(true);
 
         } else {
@@ -242,7 +245,7 @@ useEffect(() => {
         }
       })
       .catch((err) => {
-        console.log(`Произошла ошибка ${err}`)
+        console.log(`Ошибка ${err}`);
       })
       .finally(() => setIsPreloader(false));
     }
@@ -293,28 +296,16 @@ useEffect(() => {
   }
 
   //delete movies
-  function handleMovieDelete(movie){
+  function handleMovieDelete(data){
 
-    let id = '';
-
-    if (movie._id === undefined) {
-
-      savedMovies.forEach((savedMovie) => {
-      if (savedMovie.movieId === movie.id) {
-      id = savedMovie._id
-      }
-      })
-      } else {
-        id = movie._id
-      } 
-    
-
-    mainApi.deleteMovie(id)
+   
+    mainApi.deleteMovie(data)
+    .then((res) => console.log(res))
     .then(() => {
-      const updatedMovies = savedMovies.filter((item) => item._id !== id);
+      const updatedMovies = savedMovies.filter((item) => item._id !== data);
 
       setSavedMovies(updatedMovies);
-      setSavedMoviesList(savedMoviesList.filter((item) => item._id !== id));
+      setSavedMoviesList(savedMoviesList.filter((item) => item._id !== data));
     })
     .catch((err) => {
       console.log(`Ошибка ${err}`);
@@ -417,7 +408,8 @@ useEffect(() => {
           savedMovies={savedMovies}
           onSubmitCheckbox={handleCheckboxMovies}
           preloaderStatus={isPreloader}
-          
+          isChecked={isChecked} 
+          setIsChecked={setIsChecked}
           />
           </ProtectedRoute>
       } />    
