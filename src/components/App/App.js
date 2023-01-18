@@ -273,6 +273,7 @@ useEffect(() => {
   function handleMovieSave(movie){
       mainApi.saveMovie(movie)
         .then((res) => {
+          if(savedMovies)
           setSavedMovies(savedMovies.concat(res));
           setSavedMoviesList(savedMoviesList.concat(res));
           console.log(movie.trailerLink)
@@ -285,12 +286,26 @@ useEffect(() => {
   //delete movies
   function handleMovieDelete(movie){
 
-    mainApi.deleteMovie(movie._id)
+    let id = '';
+
+    if (movie._id === undefined) {
+
+      savedMovies.forEach((savedMovie) => {
+      if (savedMovie.movieId === movie.id) {
+      id = savedMovie._id
+      }
+      })
+      } else {
+        id = movie._id
+      } 
+    
+
+    mainApi.deleteMovie(id)
     .then(() => {
-      const updatedMovies = savedMovies.filter((item) => item._id !== movie._id);
+      const updatedMovies = savedMovies.filter((item) => item._id !== id);
 
       setSavedMovies(updatedMovies);
-      setSavedMoviesList(savedMoviesList.filter((item) => item._id !== movie._id));
+      setSavedMoviesList(savedMoviesList.filter((item) => item._id !== id));
     })
     .catch((err) => {
       console.log(`Ошибка ${err}`);
@@ -348,6 +363,7 @@ useEffect(() => {
   }
 
   function handleCheckboxSavedMovies(checkbox) {
+    
     if(checkbox) {
       setSavedMovies(savedMovies.filter((item) => item.duration <= SHORT_MOVIE_DURATION));
     } else if (!checkbox) {
