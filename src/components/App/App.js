@@ -43,6 +43,7 @@ function App() {
   const [infoTooltipOpen, setInfoTooltipOpen] = useState(false);
   const [infoTooltipImage, setInfoTooltipImage] = useState(imageSuccess);
   const [message, setMessage] = useState('');
+  const [search, setSearch] = useState('');
 
   const navigate = useNavigate();
   
@@ -82,6 +83,14 @@ useEffect(() => {
         handleCheckboxMovies(checkboxStat);
     }
   }, []);
+
+  useEffect(() => {
+    setFoundMovies(allMovies.filter((item) => {
+      return (
+        item.nameRU.toLowerCase().includes(search.toLowerCase())
+      )
+    }))
+  }, [allMovies, search])
 
 
   useEffect(() => {
@@ -173,17 +182,17 @@ useEffect(() => {
       });
     }
   }
-  
+
   //getting all movies from movies api 
   function handleMovieSearch(movie, checked) {
-    if(allMovies.length !== 0) {
+    if(allMovies.length !== 0) {//setSearch(movie);
       const searchMovies = allMovies.filter((item) => 
       item.nameRU.toLowerCase().includes(movie.toLowerCase()));
 
       if (searchMovies.length === 0) {
 
         setInfoTooltipImage(imageError);
-        setMessage('Увы, фильмы не найдены');
+        setMessage('Что-то пошло не так! Попробуйте ещё раз.');
         setInfoTooltipOpen(true);
 
       } else {
@@ -191,10 +200,11 @@ useEffect(() => {
         localStorage.setItem("searchWord", movie);
         localStorage.setItem("searchedMovies", JSON.stringify(searchMovies));
         localStorage.setItem("checkboxStat", JSON.stringify(checked));
+        setSearch(movie);
 
-        setFoundMovies(searchMovies);
-      }
-    } else {
+        //setFoundMovies(searchMovies);
+     /* }
+    } else {*/
       setIsPreloader(true);
 
       moviesApi.getMovies()
@@ -206,20 +216,19 @@ useEffect(() => {
           return item;
         });
 
-        const searchMovies = requestMovies.filter((item) => 
-        item.nameRU.toLowerCase().includes(movie.toLowerCase()));
+        /*const searchMovies = requestMovies.filter((item) => 
+        item.nameRU.toLowerCase().includes(movie.toLowerCase()));*/
 
         localStorage.setItem("loadedMovies", JSON.stringify(requestMovies));
           setAllMovies(requestMovies);
           localStorage.setItem("searchWord", movie);
           localStorage.setItem("searchedMovies", JSON.stringify(searchMovies));
           localStorage.setItem("checkboxStat", JSON.stringify(checked));
-          setFoundMovies(searchMovies);
 
         if (searchMovies.length === 0) {
 
           setInfoTooltipImage(imageError);
-          setMessage('Увы, фильмы не найдены');
+          setMessage('Что-то пошло не так! Попробуйте ещё раз.');
           setInfoTooltipOpen(true);
 
         } else {
@@ -233,11 +242,11 @@ useEffect(() => {
         }
       })
       .catch((err) => {
-        console.log(`Ошибка ${err}`);
+        console.log(`Произошла ошибка ${err}`)
       })
       .finally(() => setIsPreloader(false));
     }
-  }
+  }}
 
   //searching short films
   function handleCheckboxMovies(checkbox) {
@@ -407,7 +416,8 @@ useEffect(() => {
           onDeleteMovie={handleMovieDelete}
           savedMovies={savedMovies}
           onSubmitCheckbox={handleCheckboxMovies}
-          preloaderStatus={isPreloader}  
+          preloaderStatus={isPreloader}
+          
           />
           </ProtectedRoute>
       } />    

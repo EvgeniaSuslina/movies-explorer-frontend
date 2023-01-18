@@ -79,6 +79,14 @@ class MainApi extends Api {
         })
         .then(this._checkResult);
     }
+    
+    deleteMovie(id) {
+        return fetch(`${this._baseUrl}/movies/${id}`, {
+            method: 'DELETE',
+            headers: this._headers,
+        })
+        .then(this._checkResult);
+    }
 
     getSavedMovies(){
         return fetch(`${this._baseUrl}/movies`, {
@@ -88,13 +96,7 @@ class MainApi extends Api {
         .then(this._checkResult);
     }
 
-    deleteMovie(id) {
-        return fetch(`${this._baseUrl}/movies/${id}`, {
-            method: 'DELETE',
-            headers: this._headers,
-        })
-        .then(this._checkResult);
-    }
+  
 
     logoutUser(){
         return fetch(`${this._baseUrl}/signout`, {

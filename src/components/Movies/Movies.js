@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "../Header/Header";
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
@@ -9,10 +9,11 @@ import Preloader from '../Preloader/Preloader';
 import './Movies.css';
 
 
-function Movies({onSearch, isApiError, foundMovies, savedMovies, onSaveMovie, onDeleteMovie, onSubmitCheckbox, preloaderStatus}) {
-
+function Movies({onSearch, isApiError, foundMovies, savedMovies, onSaveMovie, onDeleteMovie, onSubmitCheckbox, preloaderStatus}) {  
+        
     const [isBurgerPopupOpened, setIsBurgerPopupOpened] = useState(false);
 
+    
     function handleBurgerPopupClick() {
     setIsBurgerPopupOpened(true);
     }
