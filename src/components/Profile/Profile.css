@@ -9,11 +9,11 @@
     -moz-text-size-adjust: 100%;
     box-sizing: border-box;
     padding: 74px 0 70px 0;
+    height: 100vh;
 }
 
 .profile__title{
     margin: 0 auto;
-    max-width: 204px;
     font-weight: 500;
     font-size: 24px;
     line-height: 29px;    
@@ -51,27 +51,39 @@
 }
 
 .profile__input{
+    width: 90%;
     background: #202020;
     border: none;
     text-align: end;
     font-weight: 400;
-    font-size: 11px;
-    line-height: 13px;
+    font-size: 13px;
+    line-height: 15px;
     color: #FFFFFF;
 }
 
-.profle-button{
+.profile-button-disabled{   
     margin-top: 220px;
     padding: 0;
     border: none;
-    background: #202020;
+    background-color: #202020;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;  
+    color: grey
+}
+
+.profile-button {
+    margin-top: 220px;
+    padding: 0;
+    border: none;
+    background-color: #202020;
     font-weight: 400;
     font-size: 13px;
     line-height: 16px;  
     color: #FFFFFF;
 }
 
-.profle-button:hover{
+.profile-button:hover{
     cursor: pointer;
     opacity: 0.6;
 }
@@ -88,6 +100,22 @@
 
 .profile__exit-link:hover{
     opacity: 0.6;
+}
+
+.profile__text{
+    margin: 0;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    align-items: center;
+    text-align: center;
+    color: #3DDC84;
+    display: none;
+}
+
+.profile__text_visible {
+    display: block;
 }
 
 @media screen and (max-width: 940px) {

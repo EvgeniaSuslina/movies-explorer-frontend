@@ -5,6 +5,7 @@
 }
 
 .checkbox-content{
+    margin-top: 28px;
     background: #202020;
     display: flex;
     flex-direction: row;
@@ -54,3 +55,5 @@
     line-height: 18px;
     color: #FFFFFF;
 }
+
+

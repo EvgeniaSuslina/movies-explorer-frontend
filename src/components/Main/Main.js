@@ -9,10 +9,11 @@ import AboutMe from '../AboutMe/AboutMe';
 import Portfolio from '../Portfolio/Portfolio';
 import Footer from '../Footer/Footer';
 
-function Main() {
+
+function Main({loggedIn}) {
     return (  
         <>
-        <Header navType={'mainPage'}/>
+        <Header loggedIn={loggedIn}  navType={loggedIn? 'loggedInLinks': 'mainPage'}/>
         <main className="main">
             <Promo />
             <NavTab />

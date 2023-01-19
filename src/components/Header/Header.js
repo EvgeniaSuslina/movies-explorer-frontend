@@ -4,29 +4,30 @@ import { useLocation, Link} from 'react-router-dom';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
 import Navigation from '../Navigation/Navigation';
 
-function Header({navType, onButtonClick}) {
+function Header({navType, onButtonClick, loggedIn}) {
 
     const location = useLocation();
 
     return(
         <header className={(location.pathname === '/') ? 'header' : 'header-black'}>
-            <div className={(location.pathname === '/') ? 'header__content' : 'navigation-links'}>
-                {(location.pathname === '/') ? (                    
+            <div className='navigation-links'>
+                {loggedIn ? (                    
                     <img className="logo" src={logo} alt="Логотип" />                 
                 ) : (
                     <>
-                    <Link to="/" target="_blank">
+                    <Link to="/">
                         <img className="header-logo" src={logo} alt="Логотип" />
                     </Link>
                     <BurgerMenu onButtonClick={ onButtonClick }/>
                     </>
                 )}
-                <Navigation type={navType}/>
+                <Navigation loggedIn={loggedIn} type={navType}/>
                 
             </div>
         </header>
     )
 }
+
 
 
 export default Header

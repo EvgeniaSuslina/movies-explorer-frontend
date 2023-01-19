@@ -1,28 +1,58 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { MOVIE_DURATION } from '../../utils/config';
 import './MoviesCard.css'
-import movieBanner from '../../images/movie__beg.svg'
 
+function MoviesCard({movie, onSaveMovie, onDeleteMovie, savedMovies}) {
 
-function MoviesCard() {
+    const location = useLocation();    
+    const [isSaved, setIsSaved] = useState(false);
+    
+    function checkForSaved() {
+        const result = savedMovies.find(obj => {
+          return obj.nameRU === movie.nameRU
+        });
+        if (result !==undefined)
+        return (setIsSaved(true))
+      }
+    
+      useEffect(() => {
+        checkForSaved()
+      }, [])
 
-    const location = useLocation();
+   function handleAddClick() {
+    console.log(movie);
+    onSaveMovie(movie);
+    setIsSaved(!isSaved);
+  }
+
+  function handleDeleteClick() {
+    const result = savedMovies.find(obj => {
+      return obj.nameRU === movie.nameRU
+    });    
+    onDeleteMovie(result._id);
+    setIsSaved(!isSaved);
+  }
 
     return(
         <li className="movie-card">
             <div className="movie-card__container">
-                <img className="movie-card__img" src={ movieBanner } alt="Баннер фильма"/>
+                <a href={movie.trailerLink}  className="movie-card__link" target='blank'>
+                    <img className="movie-card__img" src={movie.image.url ? 'https://api.nomoreparties.co/' + movie.image.url : movie.image} alt={movie.nameRU}/>
+                </a>
                 <div className="movie-card__info">
-                    <p className="movie-card__name">Бег это свобода</p>
-                    <p className="movie-card__duration"> 1ч 17м</p>
+                    <p className="movie-card__name">{movie.nameRU}</p>
+                    <p className="movie-card__duration"> {MOVIE_DURATION(movie)}</p>
                 </div>
                 {(location.pathname === '/movies') ? (
-                    <button className="movie-card__button" type="button">Сохранить</button>
+                    <button className={isSaved ? "movie-card__button-saved" : "movie-card__button"}type="button" onClick={isSaved ? handleDeleteClick : handleAddClick}>
+                        {!isSaved? 'Сохранить' : ''}
+                    </button>
                 ):(
-                    <button className="movie-card__button-del" type="button"></button>
+                    <button className="movie-card__button-del" type="button" onClick={handleDeleteClick}></button>
                 )}
             </div>                
         </li>        
     )    
 }
-
 export default MoviesCard;

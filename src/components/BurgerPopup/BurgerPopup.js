@@ -14,8 +14,7 @@ function BurgerPopup({ isOpen, onButtonClick }) {
           <ul className="burger-popup__links">
             <li>
               <NavLink
-                to="/"
-                target="_blank"
+                to="/"                
                 className="burger-popup__link"
                 onClick={ onButtonClick }>
                 Главная
@@ -24,7 +23,6 @@ function BurgerPopup({ isOpen, onButtonClick }) {
               <li className="burger-popup__link-active">
               <NavLink
                 to="/movies"
-                target="_blank"
                 className="burger-popup__link"
                 onClick={ onButtonClick }>
                 Фильмы
@@ -33,7 +31,6 @@ function BurgerPopup({ isOpen, onButtonClick }) {
               <li>
               <NavLink
                 to="/saved-movies"
-                target="_blank"
                 className="burger-popup__link"
                 onClick={ onButtonClick }>
                 Сохраненные фильмы
@@ -42,8 +39,7 @@ function BurgerPopup({ isOpen, onButtonClick }) {
           </ul>
           <div className="burger-popup__profile">
             <Link
-              to="/profile"
-              target="_blank"
+              to="/profile"             
               className="burger-popup__profile-link"
               onClick={ onButtonClick }>
                 Аккаунт
