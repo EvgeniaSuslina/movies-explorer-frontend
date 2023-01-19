@@ -14,6 +14,10 @@ function MoviesCardList({foundMovies, isApiError, onSaveMovie, onDeleteMovie, sa
   const [windowWidth, setWindowWidth] = useState(1280);
   const [isButtonShown, setIsButtonShown] = useState(false);
 
+  useEffect(() => { 
+    handleSubscribeResize(); 
+  }, [maxMovies]); 
+
   useEffect(() => {
     setMovies();
   }, [maxMovies]);
@@ -48,7 +52,7 @@ function MoviesCardList({foundMovies, isApiError, onSaveMovie, onDeleteMovie, sa
     });
     setRenderedMovies(movies);
 
-    if(foundMovies.length <= maxMovies){
+    if(foundMovies.length < renderedMovies.length){
       setIsButtonShown(false)
     } else {
       setIsButtonShown(true)
@@ -92,7 +96,7 @@ function MoviesCardList({foundMovies, isApiError, onSaveMovie, onDeleteMovie, sa
   });
   setRenderedMovies(movies);
 
-  if(foundMovies.length <= maxMovies){
+  if(foundMovies.length < renderedMovies.length){
     setIsButtonShown(false)
   } else {
     setIsButtonShown(true)
@@ -141,7 +145,7 @@ return(
                     /> 
                 ))} 
             </ul>  
-          {renderedMovies.length >= 12 && isButtonShown ? (moreButtonVisible) : (moreButtonHidden)} 
+            {(renderedMovies.length < foundMovies.length) && isButtonShown ? (moreButtonVisible) : (moreButtonHidden)}
     </section> 
   ) 
 } 

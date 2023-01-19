@@ -185,56 +185,54 @@ useEffect(() => {
       });
     }
   }
-
- 
+   
    //getting all movies from movies api 
-   function handleMovieSearch(movie, checked) {
-    if(allMovies.length !== 0) {
-      setSearch(movie)
-      const searchMovies = allMovies.filter((item) => 
-      item.nameRU.toLowerCase().includes(movie.toLowerCase()));
-      if (searchMovies.length === 0) {
-        setInfoTooltipImage(imageError);
-        setMessage('Увы, фильмы не найдены');
-        setInfoTooltipOpen(true);
-      } else {
-        localStorage.setItem("searchWord", movie);
-        localStorage.setItem("searchedMovies", JSON.stringify(searchMovies));
-        localStorage.setItem("checkboxStatus", JSON.stringify(checked));
-     
-        setFoundMovies(searchMovies);
-      }
-    } else {
-      setIsPreloader(true);
-      setSearch(movie)
-      moviesApi.getMovies()
-      .then((requestMovies) => {
-        requestMovies = requestMovies.map((item) => {
-          if(!URL_REGEX.test(item.trailerLink)) {
-            item.trailerLink = 'https://www.youtube.com';
-          }
-          return item;
-        });
-        const searchMovies = requestMovies.filter((item) => 
-        item.nameRU.toLowerCase().includes(movie.toLowerCase()));
-        if (searchMovies.length === 0) {
-          setInfoTooltipImage(imageError);
-          setMessage('Увы, фильмы не найдены');
-          setInfoTooltipOpen(true);
-        } else {
-          localStorage.setItem("loadedMovies", JSON.stringify(requestMovies));
-          setAllMovies(requestMovies);
-          localStorage.setItem("searchWord", movie);
-          localStorage.setItem("searchedMovies", JSON.stringify(searchMovies));
-          localStorage.setItem("checkboxStatus", JSON.stringify(checked));
-          setFoundMovies(searchMovies);
-        }
-      })
-      .catch((err) => {
-        console.log(`Ошибка ${err}`);
-      })
-      .finally(() => setIsPreloader(false));
-    }
+   function handleMovieSearch(movie, checked) { 
+    if(allMovies.length !== 0 && movie !== "") { 
+      setSearch(movie); 
+      const searchMovies = allMovies.filter((item) =>  
+      item.nameRU.toLowerCase().includes(movie.toLowerCase())); 
+      if (searchMovies.length === 0) { 
+        setInfoTooltipImage(imageError); 
+        setMessage('Увы, фильмы не найдены'); 
+        setInfoTooltipOpen(true); 
+      } else { 
+        localStorage.setItem("searchWord", movie); 
+        localStorage.setItem("searchedMovies", JSON.stringify(searchMovies)); 
+        localStorage.setItem("checkboxStatus", JSON.stringify(checked)); 
+        setFoundMovies(searchMovies); 
+      } 
+    } else if (movie !== "") { 
+      setIsPreloader(true); 
+      setSearch(movie); 
+      moviesApi.getMovies() 
+      .then((requestMovies) => { 
+        requestMovies = requestMovies.map((item) => { 
+          if(!URL_REGEX.test(item.trailerLink)) { 
+            item.trailerLink = 'https://www.youtube.com'; 
+          } 
+          return item; 
+        }); 
+        const searchMovies = requestMovies.filter((item) =>  
+        item.nameRU.toLowerCase().includes(movie.toLowerCase())); 
+        if (searchMovies.length === 0 && movie !== "") { 
+          setInfoTooltipImage(imageError); 
+          setMessage('Увы, фильмы не найдены'); 
+          setInfoTooltipOpen(true); 
+        } else { 
+          localStorage.setItem("loadedMovies", JSON.stringify(requestMovies)); 
+          setAllMovies(requestMovies); 
+          localStorage.setItem("searchWord", movie); 
+          localStorage.setItem("searchedMovies", JSON.stringify(searchMovies)); 
+          localStorage.setItem("checkboxStatus", JSON.stringify(checked)); 
+          setFoundMovies(searchMovies); 
+        } 
+      }) 
+      .catch((err) => { 
+        console.log(`Ошибка ${err}`); 
+      }) 
+      .finally(() => setIsPreloader(false)); 
+    } 
   }
 
   //searching short films

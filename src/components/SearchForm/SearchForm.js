@@ -16,14 +16,11 @@ function SearchForm({onSearch, onSubmitCheckbox, isChecked,setIsChecked}){
     const location = useLocation();
 
 //get data & checkbox state from localstorge
-useEffect(() => { 
-    if (location.pathname === '/movies') { 
-        setInputValue(localStorage.getItem("searchWord")); 
-        setIsCheckboxChecked(isChecked)        
-
-    } else if (location.pathname === '/saved-movies') { 
-        setIsCheckboxChecked(false);         
-    }           
+useEffect(() => {  
+    if ((location.pathname === '/movies') && localStorage.getItem("searchWord") !== 0 && localStorage.getItem("searchWord") !== '') {  
+        console.log(localStorage.getItem("searchWord")); 
+        console.log(isCheckboxChecked); 
+        onSearch(localStorage.getItem("searchWord"), isChecked)}        
 }, [location]);
 
     useEffect(() => {
